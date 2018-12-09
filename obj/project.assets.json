@@ -14736,11 +14736,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Clutchlit2\\Clutchlit\\Clutchlit\\Clutchlit.csproj",
+      "projectUniqueName": "E:\\[DOTNET] Projekty\\Clutchlit\\Clutchlit.csproj",
       "projectName": "Clutchlit",
-      "projectPath": "E:\\Clutchlit2\\Clutchlit\\Clutchlit\\Clutchlit.csproj",
+      "projectPath": "E:\\[DOTNET] Projekty\\Clutchlit\\Clutchlit.csproj",
       "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
-      "outputPath": "E:\\Clutchlit2\\Clutchlit\\Clutchlit\\obj\\",
+      "outputPath": "E:\\[DOTNET] Projekty\\Clutchlit\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
