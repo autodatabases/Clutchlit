@@ -1,0 +1,806 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Ten plik jest wykorzystywany przez proces publikowania/pakowania projektu sieci Web. Możesz dostosować zachowanie tego procesu
+ poprzez edycję tego pliku MSBuild. Aby dowiedzieć się więcej o tym działaniu, odwiedź stronę https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <EncryptedPassword />
+    <_PublishTargetUrl>ftp://ponowemu.pl</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="appsettings.Development.json">
+      <publishTime>10/31/2018 12:42:44</publishTime>
+    </File>
+    <File Include="appsettings.json">
+      <publishTime>10/31/2018 12:42:44</publishTime>
+    </File>
+    <File Include="Clutchlit.deps.json">
+      <publishTime>10/31/2018 14:30:59</publishTime>
+    </File>
+    <File Include="Clutchlit.dll">
+      <publishTime>10/31/2018 14:30:40</publishTime>
+    </File>
+    <File Include="Clutchlit.pdb">
+      <publishTime>10/31/2018 14:30:40</publishTime>
+    </File>
+    <File Include="Clutchlit.runtimeconfig.json">
+      <publishTime>10/31/2018 14:30:59</publishTime>
+    </File>
+    <File Include="Clutchlit.Views.dll">
+      <publishTime>10/31/2018 14:30:41</publishTime>
+    </File>
+    <File Include="Clutchlit.Views.pdb">
+      <publishTime>10/31/2018 14:30:41</publishTime>
+    </File>
+    <File Include="web.config">
+      <publishTime>10/31/2018 14:30:59</publishTime>
+    </File>
+    <File Include="wwwroot/css/site.css">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/css/site.min.css">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/AdminLTE.css">
+      <publishTime>10/31/2018 13:39:46</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/adminlte.css.map">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/AdminLTE.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/adminlte.min.css.map">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/alt/AdminLTE-bootstrap-social.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/alt/AdminLTE-bootstrap-social.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/alt/AdminLTE-fullcalendar.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/alt/AdminLTE-fullcalendar.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/alt/AdminLTE-select2.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/alt/AdminLTE-select2.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/alt/AdminLTE-without-plugins.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/alt/AdminLTE-without-plugins.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-black-light.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-black-light.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-black.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-black.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-blue-light.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-blue-light.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-blue.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-blue.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-green-light.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-green-light.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-green.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-green.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-purple-light.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-purple-light.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-purple.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-purple.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-red-light.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-red-light.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-red.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-red.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-yellow-light.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-yellow-light.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-yellow.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/skin-yellow.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/_all-skins.css">
+      <publishTime>10/31/2018 13:30:50</publishTime>
+    </File>
+    <File Include="wwwroot/dist/css/skins/_all-skins.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/avatar.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/avatar04.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/avatar2.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/avatar3.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/avatar5.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/credit/american-express.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/credit/cirrus.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/credit/mastercard.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/credit/mestro.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/credit/paypal.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/credit/paypal2.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/credit/visa.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/default-50x50.gif">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/icons.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/photo1.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/photo2.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/photo3.jpg">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/photo4.jpg">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/user1-128x128.jpg">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/user2-160x160.jpg">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/user3-128x128.jpg">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/user4-128x128.jpg">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/user5-128x128.jpg">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/user6-128x128.jpg">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/user7-128x128.jpg">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/img/user8-128x128.jpg">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/js/adminlte.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/js/adminlte.min.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/js/demo.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/js/pages/dashboard.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/dist/js/pages/dashboard2.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/favicon.ico">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/images/banner1.svg">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/images/banner2.svg">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/images/banner3.svg">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/images/logo-clutchlit.png">
+      <publishTime>10/31/2018 13:12:16</publishTime>
+    </File>
+    <File Include="wwwroot/js/site.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/js/site.min.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/.bower.json">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-theme.css">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-theme.css.map">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-theme.min.css">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap-theme.min.css.map">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap.css">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap.css.map">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap.min.css">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/css/bootstrap.min.css.map">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.eot">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.svg">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/fonts/glyphicons-halflings-regular.woff2">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/bootstrap.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/bootstrap.min.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/dist/js/npm.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/bootstrap/LICENSE">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation-unobtrusive/.bower.json">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation-unobtrusive/LICENSE.txt">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/.bower.json">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/dist/additional-methods.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/dist/additional-methods.min.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/dist/jquery.validate.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/dist/jquery.validate.min.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery-validation/LICENSE.md">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery/.bower.json">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery/dist/jquery.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery/dist/jquery.min.js">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery/dist/jquery.min.map">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/lib/jquery/LICENSE.txt">
+      <publishTime>10/31/2018 12:42:45</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/bootstrap-slider/bootstrap-slider.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/bootstrap-slider/slider.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/all.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/aero%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/aero.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/aero.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/blue%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/blue.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/blue.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/flat%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/flat.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/flat.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/green%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/green.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/green.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/grey%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/grey.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/grey.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/orange%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/orange.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/orange.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/pink%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/pink.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/pink.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/purple%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/purple.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/purple.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/red%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/red.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/red.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/yellow%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/yellow.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/yellow.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/flat/_all.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/futurico/futurico%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/futurico/futurico.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/futurico/futurico.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/icheck.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/icheck.min.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/aero.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/blue.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/green.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/grey.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/line%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/line.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/line.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/orange.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/pink.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/purple.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/red.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/yellow.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/line/_all.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/aero%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/aero.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/aero.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/blue%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/blue.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/blue.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/green%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/green.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/green.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/grey%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/grey.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/grey.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/minimal%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/minimal.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/minimal.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/orange%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/orange.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/orange.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/pink%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/pink.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/pink.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/purple%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/purple.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/purple.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/red%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/red.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/red.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/yellow%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/yellow.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/yellow.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/minimal/_all.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/polaris/polaris%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/polaris/polaris.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/polaris/polaris.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/aero%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/aero.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/aero.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/blue%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/blue.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/blue.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/green%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/green.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/green.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/grey%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/grey.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/grey.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/orange%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/orange.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/orange.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/pink%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/pink.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/pink.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/purple%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/purple.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/purple.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/red%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/red.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/red.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/square%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/square.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/square.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/yellow%402x.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/yellow.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/yellow.png">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/iCheck/square/_all.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/input-mask/jquery.inputmask.date.extensions.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/input-mask/jquery.inputmask.extensions.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/input-mask/jquery.inputmask.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/input-mask/jquery.inputmask.numeric.extensions.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/input-mask/jquery.inputmask.phone.extensions.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/input-mask/jquery.inputmask.regex.extensions.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/input-mask/phone-codes/phone-be.json">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/input-mask/phone-codes/phone-codes.json">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/input-mask/phone-codes/readme.txt">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/jQueryUI/jquery-ui.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/jQueryUI/jquery-ui.min.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/jvectormap/jquery-jvectormap-1.2.2.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/jvectormap/jquery-jvectormap-usa-en.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/jvectormap/jquery-jvectormap-world-mill-en.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/pace/pace.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/pace/pace.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/pace/pace.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/pace/pace.min.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/timepicker/bootstrap-timepicker.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/timepicker/bootstrap-timepicker.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/timepicker/bootstrap-timepicker.min.css">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+    <File Include="wwwroot/plugins/timepicker/bootstrap-timepicker.min.js">
+      <publishTime>08/22/2018 20:40:03</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

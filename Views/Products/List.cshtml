@@ -1,0 +1,142 @@
+﻿@model IEnumerable<Manufacturer>
+@{
+    ViewData["Title"] = "Lista produktów | Produkty | Dział handlowy";
+    ViewData["Title_1"] = "Produkty";
+    ViewData["Title_2"] = "Lista produktów";
+}
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Wyszukaj produkty do auta</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Zwiń">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Zamknij">
+                <i class="fa fa-times"></i>
+            </button>                
+        </div>
+    </div>
+    <div class="box-body ">
+        @using (Html.BeginForm("List", "Products", FormMethod.Post, new { @id = "ktypes_search" }))
+        {
+            <span class="col-md-4">
+                <select id="mark" name="mark" class="form-control select2" asp-items="@(new SelectList(Model, "Tecdoc_id", "Name"))">
+                    <option disabled selected> - Marka - </option>
+                </select>
+            </span>
+            <span class="col-md-3">
+                <select id="seriesA" name="seriesA" class="form-control select2">
+                    <option disabled selected> - Model - </option>
+                </select>
+            </span>
+            <span class="col-md-3">
+                <select id="engines" name="engines" class="form-control select2">
+                    <option disabled selected> - Silnik - </option>
+                </select>
+
+            </span>
+            <span class="col-md-2" style="text-align:center">
+                <input id="button" class="btn bg-orange" type="submit" value="Pokaż produkty">
+            </span>
+        }
+        </div>
+
+    <div class="box-header with-border">
+        <h3 class="box-title">Wybierz kategorie produktów</h3>
+        
+    </div>
+    <div class="box-body">
+        <div class="form-group">
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="479" >
+                ZESTAW SPRZĘGŁA
+            </label>
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="1000">
+                ZESTAW SPRZĘGŁA Z KOŁEM
+            </label>
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="577">
+                KOŁO ZAMACHOWE
+            </label>
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="262">
+                TARCZA SPRZĘGŁA
+            </label>
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="261">
+                DOCISK SPRZĘGŁA
+            </label>
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="48">
+                ŁOŻYSKO OPOROWE
+            </label>
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="47">
+                WYSPRZĘGLIK CENTRALNY
+            </label>
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="620">
+                SIŁOWNIK SPRZĘGŁA
+            </label>
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="234">
+                POMPA SPRZĘGŁA
+            </label>
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="3985">
+                ŚRUBY
+            </label>
+            <label class="col-lg-3">
+                <input type="checkbox" class="flat-red category" value="1001">
+                USZCZELNIACZE
+            </label>
+        </div>
+    </div>
+</div>
+
+
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Lista produktów</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Zwiń">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Zamknij">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body ">
+
+        <table id="example2" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nazwa</th>
+                    <th>Referencja</th>
+                    <th>Cena brutto [S]</th>
+                    <th>Cena brutto [D]</th>
+                    <th class="distributors">Nazwa [D]</th>
+                    <th>Marża</th>
+                </tr>
+            </thead>
+            
+            <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Nazwa</th>
+                    <th>Referencja</th>
+                    <th>C brutto [S]</th>
+                    <th>C brutto [D]</th>
+                    <th class="distributors">Nazwa [D]</th>
+                    <th>Marża</th>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+    
+</div>
+ 

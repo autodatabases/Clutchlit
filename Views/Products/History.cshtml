@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Historia cen | Produkty | Dział handlowy";
+    ViewData["Title_1"] = "Produkty";
+    ViewData["Title_2"] = "Historia Cen";
+}
+
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Historia zmian ceny produktu</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Zwiń">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Zamknij">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="box-body">
+
+        <div class="form-group">
+            <div class="input-group">
+                <button type="button" class="btn btn-default pull-right" id="daterange-btn">
+                    <span>
+                        <i class="fa fa-calendar"></i> Wybierz okres
+                    </span>
+                    <i class="fa fa-caret-down"></i>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+        $(function () {
+
+            $('#daterange-btn').daterangepicker(
+                {
+                    ranges: {
+                        'Today': [moment(), moment()],
+                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                    },
+                    startDate: moment().subtract(29, 'days'),
+                    endDate: moment()
+                },
+                function (start, end) {
+                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+                }
+            )
+
+        })
+</script>
