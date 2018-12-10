@@ -104,14 +104,16 @@ namespace Clutchlit.Controllers
             string result = "";
             if (type == 6)
             {
-                result = reference[0].ToString() + reference[1].ToString() + reference[2].ToString() + " " + reference[3].ToString() + reference[4].ToString() + reference[5].ToString() + reference[6].ToString() + " " + reference[7].ToString() + reference[8].ToString();
+                result = reference[0].ToString() + reference[1].ToString() + reference[2].ToString() + "+" + reference[3].ToString() + reference[4].ToString() + reference[5].ToString() + reference[6].ToString() + "+" + reference[7].ToString() + reference[8].ToString();
             }
             else if (type == 32)
             {
-                result = reference[0].ToString() + reference[1].ToString() + reference[2].ToString() + reference[3].ToString() + " " + reference[4].ToString() + reference[5].ToString() + reference[6].ToString() + " " + reference[7].ToString() + reference[8].ToString() + reference[9].ToString();
+                result = reference[0].ToString() + reference[1].ToString() + reference[2].ToString() + reference[3].ToString() + "+" + reference[4].ToString() + reference[5].ToString() + reference[6].ToString() + "+" + reference[7].ToString() + reference[8].ToString() + reference[9].ToString();
             }
             else
+            {
                 result = reference.Replace(" ", "").ToLower();
+            }
             return result;
         }
         public IActionResult GetOpponentsPrices(int Id)
@@ -337,7 +339,7 @@ namespace Clutchlit.Controllers
                 string resultA = "";
                 Double lowestPrice = 100000;
                 string partialResult = "";
-                using (var response = client.GetAsync("https://www.ceneo.pl/Motoryzacja;szukaj-" + ParseReference(product.Reference, product.Manufacturer_id)).Result)
+                using (var response = client.GetAsync("https://www.ceneo.pl/Czesci_samochodowe;szukaj-" + ParseReference(product.Reference.Trim(), product.Manufacturer_id).Trim()).Result)
                 {
                     using (var content = response.Content)
                     {
@@ -345,7 +347,7 @@ namespace Clutchlit.Controllers
                         var resultB = content.ReadAsStringAsync().Result;
                         var document = new HtmlDocument();
                         document.LoadHtml(resultB);
-                        var nodes = document.DocumentNode.SelectNodes("//div[@class=\"cat-prod-row-body\"]");
+                        var nodes = document.DocumentNode.SelectNodes("//div[contains(@class, \"cat-prod-row\")]");
                         if (nodes != null)
                         {
                             foreach (HtmlNode node in nodes)
@@ -411,7 +413,7 @@ namespace Clutchlit.Controllers
                                     var title = node.SelectSingleNode(".//div[@class=\"nr\"]").InnerText.ToUpper().Replace(" ", "");
                                     if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
                                     {
-                                        if (node.SelectSingleNode(".//a[@class=\"ga-click prod_link\"]").InnerText.ToUpper().Replace(" ", "").Contains(manufacturer_name))
+                                        if (node.SelectSingleNode(".//*[contains(@class, \"prod_link\")]").InnerText.ToUpper().Replace(" ", "").Contains(manufacturer_name))
                                         {//vers_box 
                                             var price = node.SelectSingleNode(".//div[@class=\"price\"]").InnerText;
                                             var stock = node.SelectSingleNode(".//span[contains(@class, \"text_vers\")]").InnerText;
