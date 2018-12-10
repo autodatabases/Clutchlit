@@ -98,9 +98,11 @@ namespace Clutchlit.Controllers
             }
 
         }
-        
+        [HttpPost("[controller]/[action]/{id}/")]
+        [HttpGet("[controller]/[action]/{id}/")]
         public IActionResult EndOffer(string id)
         {
+            var uuid = Guid.NewGuid().ToString();
             string data = "{" +
   "\"offerCriteria\": ["+
     "{"+
@@ -118,8 +120,8 @@ namespace Clutchlit.Controllers
     "}";
            
             string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/"+Guid.NewGuid().ToString()+"");
-            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/"+uuid+"");
+            httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "PUT";
             httpWebRequest.Headers.Add("Authorization", "Bearer "+Token+"");
@@ -136,7 +138,20 @@ namespace Clutchlit.Controllers
             {
                 response = streamReader.ReadToEnd();
             }
-            return Ok(response);
+            var resource = "";
+            var httpWebRequest2 = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/"+uuid+"");
+            httpWebRequest2.ContentType = "application/json";
+            httpWebRequest2.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest2.Method = "GET";
+            httpWebRequest2.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse2 = (HttpWebResponse)httpWebRequest2.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))
+            {
+                resource = streamReader.ReadToEnd();
+            }
+            return Ok(resource);
         }
         [HttpGet("[controller]/[action]/{id}/")]
         public IActionResult EditOffer(string id)
