@@ -61,6 +61,15 @@ namespace Clutchlit.Controllers
             string name = _context.Warehouses.Single(d => d.WarehouseNumber == id && d.DistributorId == disid).Name;
             return name;
         }
+        public string CheckIpartsBackground(string stock)
+        {
+            if (stock.Trim() == "Dodaj do koszyka")
+                return "green";
+            else if (stock.Trim().Contains("Zapytaj o"))
+                return "orange";
+            else
+                return "red";
+        }
         public string CheckBackground(int quantity)
         {
             if (quantity == 0)
@@ -69,26 +78,11 @@ namespace Clutchlit.Controllers
                 return "green";
             
         }
-
-        public async Task<string> Take_iparts()
+        public string EncodeBase64(string reference)
         {
-            HttpClient client = new HttpClient();
-            string resultA = "";
-            using (var response = await client.GetAsync("https://www.iparts.pl/wyszukaj/artOTItMDItMjcyfDB8MA==.html"))
-            {
-                using (var content = response.Content)
-                {
-                    // read answer in non-blocking way
-                    var result = await content.ReadAsStringAsync();
-                    var document = new HtmlDocument();
-                    document.LoadHtml(result);
-                    var nodes = document.DocumentNode.SelectNodes("//div[@class=\"cena\"]");
-                    //Some work with page....
-                    resultA = resultA + "<tr class='red'><td><b>IPARTS</b></td><td>100.20 PLN</td><td>10</td></tr>";
-                    resultA = resultA + "</table>";
-                return resultA;
-                }
-            }
+            
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(reference+"|0|0");
+            return Convert.ToBase64String(plainTextBytes);
         }
 
         public async Task<string> GetSm(int Id)
@@ -97,16 +91,110 @@ namespace Clutchlit.Controllers
             string ta = "adasd";
             return await Task.FromResult(ta);
         }
+        public async Task<string> TakeUcando(string reference, string manufacturer)
+        {
+            var result = "";
+            HttpClient client = new HttpClient();
+            //client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+            string resultA = "";
+            using (var response = await client.GetAsync("https://www.iparts.pl/wyszukaj/art" + EncodeBase64(reference) + ".html"))
+            {
+                using (var content = response.Content)
+                {
+                    // read answer in non-blocking way
+                    var resultB = await content.ReadAsStringAsync();
+                    var document = new HtmlDocument();
+                    document.LoadHtml(resultB);
+                    var nodes = document.DocumentNode.SelectNodes("//div[@class=\"small-12 medium-12 columns\"]");
+                    if (nodes != null)
+                    {
+                        foreach (HtmlNode node in nodes)
+                        {
+                            if (node != null)
+                            {
+                                var title = node.SelectSingleNode(".//h2[@class=\"nazwa naglowek\"]").InnerText.ToUpper().Replace(" ", "");
+                                if (title.Contains(reference.ToUpper().Replace(" ", "")))
+                                {
+                                    if (title.Contains(manufacturer))
+                                    {
+                                        var price = node.SelectSingleNode(".//div[@class=\"cena\"]").InnerText; ;
+                                        var stock = node.SelectSingleNode(".//div[@class=\"katalog-akcje-kosz\"]").InnerText; ;
+                                        resultA = resultA + "<tr class='" + CheckIpartsBackground(stock) + "'><td><b>IPARTS</b></td><td>" + price.Replace(" ", "").Replace("złzVAT", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                    }
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                            }
+                        }
+                        resultA = resultA + "</table>";
+                        result = resultA;
+                    }
+                    else
+                    {
+                        result = "<tr class='orange'><td><b>IPARTS</b></td><td colspan='2'>B/D</td></tr></table>";
+                    }
+                    //Some work with page....
 
-        public async Task<string> GetOpponentsPrices(int id)
+                }
+            }
+            return await Task.FromResult(result);
+        }
+        public async Task<string> GetOpponentsPrices(int Id)
         {
             string result = "";
-            Product product = _context.Products.Where(m => m.Id == id).FirstOrDefault();
+            Product product = _context.Products.Where(m => m.Id == Id).Single();
             //string reference = product.Reference;
-            //string manufacturer_name = _context.Manufacturers.Where(m => m.Tecdoc_id == product.Manufacturer_id).First().Name;
-
-            result = await Take_iparts();
+            string manufacturer_name = "DUPA";
+            manufacturer_name = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).First().Description.ToUpper().Replace(" ","");
             
+            HttpClient client = new HttpClient();
+           // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+            string resultA = "";
+            using (var response = await client.GetAsync("https://www.iparts.pl/wyszukaj/art" + EncodeBase64(product.Reference) + ".html"))
+            {
+                using (var content = response.Content)
+                {
+                    // read answer in non-blocking way
+                    var resultB = await content.ReadAsStringAsync();
+                    var document = new HtmlDocument();
+                    document.LoadHtml(resultB);
+                    var nodes = document.DocumentNode.SelectNodes("//div[@class=\"small-12 medium-12 columns\"]");
+                    if(nodes != null)
+                    {
+                        foreach (HtmlNode node in nodes)
+                        {
+                            if(node !=null)
+                            {
+                                var title = node.SelectSingleNode(".//h2[@class=\"nazwa naglowek\"]").InnerText.ToUpper().Replace(" ","");
+                                if (title.Contains(product.Reference.ToUpper().Replace(" ","")))
+                                {
+                                    if (title.Contains(manufacturer_name))
+                                    {
+                                        var price = node.SelectSingleNode(".//div[@class=\"cena\"]").InnerText; ;
+                                        var stock = node.SelectSingleNode(".//div[@class=\"katalog-akcje-kosz\"]").InnerText; ;
+                                        resultA = resultA + "<tr class='"+CheckIpartsBackground(stock)+"'><td><b>IPARTS</b></td><td>" + price.Replace(" ","").Replace("złzVAT"," PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                    }
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                            }
+                        }
+                        resultA = resultA + "</table>";
+                        result = resultA;
+                    }
+                    else
+                    {
+                        result = "<tr class='orange'><td><b>IPARTS</b></td><td colspan='2'>B/D</td></tr></table>";
+                    }
+                    //Some work with page....
+                    
+                }
+            }
+
             return await Task.FromResult(result);
         }
         [HttpPost]

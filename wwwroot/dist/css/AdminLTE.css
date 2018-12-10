@@ -4991,6 +4991,9 @@ table tr {
 .child-table tr.red{
     background-color:red;
 }
+.child-table tr.orange {
+    background-color:orange;
+}
 tr.shown {
     background-color:#f4f4f4;
 }

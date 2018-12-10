@@ -563,7 +563,7 @@
                 url: '/Products/GetDistributorsPrices',
                 type: 'POST',
                 data: {
-                    id: rowData.id
+                    id: idR
                 },
                 dataType: 'json',
                 success: function (json) {
@@ -592,8 +592,10 @@
                     }
                     $.ajax({
                         type: 'POST',
-                        url: '/Products/GetOpponentsPrices',
-                        data: { id: '61715'  },
+                        url: '/Products/GetOpponentsPrices/'+idR+'/',
+                        data: {
+                            id: idR
+                        },
                         contentType: 'application/json',
                         success: function (data) {
                             console.log(data);
