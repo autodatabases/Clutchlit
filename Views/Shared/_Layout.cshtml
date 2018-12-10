@@ -648,6 +648,14 @@
                             "searchable": false,
                             "checkboxes": {
                                 "selectRow": true
+                            },
+                            "createdCell": function (td, cellData, rowData, row, 8) {
+                                if (cellData == 'ACTIVE') {
+                                    $(td).css('color', 'green')
+                                }
+                                else {
+                                    $(td).css('color', 'red')
+                                }
                             }
                         }],
                     "select": {
@@ -661,6 +669,7 @@
                         { "data": "price", "name": "Price" },
                         { "data": "watchers", "name": "watchers" },
                         { "data": "visits", "name": "visits" },
+                        { "data": "status", "name": "status" },
                     ],
                     "order": [[1, 'asc']],
 
