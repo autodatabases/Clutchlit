@@ -61,6 +61,20 @@ namespace Clutchlit.Controllers
             string name = _context.Warehouses.Single(d => d.WarehouseNumber == id && d.DistributorId == disid).Name;
             return name;
         }
+        public string CheckAutodocBackground(string stock)
+        {
+            if (stock.Trim().Contains("Aktualnie"))
+                return "red";
+            else
+                return "green";
+        }
+        public string CheckUcandoBackground(string stock)
+        {
+            if (stock.Trim().Contains("2-3 dni"))
+                return "green";
+            else
+                return "red";
+        }
         public string CheckIpartsBackground(string stock)
         {
             if (stock.Trim() == "Dodaj do koszyka")
@@ -85,117 +99,226 @@ namespace Clutchlit.Controllers
             return Convert.ToBase64String(plainTextBytes);
         }
 
-        public async Task<string> GetSm(int Id)
+       
+        public IActionResult GetOpponentsPrices(int Id)
         {
-            await Task.Delay(500);
-            string ta = "adasd";
-            return await Task.FromResult(ta);
-        }
-        public async Task<string> TakeUcando(string reference, string manufacturer)
-        {
-            var result = "";
-            HttpClient client = new HttpClient();
-            //client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
-            string resultA = "";
-            using (var response = await client.GetAsync("https://www.iparts.pl/wyszukaj/art" + EncodeBase64(reference) + ".html"))
-            {
-                using (var content = response.Content)
-                {
-                    // read answer in non-blocking way
-                    var resultB = await content.ReadAsStringAsync();
-                    var document = new HtmlDocument();
-                    document.LoadHtml(resultB);
-                    var nodes = document.DocumentNode.SelectNodes("//div[@class=\"small-12 medium-12 columns\"]");
-                    if (nodes != null)
-                    {
-                        foreach (HtmlNode node in nodes)
-                        {
-                            if (node != null)
-                            {
-                                var title = node.SelectSingleNode(".//h2[@class=\"nazwa naglowek\"]").InnerText.ToUpper().Replace(" ", "");
-                                if (title.Contains(reference.ToUpper().Replace(" ", "")))
-                                {
-                                    if (title.Contains(manufacturer))
-                                    {
-                                        var price = node.SelectSingleNode(".//div[@class=\"cena\"]").InnerText; ;
-                                        var stock = node.SelectSingleNode(".//div[@class=\"katalog-akcje-kosz\"]").InnerText; ;
-                                        resultA = resultA + "<tr class='" + CheckIpartsBackground(stock) + "'><td><b>IPARTS</b></td><td>" + price.Replace(" ", "").Replace("złzVAT", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
-                                    }
-                                    break;
-                                }
-                            }
-                            else
-                            {
-                            }
-                        }
-                        resultA = resultA + "</table>";
-                        result = resultA;
-                    }
-                    else
-                    {
-                        result = "<tr class='orange'><td><b>IPARTS</b></td><td colspan='2'>B/D</td></tr></table>";
-                    }
-                    //Some work with page....
-
-                }
-            }
-            return await Task.FromResult(result);
-        }
-        public async Task<string> GetOpponentsPrices(int Id)
-        {
-            string result = "";
+            string iparts_string = "";
+            string ucando_string = "";
+            string interCars_string = "";
+            string autodoc_string = "";
+            //
             Product product = _context.Products.Where(m => m.Id == Id).Single();
-            //string reference = product.Reference;
             string manufacturer_name = "DUPA";
-            manufacturer_name = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).First().Description.ToUpper().Replace(" ","");
-            
-            HttpClient client = new HttpClient();
-           // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
-            string resultA = "";
-            using (var response = await client.GetAsync("https://www.iparts.pl/wyszukaj/art" + EncodeBase64(product.Reference) + ".html"))
+            manufacturer_name = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).First().Description.ToUpper().Replace(" ", "");
+
+            // IPARTS
+            Task<string> iparts = Task<string>.Factory.StartNew(() =>
             {
-                using (var content = response.Content)
+                string result = "";
+                HttpClient client = new HttpClient();
+                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                string resultA = "";
+                using (var response =  client.GetAsync("https://www.iparts.pl/wyszukaj/art" + EncodeBase64(product.Reference) + ".html").Result)
                 {
-                    // read answer in non-blocking way
-                    var resultB = await content.ReadAsStringAsync();
-                    var document = new HtmlDocument();
-                    document.LoadHtml(resultB);
-                    var nodes = document.DocumentNode.SelectNodes("//div[@class=\"small-12 medium-12 columns\"]");
-                    if(nodes != null)
+                    using (var content = response.Content)
                     {
-                        foreach (HtmlNode node in nodes)
+                        // read answer in non-blocking way
+                        var resultB = content.ReadAsStringAsync().Result;
+                        var document = new HtmlDocument();
+                        document.LoadHtml(resultB);
+                        var nodes = document.DocumentNode.SelectNodes("//div[@class=\"small-12 medium-12 columns\"]");
+                        if (nodes != null)
                         {
-                            if(node !=null)
+                            foreach (HtmlNode node in nodes)
                             {
-                                var title = node.SelectSingleNode(".//h2[@class=\"nazwa naglowek\"]").InnerText.ToUpper().Replace(" ","");
-                                if (title.Contains(product.Reference.ToUpper().Replace(" ","")))
+                                if (node != null)
                                 {
-                                    if (title.Contains(manufacturer_name))
+                                    var title = node.SelectSingleNode(".//h2[@class=\"nazwa naglowek\"]").InnerText.ToUpper().Replace(" ", "");
+                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
                                     {
-                                        var price = node.SelectSingleNode(".//div[@class=\"cena\"]").InnerText; ;
-                                        var stock = node.SelectSingleNode(".//div[@class=\"katalog-akcje-kosz\"]").InnerText; ;
-                                        resultA = resultA + "<tr class='"+CheckIpartsBackground(stock)+"'><td><b>IPARTS</b></td><td>" + price.Replace(" ","").Replace("złzVAT"," PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                        if (title.Contains(manufacturer_name))
+                                        {
+                                            var price = node.SelectSingleNode(".//div[@class=\"cena\"]").InnerText; 
+                                            var stock = node.SelectSingleNode(".//div[@class=\"katalog-akcje-kosz\"]").InnerText; 
+                                            resultA = resultA + "<tr class='" + CheckIpartsBackground(stock) + "'><td><b>IPARTS</b></td><td>" + price.Replace(" ", "").Replace("złzVAT", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                        }
+                                        break;
                                     }
-                                    break;
+                                }
+                                else
+                                {
                                 }
                             }
-                            else
-                            {
-                            }
+                            result = resultA;
                         }
-                        resultA = resultA + "</table>";
-                        result = resultA;
+                        else
+                        {
+                            result = "<tr class='orange'><td><b>IPARTS</b></td><td colspan='2'>B/D</td></tr><";
+                        }
                     }
-                    else
-                    {
-                        result = "<tr class='orange'><td><b>IPARTS</b></td><td colspan='2'>B/D</td></tr></table>";
-                    }
-                    //Some work with page....
-                    
                 }
-            }
+                return result;
+            });
+            // IPARTS
 
-            return await Task.FromResult(result);
+            // UCANDO
+            Task<string> ucando = Task<string>.Factory.StartNew(() =>
+            {
+                string result = "";
+                HttpClient client = new HttpClient();
+                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                string resultA = "";
+                using (var response = client.GetAsync("https://www.ucando.pl/szukaj?text="+product.Reference.Replace(" ","")+"").Result)
+                {
+                    using (var content = response.Content)
+                    {
+                        // read answer in non-blocking way
+                        var resultB = content.ReadAsStringAsync().Result;
+                        var document = new HtmlDocument();
+                        document.LoadHtml(resultB);
+                        var nodes = document.DocumentNode.SelectNodes("//product-item[@class=\"o-product-list__item c-product-item\"]");
+                        if (nodes != null)
+                        {
+                            foreach (HtmlNode node in nodes)
+                            {
+                                if (node != null)
+                                {
+                                    var title = node.SelectSingleNode(".//h3[@class=\"c-product-item__name\"]").InnerText.ToUpper().Replace(" ", "");
+                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    {
+                                        if (title.Contains(manufacturer_name))
+                                        {
+                                            var price = node.SelectSingleNode(".//span[@class=\"c-price__current\"]").InnerText; 
+                                            var stock = node.SelectSingleNode(".//span[@class=\"c-price__delivery-note c-price__delivery-note--inStock\"]").InnerText; 
+                                            resultA = resultA + "<tr class='" + CheckUcandoBackground(stock) + "'><td><b>UCANDO</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Replace("Dostępny.","").Trim() + "</td></tr>";
+                                        }
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                }
+                            }
+                            result = resultA;
+                        }
+                        else
+                        {
+                            result = "<tr class='orange'><td><b>UCANDO</b></td><td colspan='2'>B/D</td></tr>";
+                        }
+                    }
+                }
+                return result;
+            });
+            // UCANDO
+
+            // INTER-CARS
+            Task<string> interCars = Task<string>.Factory.StartNew(() =>
+            {
+                string result = "";
+                HttpClient client = new HttpClient();
+                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                string resultA = "";
+                using (var response = client.GetAsync("https://intercars.pl/szukaj/"+product.Reference.Replace(" ","")+".html").Result)
+                {
+                    using (var content = response.Content)
+                    {
+                        // read answer in non-blocking way
+                        var resultB = content.ReadAsStringAsync().Result;
+                        var document = new HtmlDocument();
+                        document.LoadHtml(resultB);
+                        var nodes = document.DocumentNode.SelectNodes("//div[contains(@class, \"gtm-item\")]");
+                        if (nodes != null)
+                        {
+                            foreach (HtmlNode node in nodes)
+                            {
+                                if (node != null)
+                                {
+                                    var title = node.SelectSingleNode(".//span[@class=\"prod-label cleared\"]").InnerText.ToUpper().Replace(" ", "");
+                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    {
+                                        if (title.Contains(manufacturer_name))
+                                        {
+                                            var price = node.SelectSingleNode(".//span[@class=\"current-price\"]").InnerText;
+                                            var stock = "B/D";
+                                            resultA = resultA + "<tr class='orange'><td><b>INTER-CARS</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                        }
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                }
+                            }
+                            result = resultA;
+                        }
+                        else
+                        {
+                            result = "<tr class='orange'><td><b>INTER-CARS</b></td><td colspan='2'>B/D</td></tr>";
+                        }
+                    }
+                }
+                return result;
+            });
+            // INTER-CARS
+
+            // AUTO DOC
+            Task<string> autodoc = Task<string>.Factory.StartNew(() =>
+            {
+                string result = "";
+                HttpClient client = new HttpClient();
+                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                string resultA = "";
+                using (var response = client.GetAsync("https://www.autodoc.pl/search?keyword=" + product.Reference.Replace(" ", "")).Result)
+                {
+                    using (var content = response.Content)
+                    {
+                        // read answer in non-blocking way
+                        var resultB = content.ReadAsStringAsync().Result;
+                        var document = new HtmlDocument();
+                        document.LoadHtml(resultB);
+                        var nodes = document.DocumentNode.SelectNodes("//li[contains(@class, \"ovVisLi\")]");
+                        if (nodes != null)
+                        {
+                            foreach (HtmlNode node in nodes)
+                            {
+                                if (node != null)
+                                {
+                                    var title = node.SelectSingleNode(".//span[@class=\"article_number\"]").InnerText.ToUpper().Replace(" ", "");
+                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    {
+                                        if (node.SelectSingleNode(".//div[@class=\"name\"]").InnerText.ToUpper().Replace(" ", "").Contains(manufacturer_name))
+                                        {//delivery
+                                            var price = node.SelectSingleNode(".//p[@class=\"actual_price small_price\"]").InnerText;
+                                            var stock = node.SelectSingleNode(".//div[@class=\"delivery\"]").InnerText;
+
+                                            resultA = resultA + "<tr class='"+CheckAutodocBackground(stock.Trim())+"'><td><b>AUTODOC</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                        }
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                }
+                            }
+                            result = resultA;
+                        }
+                        else
+                        {
+                            result = "<tr class='orange'><td><b>AUTODOC</b></td><td colspan='2'>B/D</td></tr>";
+                        }
+                    }
+                }
+                return result;
+            });
+            // AUTO DOC
+
+            ////////////////////////////////////
+            iparts_string = iparts.Result;
+            ucando_string = ucando.Result;
+            interCars_string = interCars.Result;
+            autodoc_string = autodoc.Result;
+            var res = iparts_string + ucando_string + interCars_string + autodoc_string + "</table>";
+            return Json(res);
         }
         [HttpPost]
         public IActionResult GetDistributorsPrices(int Id)
