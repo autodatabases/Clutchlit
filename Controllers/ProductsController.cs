@@ -256,7 +256,7 @@ namespace Clutchlit.Controllers
                                         {
                                             var price = node.SelectSingleNode(".//span[@class=\"current-price\"]").InnerText;
                                             var stock = "B/D";
-                                            resultA = resultA + "<tr class='orange'><td><b>INTER-CARS</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                            resultA = "<tr class='orange'><td><b>INTER-CARS</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
                                         }
                                         break;
                                     }
