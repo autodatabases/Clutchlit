@@ -100,22 +100,22 @@ namespace Clutchlit.Controllers
         }
         
         public string EndOffer(string id)
-        { 
+        {
             string data = "{" +
-                " \"publication\": {" +
-                " \"action\": \"END\"" +
-                "}," +
-                "\"offerCriteria\": [" +
-                "{" +
-                "\"offers\":[" +
-                "{" +
-                "  \"id\": \""+id+"\"" +
-                "}" +
-                "]," +
-                "\"type\": \"CONTAINS_OFFERS\"" +
-                "}" +
-                "]" +
-                "}";
+  "\"offerCriteria\": ["+
+    "{"+
+      "\"offers\": ["+
+        "{"+
+          "\"id\": \""+id+"\""+
+        "}"+
+      "],"+
+      "\"type\": \"CONTAINS_OFFERS\""+
+    "}"+
+  "],"+
+  "\"publication\": {"+
+    "\"action\": \"END\""+
+    "}"+
+    "}";
             
             string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/84b9b97a-fe6a-494a-9901-d30b46095211");
