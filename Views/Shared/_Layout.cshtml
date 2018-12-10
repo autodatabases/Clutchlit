@@ -627,6 +627,8 @@
             $('#getoffers').submit(function (event) {
 
                 event.preventDefault();
+
+
                 var table = $('#example3').DataTable({
                     "destroy": true,
                     "processing": false, // for show progress bar
@@ -641,14 +643,13 @@
                     },
                     "columnDefs":
                         [{
-                            "targets": 0,
+                            "targets": [0],
                             "visible": true,
                             "searchable": false,
                             "checkboxes": {
                                 "selectRow": true
                             },
                         }],
-                    
                     "select": {
                         "style": "multi"
                     },
@@ -660,13 +661,12 @@
                         { "data": "price", "name": "Price" },
                         { "data": "watchers", "name": "watchers" },
                         { "data": "visits", "name": "visits" },
-                        { "data": "status", "name": "Status" },
+                        { "data": "status", "name": "status" },
                     ],
                     "order": [[1, 'asc']],
+
                 });
-                // Wyszukiwarka po kolumnach 
-              
-                //
+
                 $('#end_selected').click(function (event) {
                     
                     if (confirm("Czy jesteś pewien, że chcesz wyłączyć zaznaczone aukcje?")) {
