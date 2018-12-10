@@ -151,7 +151,62 @@ namespace Clutchlit.Controllers
             }
 
             Response.StatusCode = 200;
-            return new JsonResult(resource);
+            return new JsonResult("Aukcja została zakończona");
+        }
+        public IActionResult AcitvateOffer(string Id)
+        {
+            var uuid = Guid.NewGuid().ToString();
+            string data = "{" +
+  "\"offerCriteria\": [" +
+    "{" +
+      "\"offers\": [" +
+        "{" +
+          "\"id\": \"" + Id + "\"" +
+        "}" +
+      "]," +
+      "\"type\": \"CONTAINS_OFFERS\"" +
+    "}" +
+  "]," +
+  "\"publication\": {" +
+    "\"action\": \"ACTIVATE\"" +
+    "}" +
+    "}";
+
+            string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/" + uuid + "");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "PUT";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(data);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                response = streamReader.ReadToEnd();
+            }
+            var resource = "";
+            var httpWebRequest2 = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/" + uuid + "");
+            httpWebRequest2.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest2.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest2.Method = "GET";
+            httpWebRequest2.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse2 = (HttpWebResponse)httpWebRequest2.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))
+            {
+                resource = streamReader.ReadToEnd();
+            }
+
+            Response.StatusCode = 200;
+            return new JsonResult("Aukcja została zakończona");
         }
         [HttpGet("[controller]/[action]/{id}/")]
         public IActionResult EditOffer(string id)
