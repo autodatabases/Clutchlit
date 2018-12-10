@@ -347,7 +347,7 @@ namespace Clutchlit.Controllers
                         var resultB = content.ReadAsStringAsync().Result;
                         var document = new HtmlDocument();
                         document.LoadHtml(resultB);
-                        var nodes = document.DocumentNode.SelectNodes("//div[contains(@class, \"cat-prod-row\")]");
+                        var nodes = document.DocumentNode.SelectNodes("//div[@class=\"cat-prod-row-body\"]");
                         if (nodes != null)
                         {
                             foreach (HtmlNode node in nodes)
