@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Clutchlit.Data;
 using Clutchlit.Models;
@@ -98,14 +99,29 @@ namespace Clutchlit.Controllers
             var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(reference+"|0|0");
             return Convert.ToBase64String(plainTextBytes);
         }
-
-       
+        public string ParseReference(string reference, int type)
+        {
+            string result = "";
+            if (type == 6)
+            {
+                result = reference[0].ToString() + reference[1].ToString() + reference[2].ToString() + " " + reference[3].ToString() + reference[4].ToString() + reference[5].ToString() + reference[6].ToString() + " " + reference[7].ToString() + reference[8].ToString();
+            }
+            else if (type == 32)
+            {
+                result = reference[0].ToString() + reference[1].ToString() + reference[2].ToString() + reference[3].ToString() + " " + reference[4].ToString() + reference[5].ToString() + reference[6].ToString() + " " + reference[7].ToString() + reference[8].ToString() + reference[9].ToString();
+            }
+            else
+                result = reference.Replace(" ", "").ToLower();
+            return result;
+        }
         public IActionResult GetOpponentsPrices(int Id)
         {
             string iparts_string = "";
             string ucando_string = "";
             string interCars_string = "";
             string autodoc_string = "";
+            string ceneo_string = "";
+            string czesci_string = "";
             //
             Product product = _context.Products.Where(m => m.Id == Id).Single();
             string manufacturer_name = "DUPA";
@@ -118,7 +134,7 @@ namespace Clutchlit.Controllers
                 HttpClient client = new HttpClient();
                 // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
                 string resultA = "";
-                using (var response =  client.GetAsync("https://www.iparts.pl/wyszukaj/art" + EncodeBase64(product.Reference) + ".html").Result)
+                using (var response = client.GetAsync("https://www.iparts.pl/wyszukaj/art" + EncodeBase64(product.Reference) + ".html").Result)
                 {
                     using (var content = response.Content)
                     {
@@ -138,8 +154,8 @@ namespace Clutchlit.Controllers
                                     {
                                         if (title.Contains(manufacturer_name))
                                         {
-                                            var price = node.SelectSingleNode(".//div[@class=\"cena\"]").InnerText; 
-                                            var stock = node.SelectSingleNode(".//div[@class=\"katalog-akcje-kosz\"]").InnerText; 
+                                            var price = node.SelectSingleNode(".//div[@class=\"cena\"]").InnerText;
+                                            var stock = node.SelectSingleNode(".//div[@class=\"katalog-akcje-kosz\"]").InnerText;
                                             resultA = resultA + "<tr class='" + CheckIpartsBackground(stock) + "'><td><b>IPARTS</b></td><td>" + price.Replace(" ", "").Replace("złzVAT", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
                                         }
                                         break;
@@ -168,7 +184,7 @@ namespace Clutchlit.Controllers
                 HttpClient client = new HttpClient();
                 // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
                 string resultA = "";
-                using (var response = client.GetAsync("https://www.ucando.pl/szukaj?text="+product.Reference.Replace(" ","")+"").Result)
+                using (var response = client.GetAsync("https://www.ucando.pl/szukaj?text=" + product.Reference.Replace(" ", "") + "").Result)
                 {
                     using (var content = response.Content)
                     {
@@ -188,9 +204,9 @@ namespace Clutchlit.Controllers
                                     {
                                         if (title.Contains(manufacturer_name))
                                         {
-                                            var price = node.SelectSingleNode(".//span[@class=\"c-price__current\"]").InnerText; 
-                                            var stock = node.SelectSingleNode(".//span[@class=\"c-price__delivery-note c-price__delivery-note--inStock\"]").InnerText; 
-                                            resultA = resultA + "<tr class='" + CheckUcandoBackground(stock) + "'><td><b>UCANDO</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Replace("Dostępny.","").Trim() + "</td></tr>";
+                                            var price = node.SelectSingleNode(".//span[@class=\"c-price__current\"]").InnerText;
+                                            var stock = node.SelectSingleNode(".//span[@class=\"c-price__delivery-note c-price__delivery-note--inStock\"]").InnerText;
+                                            resultA = resultA + "<tr class='" + CheckUcandoBackground(stock) + "'><td><b>UCANDO</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Replace("Dostępny.", "").Trim() + "</td></tr>";
                                         }
                                         break;
                                     }
@@ -218,7 +234,7 @@ namespace Clutchlit.Controllers
                 HttpClient client = new HttpClient();
                 // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
                 string resultA = "";
-                using (var response = client.GetAsync("https://intercars.pl/szukaj/"+product.Reference.Replace(" ","")+".html").Result)
+                using (var response = client.GetAsync("https://intercars.pl/szukaj/" + product.Reference.Replace(" ", "") + ".html").Result)
                 {
                     using (var content = response.Content)
                     {
@@ -291,7 +307,7 @@ namespace Clutchlit.Controllers
                                             var price = node.SelectSingleNode(".//p[@class=\"actual_price small_price\"]").InnerText;
                                             var stock = node.SelectSingleNode(".//div[@class=\"delivery\"]").InnerText;
 
-                                            resultA = resultA + "<tr class='"+CheckAutodocBackground(stock.Trim())+"'><td><b>AUTODOC</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                            resultA = resultA + "<tr class='" + CheckAutodocBackground(stock.Trim()) + "'><td><b>AUTODOC</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
                                         }
                                         break;
                                     }
@@ -312,12 +328,123 @@ namespace Clutchlit.Controllers
             });
             // AUTO DOC
 
+            // CENEO 
+            Task<string> ceneo = Task<string>.Factory.StartNew(() =>
+            {
+                string result = "";
+                HttpClient client = new HttpClient();
+                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                string resultA = "";
+                Double lowestPrice = 100000;
+                string partialResult = "";
+                using (var response = client.GetAsync("https://www.ceneo.pl/Motoryzacja;szukaj-" + ParseReference(product.Reference, product.Manufacturer_id)).Result)
+                {
+                    using (var content = response.Content)
+                    {
+                        // read answer in non-blocking way
+                        var resultB = content.ReadAsStringAsync().Result;
+                        var document = new HtmlDocument();
+                        document.LoadHtml(resultB);
+                        var nodes = document.DocumentNode.SelectNodes("//div[@class=\"cat-prod-row-body\"]");
+                        if (nodes != null)
+                        {
+                            foreach (HtmlNode node in nodes)
+                            {
+                                if (node != null)
+                                {
+                                    var title = node.SelectSingleNode(".//strong[@class=\"cat-prod-row-name\"]").InnerText.ToUpper().Replace(" ", "");
+                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    {
+                                        if (title.Contains(manufacturer_name))
+                                        {//delivery
+
+                                            var price = node.SelectSingleNode(".//span[@class=\"price\"]").InnerText;
+                                            var stock = "Dostępny";
+                                            if (Double.Parse(price.Replace("zł", "").Trim()) < lowestPrice)
+                                            {
+                                                lowestPrice = Double.Parse(price.Replace("zł", "").Trim());
+                                                partialResult = "<tr class='green'><td><b>CENEO</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                            }
+
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                }
+                            }
+                            resultA = resultA + partialResult;
+                            result = resultA;
+                        }
+                        else
+                        {
+                            result = "<tr class='orange'><td><b>CENEO</b></td><td colspan='2'>B/D</td></tr>";
+                        }
+                    }
+                }
+                return result;
+            });
+            // CENEO
+
+            // CZESCI AUTO
+            Task<string> czesciauto = Task<string>.Factory.StartNew(() =>
+            {
+                string result = "";
+                HttpClient client = new HttpClient();
+                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                string resultA = "";
+                using (var response = client.GetAsync("https://www.czesciauto24.pl/search?keyword=" + product.Reference.Replace(" ", "")).Result)
+                {
+                    using (var content = response.Content)
+                    {
+                        // read answer in non-blocking way
+                        var resultB = content.ReadAsStringAsync().Result;
+                        var document = new HtmlDocument();
+                        document.LoadHtml(resultB);
+                        var nodes = document.DocumentNode.SelectNodes("//div[@class=\"brand-products\"]");
+                        if (nodes != null)
+                        {
+                            foreach (HtmlNode node in nodes)
+                            {
+                                if (node != null)
+                                {
+                                    var title = node.SelectSingleNode(".//div[@class=\"nr\"]").InnerText.ToUpper().Replace(" ", "");
+                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    {
+                                        if (node.SelectSingleNode(".//a[@class=\"ga-click prod_link\"]").InnerText.ToUpper().Replace(" ", "").Contains(manufacturer_name))
+                                        {//vers_box 
+                                            var price = node.SelectSingleNode(".//div[@class=\"price\"]").InnerText;
+                                            var stock = node.SelectSingleNode(".//span[contains(@class, \"text_vers\")]").InnerText;
+
+                                            resultA = resultA + "<tr class='" + CheckAutodocBackground(stock.Trim()) + "'><td><b>CZĘŚCIAUTO</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                        }
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                }
+                            }
+                            result = resultA;
+                        }
+                        else
+                        {
+                            result = "<tr class='orange'><td><b>CZĘŚCIAUTO</b></td><td colspan='2'>B/D</td></tr>";
+                        }
+                    }
+                }
+                return result;
+            });
+            // CZESCI AUTO
+
             ////////////////////////////////////
             iparts_string = iparts.Result;
             ucando_string = ucando.Result;
             interCars_string = interCars.Result;
             autodoc_string = autodoc.Result;
-            var res = iparts_string + ucando_string + interCars_string + autodoc_string + "</table>";
+            ceneo_string = ceneo.Result;
+            czesci_string = czesciauto.Result;
+            var res = iparts_string + ucando_string + interCars_string + autodoc_string + ceneo_string + czesci_string +"</table>";
             return Json(res);
         }
         [HttpPost]
