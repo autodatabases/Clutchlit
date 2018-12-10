@@ -98,9 +98,7 @@ namespace Clutchlit.Controllers
             }
 
         }
-        [HttpPost("[controller]/[action]/{id}/")]
-        [HttpGet("[controller]/[action]/{id}/")]
-        public IActionResult EndOffer(string id)
+        public IActionResult EndOffer(string Id)
         {
             var uuid = Guid.NewGuid().ToString();
             string data = "{" +
@@ -108,7 +106,7 @@ namespace Clutchlit.Controllers
     "{"+
       "\"offers\": ["+
         "{"+
-          "\"id\": \""+id+"\""+
+          "\"id\": \""+Id+"\""+
         "}"+
       "],"+
       "\"type\": \"CONTAINS_OFFERS\""+
@@ -151,7 +149,9 @@ namespace Clutchlit.Controllers
             {
                 resource = streamReader.ReadToEnd();
             }
-            return Ok(resource);
+
+            Response.StatusCode = 200;
+            return new JsonResult(resource);
         }
         [HttpGet("[controller]/[action]/{id}/")]
         public IActionResult EditOffer(string id)
