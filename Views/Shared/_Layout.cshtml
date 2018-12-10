@@ -645,7 +645,10 @@
                         [{
                             "targets": 0,
                             "visible": true,
-                            "searchable": true,
+                            "searchable": false,
+                            "checkboxes": {
+                                "selectRow": true
+                            },
                         }],
                     "createdRow": function (row, data, dataIndex) {
                         if (data[8] == "ENDED") {
@@ -659,16 +662,7 @@
                         "style": "multi"
                     },
                     "columns": [
-                        {
-                            data: "active",
-                            render: function (data, type, row) {
-                                if (type === 'display') {
-                                    return '<input type="checkbox" class="editor-active">';
-                                }
-                                return data;
-                            },
-                            className: "dt-body-center"
-                        }
+                        { "data": "id", "name": "Id" },
                         { "data": "id", "name": "Id" },
                         { "data": "name", "name": "Name" },
                         { "data": "category", "name": "Category" },
