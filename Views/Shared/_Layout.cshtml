@@ -672,22 +672,22 @@
                         var idR;
                         var rows_selected = table.column(0).checkboxes.selected();
                         $.each(rows_selected, function (index, rowId) {
-                            idR = rowId;
+                            $.ajax({
+                                type: "POST",
+                                url: "/AllegroAuctions/EndOffer/"+idR+"/",
+                                data: { "Id": idR },
+                                contentType: "application/json;charset=utf-8",
+                                dataType: "json",
+                                success: function (msg) {
+                                    alert(msg);
+                                },
+                                error: function (msg) {
+                                    alert("Coś poszło nie tak. Zmiany nie zostały poczynione :(");
+                                }
+                            });
                         });
 
-                        $.ajax({
-                            type: "POST",
-                            url: "/AllegroAuctions/EndOffer",
-                            data: { "Id": idR },
-                            contentType: "application/json;charset=utf-8",
-                            dataType: "json",
-                            success: function (msg) {
-                                alert(msg);
-                            },
-                            error: function (msg) {
-                                alert("Coś poszło nie tak. Zmiany nie zostały poczynione :(");
-                            }
-                        });
+                        
                     }
                     else {
 
