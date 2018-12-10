@@ -439,7 +439,7 @@ namespace Clutchlit.Controllers
 
             ////////////////////////////////////
             iparts_string = iparts.Result;
-            ucando_string = ucando.Result;
+            ucando_string = ucando.Result.Replace("<","");
             interCars_string = interCars.Result;
             autodoc_string = autodoc.Result;
             ceneo_string = ceneo.Result;
