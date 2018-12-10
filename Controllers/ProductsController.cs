@@ -169,7 +169,7 @@ namespace Clutchlit.Controllers
                         }
                         else
                         {
-                            result = "<tr class='orange'><td><b>IPARTS</b></td><td colspan='2'>B/D</td></tr><";
+                            result = "<tr class='orange'><td><b>IPARTS</b></td><td colspan='2'>B/D</td></tr>";
                         }
                     }
                 }
@@ -439,7 +439,7 @@ namespace Clutchlit.Controllers
 
             ////////////////////////////////////
             iparts_string = iparts.Result;
-            ucando_string = ucando.Result.Replace("<","");
+            ucando_string = ucando.Result;
             interCars_string = interCars.Result;
             autodoc_string = autodoc.Result;
             ceneo_string = ceneo.Result;
