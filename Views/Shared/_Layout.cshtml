@@ -650,19 +650,12 @@
                                 "selectRow": true
                             },
                         }],
-                    "createdRow": function (row, data, dataIndex) {
-                        if (data[7] == "ENDED") {
-                            $(row).addClass('light-red');
-                        }
-                        else {
-                            $(row).addClass('light-green');
-                        }
-                    },
+                    
                     "select": {
                         "style": "multi"
                     },
                     "columns": [
-                        { "data": "id", "name": "Id" },
+                        { "data": "", "name": "" },
                         { "data": "id", "name": "Id" },
                         { "data": "name", "name": "Name" },
                         { "data": "category", "name": "Category" },
@@ -674,7 +667,13 @@
                     ],
                     "order": [[0, 'asc']],
                 });
-
+                var table2 = $('#example3').DataTable({
+                    "createdRow": function (row, data, dataIndex) {
+                        if (data[8] == "ENDED") {
+                            $(row).addClass('red');
+                        }
+                    }
+                });
                 $('#end_selected').click(function (event) {
                     
                     if (confirm("Czy jesteś pewien, że chcesz wyłączyć zaznaczone aukcje?")) {
