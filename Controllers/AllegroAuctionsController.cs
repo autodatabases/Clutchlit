@@ -117,26 +117,8 @@ namespace Clutchlit.Controllers
     "}"+
     "}";
             
-            string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/84b9b97a-fe6a-494a-9901-d30b46095211");
-            httpWebRequest.ContentType = "application/vnd.allegro.beta.v1+json";
-            httpWebRequest.Accept = "application/vnd.allegro.beta.v1+json";
-            httpWebRequest.Method = "PUT";
-            httpWebRequest.Headers.Add("Authorization", "Bearer "+Token+"");
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                streamWriter.Write(data);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                response = streamReader.ReadToEnd();
-            }
-            return response; 
+           
+            return data; 
         }
         [HttpGet("[controller]/[action]/{id}/")]
         public IActionResult EditOffer(string id)
