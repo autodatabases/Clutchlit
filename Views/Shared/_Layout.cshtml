@@ -665,10 +665,7 @@
                     ],
                     "order": [[1, 'asc']],
                     "createdRow": function (row, data, dataIndex) {
-                        if (data[7] == 'ACTIVE') {
-                            $(row).addClass('light-green');
-                        }
-                        else {
+                        if (data[2] == "ENDED") {
                             $(row).addClass('light-red');
                         }
                     }
