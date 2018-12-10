@@ -672,6 +672,7 @@
                         var idR;
                         var rows_selected = table.column(0).checkboxes.selected();
                         $.each(rows_selected, function (index, rowId) {
+                            idR = rowId;
                             $.ajax({
                                 type: "POST",
                                 url: "/AllegroAuctions/EndOffer/"+idR+"/",
