@@ -119,7 +119,7 @@ namespace Clutchlit.Controllers
            
             string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/"+uuid+"");
-            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "PUT";
             httpWebRequest.Headers.Add("Authorization", "Bearer "+Token+"");
