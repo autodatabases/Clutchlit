@@ -650,17 +650,6 @@
                                 "selectRow": true
                             },
                         }],
-                    "columnDefs": [{
-                        "targets": [8],
-                        "createdCell": function (td, cellData, rowData, row, col) {
-                            if (cellData == 'ACTIVE') {
-                                $(td).css('color', 'green')
-                            }
-                            else {
-                                $(td).css('color', 'red')
-                            }
-                        }
-                    }],
                     "select": {
                         "style": "multi"
                     },
@@ -672,9 +661,17 @@
                         { "data": "price", "name": "Price" },
                         { "data": "watchers", "name": "watchers" },
                         { "data": "visits", "name": "visits" },
-                        { "data": "status", "name": "status" },
+                        { "data": "status", "name": "Status" },
                     ],
                     "order": [[1, 'asc']],
+                    "createdRow": function (row, data, dataIndex) {
+                        if (data[8] == 'ACTIVE') {
+                            $(row).addClass('light-green');
+                        }
+                        else {
+                            $(row).addClass('light-red');
+                        }
+                    }
 
                 });
 
