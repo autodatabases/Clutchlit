@@ -650,6 +650,14 @@
                                 "selectRow": true
                             },
                         }],
+                    "createdRow": function (row, data, dataIndex) {
+                        if (data[7] == "ENDED") {
+                            $(row).addClass('light-red');
+                        }
+                        else {
+                            $(row).addClass('light-green');
+                        }
+                    },
                     "select": {
                         "style": "multi"
                     },
@@ -663,16 +671,7 @@
                         { "data": "visits", "name": "visits" },
                         { "data": "status", "name": "Status" },
                     ],
-                    "order": [[1, 'asc']],
-                    "createdRow": function (row, data, dataIndex) {
-                        if (data[8] == "ENDED") {
-                            $(row).addClass('light-red');
-                        }
-                        else {
-                            $(row).addClass('light-green');
-                        }
-                    }
-
+                    "order": [[0, 'asc']],
                 });
 
                 $('#end_selected').click(function (event) {
