@@ -153,7 +153,7 @@ namespace Clutchlit.Controllers
             Response.StatusCode = 200;
             return new JsonResult("Aukcja została zakończona");
         }
-        public IActionResult AcitvateOffer(string Id)
+        public IActionResult ActivateOffer(string Id)
         {
             var uuid = Guid.NewGuid().ToString();
             string data = "{" +
