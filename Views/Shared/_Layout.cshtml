@@ -627,9 +627,12 @@
             $('#getoffers').submit(function (event) {
 
                 event.preventDefault();
-
-
                 var table = $('#example3').DataTable({
+                    "createdRow": function (row, data, dataIndex) {
+                        if (data[8] == "ENDED") {
+                            $(row).addClass('red');
+                        }
+                    },
                     "destroy": true,
                     "processing": false, // for show progress bar
                     "serverSide": false, // for process server side
@@ -667,13 +670,7 @@
                     ],
                     "order": [[0, 'asc']],
                 });
-                var table2 = $('#example3').DataTable({
-                    "createdRow": function (row, data, dataIndex) {
-                        if (data[8] == "ENDED") {
-                            $(row).addClass('red');
-                        }
-                    }
-                });
+
                 $('#end_selected').click(function (event) {
                     
                     if (confirm("Czy jesteś pewien, że chcesz wyłączyć zaznaczone aukcje?")) {
