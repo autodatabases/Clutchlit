@@ -649,15 +649,18 @@
                             "checkboxes": {
                                 "selectRow": true
                             },
-                            "createdCell": function (td, cellData, rowData, row, 8) {
-                                if (cellData == 'ACTIVE') {
-                                    $(td).css('color', 'green')
-                                }
-                                else {
-                                    $(td).css('color', 'red')
-                                }
-                            }
                         }],
+                    "columnDefs": [{
+                        "targets": [8],
+                        "createdCell": function (td, cellData, rowData, row, col) {
+                            if (cellData == 'ACTIVE') {
+                                $(td).css('color', 'green')
+                            }
+                            else {
+                                $(td).css('color', 'red')
+                            }
+                        }
+                    }],
                     "select": {
                         "style": "multi"
                     },
