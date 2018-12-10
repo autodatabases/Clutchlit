@@ -99,7 +99,7 @@ namespace Clutchlit.Controllers
 
         }
         
-        public string EndOffer(string id)
+        public IActionResult EndOffer(string id)
         {
             string data = "{" +
   "\"offerCriteria\": ["+
@@ -116,8 +116,27 @@ namespace Clutchlit.Controllers
     "\"action\": \"END\""+
     "}"+
     "}";
-            return Token;
-            
+           
+            string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/6b17564c-2e63-4a32-8d2d-b456180d884c");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "PUT";
+            httpWebRequest.Headers.Add("Authorization", "Bearer "+Token+"");
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(data);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                response = streamReader.ReadToEnd();
+            }
+            return Json(response); 
         }
         [HttpGet("[controller]/[action]/{id}/")]
         public IActionResult EditOffer(string id)
