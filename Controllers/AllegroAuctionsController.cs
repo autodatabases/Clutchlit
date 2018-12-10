@@ -118,7 +118,7 @@ namespace Clutchlit.Controllers
     "}";
            
             string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/6b17564c-2e63-4a32-8d2d-b456180d884c");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/"+Guid.NewGuid().ToString()+"");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "PUT";
@@ -136,7 +136,7 @@ namespace Clutchlit.Controllers
             {
                 response = streamReader.ReadToEnd();
             }
-            return Json(response); 
+            return Ok(response);
         }
         [HttpGet("[controller]/[action]/{id}/")]
         public IActionResult EditOffer(string id)
