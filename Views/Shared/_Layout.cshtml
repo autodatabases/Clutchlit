@@ -628,11 +628,6 @@
 
                 event.preventDefault();
                 var table = $('#example3').DataTable({
-                    "createdRow": function (row, data, dataIndex) {
-                        if (data[8] == "ENDED") {
-                            $(row).addClass('red');
-                        }
-                    },
                     "destroy": true,
                     "processing": false, // for show progress bar
                     "serverSide": false, // for process server side
