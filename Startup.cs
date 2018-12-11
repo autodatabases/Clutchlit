@@ -38,6 +38,10 @@ namespace Clutchlit
             services.AddEntityFrameworkNpgsql()
                .AddDbContext<ApplicationDbContext>()
                .BuildServiceProvider();
+
+            services.AddEntityFrameworkMySql()
+                .AddDbContext<MysqlContext>()
+                .BuildServiceProvider();
             
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();

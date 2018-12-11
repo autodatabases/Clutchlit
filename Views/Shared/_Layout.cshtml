@@ -299,6 +299,22 @@
                     <li class="header">DZIAŁ HANDLOWY</li>
                     <li class="treeview">
                         <a href="#">
+                            <i class="fa fa-file-text"></i>
+                            <span>Zamówienia</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a asp-controller="Orders" asp-action="GetAll"><i class="fa fa-circle-o text-red"></i> Wszystkie zamówienia</a></li>
+                            <li><a asp-controller="Orders" asp-action="GetUnrealized"><i class="fa fa-circle-o text-red"></i> Zamówienia niezrealizowane</a></li>
+                            <li><a asp-controller="Orders" asp-action="GetSpcom"><i class="fa fa-circle-o text-red"></i> Zamówienia Sprzeglo.com.pl</a></li>
+                            <li><a asp-controller="Orders" asp-action="GetSp24"><i class="fa fa-circle-o text-red"></i> Zamówienia Sprzegla24.pl</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        
+                        <a href="#">
                             <i class="fa fa-inbox"></i>
                             <span>Produkty</span>
                             <span class="pull-right-container">
@@ -306,7 +322,6 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a>Zamówienia</a></li>
                             <li><a asp-controller="Products" asp-action="List"><i class="fa fa-circle-o text-red"></i> Lista produktów</a></li>
                             <li><a asp-controller="Products" asp-action="History"><i class="fa fa-circle-o text-red"></i> Historia Cen</a></li>
                         </ul>
@@ -624,6 +639,8 @@
         function CheckEngine() {
             var ktype = 0;
             ktype = $('#engines').val();
+            if (ktype == null)
+                ktype = 0;
             return ktype;
         }
         function CheckcheckedVals() {

@@ -1992,6 +1992,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Views\Orders\" />
   </ItemGroup>
 
   <ItemGroup>
