@@ -621,16 +621,23 @@
             // div.append('</div>');
             return div;
         }
+        function CheckEngine() {
+            var ktype = 0;
+            ktype = $('#engines').val();
+            return ktype;
+        }
+        function CheckcheckedVals() {
+            var checkedVals = $('.category:checkbox:checked').map(function () {
+                return this.value;
+            }).get();
+            return checkedVals;
+        }
 
-        $(function () {
-
-            
+        $(document).ready(function () {
 
             $('#getoffers').submit(function (event) {
 
                 event.preventDefault();
-
-
                 var table = $('#example3').DataTable({
                     "destroy": true,
                     "processing": false, // for show progress bar
@@ -728,17 +735,15 @@
 
             });
 
-            var table = "";
-            $('#ktypes_search').submit(function (event) {
+           
+            
+                // Tabela z produktami
+            
+                
 
-                event.preventDefault();
-                var checkedVals = $('.category:checkbox:checked').map(function () {
-                    return this.value;
-                }).get();
-
-                var table = $('#example2').DataTable({
+                var tableA = $('#example2').DataTable({
                     "destroy": true,
-                    "processing": false, // for show progress bar
+                    "processing": true, // for show progress bar
                     "serverSide": true, // for process server side
                     "filter": true, // this is for disable filter (search box)
                     "orderMulti": false, // for disable multiple column at once
@@ -746,8 +751,10 @@
                         "url": "/Products/ProductsList",
                         "type": "POST",
                         "datatype": "json",
-                        "data": { "engine": $("#engines").val(), "category_id": checkedVals }
-
+                        "data": function (d) {
+                                d.engine = CheckEngine();
+                                d.category_id = CheckcheckedVals();
+                        }
                     },
                     "columnDefs":
                         [{
@@ -767,9 +774,12 @@
                     "order": [[1, 'asc']],
 
                 });
-                $('#example2 tbody').on('click', 'tr', function () {
+
+                $("#example2 tbody").on('click', 'tr', function () {
+                    //alert("dd");
                     var tr = $(this).closest('tr');
-                    var row = table.row(tr);
+
+                    var row = tableA.row(tr);
                     if (row.child.isShown()) {
                         // This row is already open - close it
                         row.child.hide();
@@ -777,11 +787,20 @@
                     }
                     else {
                         // Open this row
+                        //alert("da");
                         row.child(format(row.data())).show();
                         tr.addClass('shown');
                     }
                 });
+                // click
+            
+            // Tabela z produktami
+                
+            $('#ktypes_search').submit(function (event) {
+                event.preventDefault();
+                $("#example2").DataTable().ajax.reload();
             });
+
         });
 
 

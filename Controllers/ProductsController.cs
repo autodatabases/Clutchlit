@@ -69,6 +69,13 @@ namespace Clutchlit.Controllers
             string name = _context.Warehouses.Single(d => d.WarehouseNumber == id && d.DistributorId == disid).Name;
             return name;
         }
+        public string CheckCzesciBackground(string stock)
+        {
+            if (stock.Trim().Contains("Niedost"))
+                return "red";
+            else
+                return "green";
+        }
         public string CheckAutodocBackground(string stock)
         {
             if (stock.Trim().Contains("Aktualnie"))
@@ -459,7 +466,7 @@ namespace Clutchlit.Controllers
                                                 var price = node.SelectSingleNode(".//div[@class=\"price\"]").InnerText;
                                                 var stock = node.SelectSingleNode(".//span[contains(@class, \"text_vers\")]").InnerText;
 
-                                                resultA = resultA + "<tr class='" + CheckAutodocBackground(stock.Trim()) + "'><td><b>CZĘŚCIAUTO</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                                resultA = resultA + "<tr class='" + CheckCzesciBackground(stock.Trim()) + "'><td><b>CZĘŚCIAUTO</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
                                             }
                                             break;
                                         }
