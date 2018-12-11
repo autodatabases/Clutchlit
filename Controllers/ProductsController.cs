@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -134,47 +135,55 @@ namespace Clutchlit.Controllers
             {
                 string result = "";
                 HttpClient client = new HttpClient();
-                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
                 string resultA = "";
-                using (var response = client.GetAsync("https://www.iparts.pl/wyszukaj/art" + EncodeBase64(product.Reference) + ".html").Result)
+                try
                 {
-                    using (var content = response.Content)
+                    using (var response = client.GetAsync("https://www.iparts.pl/wyszukaj/art" + EncodeBase64(product.Reference) + ".html").Result)
                     {
-                        // read answer in non-blocking way
-                        var resultB = content.ReadAsStringAsync().Result;
-                        var document = new HtmlDocument();
-                        document.LoadHtml(resultB);
-                        var nodes = document.DocumentNode.SelectNodes("//div[@class=\"small-12 medium-12 columns\"]");
-                        if (nodes != null)
+                        using (var content = response.Content)
                         {
-                            foreach (HtmlNode node in nodes)
+                            // read answer in non-blocking way
+                            var resultB = content.ReadAsStringAsync().Result;
+                            var document = new HtmlDocument();
+                            document.LoadHtml(resultB);
+                            var nodes = document.DocumentNode.SelectNodes("//div[@class=\"small-12 medium-12 columns\"]");
+                            if (nodes != null)
                             {
-                                if (node != null)
+                                foreach (HtmlNode node in nodes)
                                 {
-                                    var title = node.SelectSingleNode(".//h2[@class=\"nazwa naglowek\"]").InnerText.ToUpper().Replace(" ", "");
-                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    if (node != null)
                                     {
-                                        if (title.Contains(manufacturer_name))
+                                        var title = node.SelectSingleNode(".//h2[@class=\"nazwa naglowek\"]").InnerText.ToUpper().Replace(" ", "");
+                                        if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
                                         {
-                                            var price = node.SelectSingleNode(".//div[@class=\"cena\"]").InnerText;
-                                            var stock = node.SelectSingleNode(".//div[@class=\"katalog-akcje-kosz\"]").InnerText;
-                                            resultA = resultA + "<tr class='" + CheckIpartsBackground(stock) + "'><td><b>IPARTS</b></td><td>" + price.Replace(" ", "").Replace("złzVAT", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                            if (title.Contains(manufacturer_name))
+                                            {
+                                                var price = node.SelectSingleNode(".//div[@class=\"cena\"]").InnerText;
+                                                var stock = node.SelectSingleNode(".//div[@class=\"katalog-akcje-kosz\"]").InnerText;
+                                                resultA = resultA + "<tr class='" + CheckIpartsBackground(stock) + "'><td><b>IPARTS</b></td><td>" + price.Replace(" ", "").Replace("złzVAT", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                            }
+                                            break;
                                         }
-                                        break;
+                                    }
+                                    else
+                                    {
                                     }
                                 }
-                                else
-                                {
-                                }
+                                result = resultA;
                             }
-                            result = resultA;
-                        }
-                        else
-                        {
-                            result = "<tr class='orange'><td><b>IPARTS</b></td><td colspan='2'>B/D</td></tr>";
+                            else
+                            {
+                                result = "<tr class='orange'><td><b>IPARTS</b></td><td colspan='2'>B/D</td></tr>";
+                            }
                         }
                     }
                 }
+                catch (AggregateException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                
                 return result;
             });
             // IPARTS
@@ -184,7 +193,7 @@ namespace Clutchlit.Controllers
             {
                 string result = "";
                 HttpClient client = new HttpClient();
-                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
                 string resultA = "";
                 using (var response = client.GetAsync("https://www.ucando.pl/szukaj?text=" + product.Reference.Replace(" ", "") + "").Result)
                 {
@@ -234,47 +243,55 @@ namespace Clutchlit.Controllers
             {
                 string result = "";
                 HttpClient client = new HttpClient();
-                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
                 string resultA = "";
-                using (var response = client.GetAsync("https://intercars.pl/szukaj/" + product.Reference.Replace(" ", "") + ".html").Result)
+                try
                 {
-                    using (var content = response.Content)
+                    using (var response = client.GetAsync("https://intercars.pl/szukaj/" + product.Reference.Replace(" ", "") + ".html").Result)
                     {
-                        // read answer in non-blocking way
-                        var resultB = content.ReadAsStringAsync().Result;
-                        var document = new HtmlDocument();
-                        document.LoadHtml(resultB);
-                        var nodes = document.DocumentNode.SelectNodes("//div[contains(@class, \"gtm-item\")]");
-                        if (nodes != null)
+                        using (var content = response.Content)
                         {
-                            foreach (HtmlNode node in nodes)
+                            // read answer in non-blocking way
+                            var resultB = content.ReadAsStringAsync().Result;
+                            var document = new HtmlDocument();
+                            document.LoadHtml(resultB);
+                            var nodes = document.DocumentNode.SelectNodes("//div[contains(@class, \"gtm-item\")]");
+                            if (nodes != null)
                             {
-                                if (node != null)
+                                foreach (HtmlNode node in nodes)
                                 {
-                                    var title = node.SelectSingleNode(".//span[@class=\"prod-label cleared\"]").InnerText.ToUpper().Replace(" ", "");
-                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    if (node != null)
                                     {
-                                        if (title.Contains(manufacturer_name))
+                                        var title = node.SelectSingleNode(".//span[@class=\"prod-label cleared\"]").InnerText.ToUpper().Replace(" ", "");
+                                        if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
                                         {
-                                            var price = node.SelectSingleNode(".//span[@class=\"current-price\"]").InnerText;
-                                            var stock = "B/D";
-                                            resultA = "<tr class='orange'><td><b>INTER-CARS</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                            if (title.Contains(manufacturer_name))
+                                            {
+                                                var price = node.SelectSingleNode(".//span[@class=\"current-price\"]").InnerText;
+                                                var stock = "B/D";
+                                                resultA = "<tr class='orange'><td><b>INTER-CARS</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                            }
+                                            break;
                                         }
-                                        break;
+                                    }
+                                    else
+                                    {
                                     }
                                 }
-                                else
-                                {
-                                }
+                                result = resultA;
                             }
-                            result = resultA;
-                        }
-                        else
-                        {
-                            result = "<tr class='orange'><td><b>INTER-CARS</b></td><td colspan='2'>B/D</td></tr>";
+                            else
+                            {
+                                result = "<tr class='orange'><td><b>INTER-CARS</b></td><td colspan='2'>B/D</td></tr>";
+                            }
                         }
                     }
                 }
+                catch (AggregateException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                
                 return result;
             });
             // INTER-CARS
@@ -284,48 +301,56 @@ namespace Clutchlit.Controllers
             {
                 string result = "";
                 HttpClient client = new HttpClient();
-                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
                 string resultA = "";
-                using (var response = client.GetAsync("https://www.autodoc.pl/search?keyword=" + product.Reference.Replace(" ", "")).Result)
+                try
                 {
-                    using (var content = response.Content)
+                    using (var response = client.GetAsync("https://www.autodoc.pl/search?keyword=" + product.Reference.Replace(" ", "")).Result)
                     {
-                        // read answer in non-blocking way
-                        var resultB = content.ReadAsStringAsync().Result;
-                        var document = new HtmlDocument();
-                        document.LoadHtml(resultB);
-                        var nodes = document.DocumentNode.SelectNodes("//li[contains(@class, \"ovVisLi\")]");
-                        if (nodes != null)
+                        using (var content = response.Content)
                         {
-                            foreach (HtmlNode node in nodes)
+                            // read answer in non-blocking way
+                            var resultB = content.ReadAsStringAsync().Result;
+                            var document = new HtmlDocument();
+                            document.LoadHtml(resultB);
+                            var nodes = document.DocumentNode.SelectNodes("//li[contains(@class, \"ovVisLi\")]");
+                            if (nodes != null)
                             {
-                                if (node != null)
+                                foreach (HtmlNode node in nodes)
                                 {
-                                    var title = node.SelectSingleNode(".//span[@class=\"article_number\"]").InnerText.ToUpper().Replace(" ", "");
-                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    if (node != null)
                                     {
-                                        if (node.SelectSingleNode(".//div[@class=\"name\"]").InnerText.ToUpper().Replace(" ", "").Contains(manufacturer_name))
-                                        {//delivery
-                                            var price = node.SelectSingleNode(".//p[@class=\"actual_price small_price\"]").InnerText;
-                                            var stock = node.SelectSingleNode(".//div[@class=\"delivery\"]").InnerText;
+                                        var title = node.SelectSingleNode(".//span[@class=\"article_number\"]").InnerText.ToUpper().Replace(" ", "");
+                                        if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                        {
+                                            if (node.SelectSingleNode(".//div[@class=\"name\"]").InnerText.ToUpper().Replace(" ", "").Contains(manufacturer_name))
+                                            {//delivery
+                                                var price = node.SelectSingleNode(".//p[@class=\"actual_price small_price\"]").InnerText;
+                                                var stock = node.SelectSingleNode(".//div[@class=\"delivery\"]").InnerText;
 
-                                            resultA = resultA + "<tr class='" + CheckAutodocBackground(stock.Trim()) + "'><td><b>AUTODOC</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                                resultA = resultA + "<tr class='" + CheckAutodocBackground(stock.Trim()) + "'><td><b>AUTODOC</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                            }
+                                            break;
                                         }
-                                        break;
+                                    }
+                                    else
+                                    {
                                     }
                                 }
-                                else
-                                {
-                                }
+                                result = resultA;
                             }
-                            result = resultA;
-                        }
-                        else
-                        {
-                            result = "<tr class='orange'><td><b>AUTODOC</b></td><td colspan='2'>B/D</td></tr>";
+                            else
+                            {
+                                result = "<tr class='orange'><td><b>AUTODOC</b></td><td colspan='2'>B/D</td></tr>";
+                            }
                         }
                     }
                 }
+                catch (AggregateException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                
                 return result;
             });
             // AUTO DOC
@@ -335,54 +360,62 @@ namespace Clutchlit.Controllers
             {
                 string result = "";
                 HttpClient client = new HttpClient();
-                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
                 string resultA = "";
                 Double lowestPrice = 100000;
                 string partialResult = "";
-                using (var response = client.GetAsync("https://www.ceneo.pl/Czesci_samochodowe;szukaj-" + ParseReference(product.Reference.Trim(), product.Manufacturer_id).Trim()).Result)
+
+                try
                 {
-                    using (var content = response.Content)
+                    using (var response = client.GetAsync("https://www.ceneo.pl/Czesci_samochodowe;szukaj-" + ParseReference(product.Reference.Trim(), product.Manufacturer_id).Trim()).Result)
                     {
-                        // read answer in non-blocking way
-                        var resultB = content.ReadAsStringAsync().Result;
-                        var document = new HtmlDocument();
-                        document.LoadHtml(resultB);
-                        var nodes = document.DocumentNode.SelectNodes("//div[@class=\"cat-prod-row-body\"]");
-                        if (nodes != null)
+                        using (var content = response.Content)
                         {
-                            foreach (HtmlNode node in nodes)
+                            // read answer in non-blocking way
+                            var resultB = content.ReadAsStringAsync().Result;
+                            var document = new HtmlDocument();
+                            document.LoadHtml(resultB);
+                            var nodes = document.DocumentNode.SelectNodes("//div[@class=\"cat-prod-row-body\"]");
+                            if (nodes != null)
                             {
-                                if (node != null)
+                                foreach (HtmlNode node in nodes)
                                 {
-                                    var title = node.SelectSingleNode(".//strong[@class=\"cat-prod-row-name\"]").InnerText.ToUpper().Replace(" ", "");
-                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    if (node != null)
                                     {
-                                        if (title.Contains(manufacturer_name))
-                                        {//delivery
+                                        var title = node.SelectSingleNode(".//strong[@class=\"cat-prod-row-name\"]").InnerText.ToUpper().Replace(" ", "");
+                                        if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                        {
+                                            if (title.Contains(manufacturer_name))
+                                            {//delivery
 
-                                            var price = node.SelectSingleNode(".//span[@class=\"price\"]").InnerText;
-                                            var stock = "Dostępny";
-                                            if (Double.Parse(price.Replace("zł", "").Trim()) < lowestPrice)
-                                            {
-                                                lowestPrice = Double.Parse(price.Replace("zł", "").Trim());
-                                                partialResult = "<tr class='green'><td><b>CENEO</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                                var price = node.SelectSingleNode(".//span[@class=\"price\"]").InnerText;
+                                                var stock = "Dostępny";
+                                                if (Double.Parse(price.Replace("zł", "").Trim()) < lowestPrice)
+                                                {
+                                                    lowestPrice = Double.Parse(price.Replace("zł", "").Trim());
+                                                    partialResult = "<tr class='green'><td><b>CENEO</b></td><td>" + price.Replace(" ", "").Trim() + " PLN</td><td>" + stock.Trim() + "</td></tr>";
+                                                }
+
                                             }
-
                                         }
                                     }
+                                    else
+                                    {
+                                    }
                                 }
-                                else
-                                {
-                                }
+                                resultA = resultA + partialResult;
+                                result = resultA;
                             }
-                            resultA = resultA + partialResult;
-                            result = resultA;
-                        }
-                        else
-                        {
-                            result = "<tr class='orange'><td><b>CENEO</b></td><td colspan='2'>B/D</td></tr>";
+                            else
+                            {
+                                result = "<tr class='orange'><td><b>CENEO</b></td><td colspan='2'>B/D</td></tr>";
+                            }
                         }
                     }
+                }
+                catch(AggregateException e)
+                {
+                    Console.WriteLine(e.Message);
                 }
                 return result;
             });
@@ -393,59 +426,73 @@ namespace Clutchlit.Controllers
             {
                 string result = "";
                 HttpClient client = new HttpClient();
-                // client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; AcmeInc/1.0");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
                 string resultA = "";
-                using (var response = client.GetAsync("https://www.czesciauto24.pl/search?keyword=" + product.Reference.Replace(" ", "")).Result)
+                try
                 {
-                    using (var content = response.Content)
+                    using (var response = client.GetAsync("https://www.czesciauto24.pl/search?keyword=" + product.Reference.Replace(" ", "")).Result)
                     {
-                        // read answer in non-blocking way
-                        var resultB = content.ReadAsStringAsync().Result;
-                        var document = new HtmlDocument();
-                        document.LoadHtml(resultB);
-                        var nodes = document.DocumentNode.SelectNodes("//div[@class=\"brand-products\"]");
-                        if (nodes != null)
+                        using (var content = response.Content)
                         {
-                            foreach (HtmlNode node in nodes)
+                            // read answer in non-blocking way
+                            var resultB = content.ReadAsStringAsync().Result;
+                            var document = new HtmlDocument();
+                            document.LoadHtml(resultB);
+                            var nodes = document.DocumentNode.SelectNodes("//div[@class=\"brand-products\"]");
+                            if (nodes != null)
                             {
-                                if (node != null)
+                                foreach (HtmlNode node in nodes)
                                 {
-                                    var title = node.SelectSingleNode(".//div[@class=\"nr\"]").InnerText.ToUpper().Replace(" ", "");
-                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    if (node != null)
                                     {
-                                        if (node.SelectSingleNode(".//*[contains(@class, \"prod_link\")]").InnerText.ToUpper().Replace(" ", "").Contains(manufacturer_name))
-                                        {//vers_box 
-                                            var price = node.SelectSingleNode(".//div[@class=\"price\"]").InnerText;
-                                            var stock = node.SelectSingleNode(".//span[contains(@class, \"text_vers\")]").InnerText;
+                                        var title = node.SelectSingleNode(".//div[@class=\"nr\"]").InnerText.ToUpper().Replace(" ", "");
+                                        if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                        {
+                                            if (node.SelectSingleNode(".//*[contains(@class, \"prod_link\")]").InnerText.ToUpper().Replace(" ", "").Contains(manufacturer_name))
+                                            {//vers_box 
+                                                var price = node.SelectSingleNode(".//div[@class=\"price\"]").InnerText;
+                                                var stock = node.SelectSingleNode(".//span[contains(@class, \"text_vers\")]").InnerText;
 
-                                            resultA = resultA + "<tr class='" + CheckAutodocBackground(stock.Trim()) + "'><td><b>CZĘŚCIAUTO</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                                resultA = resultA + "<tr class='" + CheckAutodocBackground(stock.Trim()) + "'><td><b>CZĘŚCIAUTO</b></td><td>" + price.Replace(" ", "").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                            }
+                                            break;
                                         }
-                                        break;
+                                    }
+                                    else
+                                    {
                                     }
                                 }
-                                else
-                                {
-                                }
+                                result = resultA;
                             }
-                            result = resultA;
-                        }
-                        else
-                        {
-                            result = "<tr class='orange'><td><b>CZĘŚCIAUTO</b></td><td colspan='2'>B/D</td></tr>";
+                            else
+                            {
+                                result = "<tr class='orange'><td><b>CZĘŚCIAUTO</b></td><td colspan='2'>B/D</td></tr>";
+                            }
                         }
                     }
                 }
+                catch (AggregateException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                
                 return result;
             });
             // CZESCI AUTO
 
             ////////////////////////////////////
-            iparts_string = iparts.Result;
-            ucando_string = ucando.Result;
-            interCars_string = interCars.Result;
-            autodoc_string = autodoc.Result;
-            ceneo_string = ceneo.Result;
-            czesci_string = czesciauto.Result;
+            if (iparts.Result != null)
+                iparts_string = iparts.Result;
+            if(ucando.Result != null)
+                ucando_string = ucando.Result;
+            if (interCars.Result != null)
+                interCars_string = interCars.Result;
+            if (autodoc.Result != null)
+                autodoc_string = autodoc.Result;
+            if (ceneo.Result != null)
+                ceneo_string = ceneo.Result;
+            if (czesciauto.Result != null)
+                czesci_string = czesciauto.Result;
             var res = iparts_string + ucando_string + interCars_string + autodoc_string + ceneo_string + czesci_string +"</table>";
             return Json(res);
         }
