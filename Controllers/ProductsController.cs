@@ -48,10 +48,16 @@ namespace Clutchlit.Controllers
         public IActionResult PcList(int id)
         {
            
-            List<PassengerCar> list = new List<PassengerCar>();
-            list = _context.PassengerCars.Where(p => p.Modelid == id).ToList();
+            var list = _context.PassengerCars.Where(p => p.Modelid == id);
+            var list_a = _context.PcAttributes;
+            List<PassengerCar> result = null;
+
+            result = (from p in list
+                     join a in list_a on p.Ktype equals a.Pc_id
+                     select new PassengerCar { Ktype = p.Ktype, Description = p.Description, Constructioninterval = p.Constructioninterval, Id = p.Id, Modelid = p.Modelid, Fulldescription = a.Description }).OrderBy(c => c.Description).ToList();
+            
             Response.StatusCode = 200;
-            return new JsonResult(new SelectList(list, "Ktype", "SelectDesc"));
+            return new JsonResult(new SelectList(result, "Ktype", "SelectDesc"));
         }
         public string GetDistributorName(int id)
         {
@@ -508,17 +514,13 @@ namespace Clutchlit.Controllers
             }
             else
             {
-                
                 foreach (PdPrices s in list)
                 {
                     result = result + "<tr class="+CheckBackground(s.Quantity)+"><td><b>" + GetDistributorName(s.DistributorId) + "</b></td><td>"+GetDistributorWarehouseName(s.DistributorWarehouseId, s.DistributorId)+"</td><td>" + s.GrossPrice + "</td><td>"+s.Quantity+"</td></tr>";
                 }
                 result = result + "</table>";
             }
-            
-
             Response.StatusCode = 200;
-
             return new JsonResult(result); 
         }
         public IActionResult ProductsList(string engine, int category_id)

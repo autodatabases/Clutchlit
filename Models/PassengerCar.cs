@@ -23,7 +23,7 @@ namespace Clutchlit.Models
         public Int32 Modelid { get; set; }
         [Column("pc_ktype")]
         public Int32 Ktype { get; set; }
-        public string SelectDesc { get { return this.Description + "[ " + this.Constructioninterval + " ]"; }  }
+        public string SelectDesc { get { return this.Description + " [ " + this.Constructioninterval + " ]" + " [" +this.Fulldescription + "]"; }  }
 
     }
 }
