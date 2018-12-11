@@ -89,3 +89,6 @@ E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.Views.pdb
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.dll
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.pdb
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.csproj.CopyComplete
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\Index.g.cshtml.cs
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\GetAll.g.cshtml.cs
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\GetUnrealized.g.cshtml.cs

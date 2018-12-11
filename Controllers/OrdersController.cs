@@ -12,21 +12,24 @@ namespace Clutchlit.Controllers
         {
             return View();
         }
-        public void GetAll()
+        public IActionResult GetAll()
         {
-
+            return View();
         }
-        public void GetUnrealized()
+        public IActionResult GetUnrealized()
         {
 
+            return View();
         }
-        public void GetSpcom()
+        public IActionResult GetSpcom()
         {
 
+            return View();
         }
-        public void GetSp24()
+        public IActionResult GetSp24()
         {
 
+            return View();
         }
     }
 }
