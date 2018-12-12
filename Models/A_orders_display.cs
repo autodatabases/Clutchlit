@@ -10,7 +10,7 @@ namespace Clutchlit.Models
 
     public class A_orders_display
     {
-
+        public string Shop { get; set; }
         public int Id_order { get; set; }
         [Key]
         public string Reference { get; set; }

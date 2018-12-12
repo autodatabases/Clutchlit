@@ -49,6 +49,7 @@ namespace Clutchlit.Controllers
                             from msg1 in gh.DefaultIfEmpty()
                             select new A_orders_display()
                             {
+                                Shop = "Sprzegla24.pl",
                                 Created = orders.Created,
                                 Id_carrier = orders.Id_carrier,
                                 Id_address_i = string.Format("{0} {1} <br /> {2} {3} <br/><b>NIP:</b> {4}", invoice.Address1, invoice.Address2, invoice.ZipCode, invoice.City, invoice.Nip),
@@ -73,6 +74,7 @@ namespace Clutchlit.Controllers
                            from msg1 in gh.DefaultIfEmpty()
                            select new A_orders_display()
                            {
+                               Shop = "Sprzeglo.com.pl",
                                Created = orders.Created,
                                Id_carrier = orders.Id_carrier,
                                Id_address_i = string.Format("{0} {1} <br /> {2} {3} <br/><b>NIP:</b> {4}", invoice.Address1, invoice.Address2, invoice.ZipCode, invoice.City, invoice.Nip),

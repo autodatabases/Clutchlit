@@ -22,11 +22,16 @@
                 "searchable": false
             },
                 {
+                    "targets": [1],
+                    "visible": false
+                },
+                {
                     "targets": [10],
                     "visible": false
                 }
             ],
         "columns": [
+            { "data": "shop", "name":"Shop"},
             { "data": "id_order", "name": "Id" },
             { "data": "created", "name": "name"},
             { "data": "payment", "name": "reference"},
@@ -62,7 +67,8 @@
             else {
                 $('td', nRow).css('background-color', '#fdff50');
             }
-        }
+        },
+        
     });
 
 
