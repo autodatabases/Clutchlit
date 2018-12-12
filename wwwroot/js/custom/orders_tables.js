@@ -40,7 +40,7 @@
             { "data": "current_state", "name": "Current State" },
             {
                 "render": function (data, type, full, meta) { return '<a target="_blank" class="btn btn-default" href="https://www.sprzegla24.pl/admin125fzmhfc/index.php?controller=AdminOrders&id_order=4341&vieworder' + full.id_order + '">Edytuj</a>'; }
-            },
+            }
         ],
         "order": [[0, 'desc']],
         "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {

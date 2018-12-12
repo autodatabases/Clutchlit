@@ -8,9 +8,8 @@ using System.Threading.Tasks;
 namespace Clutchlit.Models
 {
     [Table("ps_orders")]
-    public class A_orders
+    public class B_orders
     {
-        
         [Column("id_order")]
         public int Id_order { get; set; }
         [Key]

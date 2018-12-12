@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 namespace Clutchlit.Models
 {
 
-    public class A_orders_display
+    public class B_orders_display
     {
 
         public int Id_order { get; set; }
-        [Key]
         public string Reference { get; set; }
         public int Id_carrier { get; set; }
         public int Id_cart { get; set; }
