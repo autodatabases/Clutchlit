@@ -92,3 +92,5 @@ E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.csproj.CopyComp
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\Index.g.cshtml.cs
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\GetAll.g.cshtml.cs
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\GetUnrealized.g.cshtml.cs
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\GetSp24.g.cshtml.cs
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\GetSpcom.g.cshtml.cs

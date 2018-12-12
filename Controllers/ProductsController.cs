@@ -20,12 +20,10 @@ namespace Clutchlit.Controllers
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly MysqlContext _contextSp24;
 
-        public ProductsController(ApplicationDbContext context, MysqlContext contextSp24)
+        public ProductsController(ApplicationDbContext context)
         {
             _context = context;
-            _contextSp24 = contextSp24;
         }
         public IActionResult Index()
         {
@@ -71,6 +69,7 @@ namespace Clutchlit.Controllers
             string name = _context.Warehouses.Single(d => d.WarehouseNumber == id && d.DistributorId == disid).Name;
             return name;
         }
+
         public string CheckCzesciBackground(string stock)
         {
             if (stock.Trim().Contains("Niedost"))
@@ -132,6 +131,7 @@ namespace Clutchlit.Controllers
             }
             return result;
         }
+
         public IActionResult GetOpponentsPrices(int Id)
         {
             string iparts_string = "";
@@ -548,7 +548,7 @@ namespace Clutchlit.Controllers
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
             int pageSize = length != null ? Convert.ToInt32(length) : 0;
-     
+
             int skip = start != null ? Convert.ToInt32(start) : 0;
 
             int recordsTotal = 0;

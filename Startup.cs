@@ -40,8 +40,11 @@ namespace Clutchlit
                .BuildServiceProvider();
 
             services.AddEntityFrameworkMySql()
-                .AddDbContext<MysqlContext>()
-                .BuildServiceProvider();
+               .AddDbContext<MysqlContext>()
+               .BuildServiceProvider();
+
+           
+            
             
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
