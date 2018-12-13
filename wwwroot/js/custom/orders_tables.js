@@ -37,6 +37,31 @@
 
                 div.append(html);
             }
+            $.ajax({
+                type: 'POST',
+                url: '/Orders/GetCartAdditionalInfo',
+                data: {
+                    cart_id: idR,
+                    Shop_id: shop
+                },
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                    html = "";
+                    if (data !== '</table>') {
+                        html += '<div class="col-lg-6"><h4>Dodatkowe informacje</h4><table width="100%"><tr style="background-color:#efefef">';
+                        html += '<td><b>Informacja</b></td><td><b>Wartość</b></td><td><b>Uwagi</b></td></tr>';
+                        html += data;
+                        html += '</table></div>';
+                    }
+                    else {
+                        html += '<div class="col-lg-6"><h4>Dodatkowe informacje</h4>';
+                        html += '<p style="text-align:center"><b>BRAK DANYCH</b></p>';
+                        html += '</div>';
+                    }
+                    div.append(html);
+                }
+            });
         }
     });
 

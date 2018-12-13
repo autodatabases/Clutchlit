@@ -35,6 +35,30 @@ namespace Clutchlit.Controllers
         {
             return View();
         }
+        public IActionResult GetCartAdditionalInfo(int Cart_id, string Shop_id)
+        {
+            var result = "";
+            if (Shop_id == "Sp1")
+            {
+                var info = _contextSp.Ip_cart_spcom.Where(i => i.Id_cart == Cart_id);
+                var results = from i in info select new A_Cart_ip { Id_cart = i.Id_cart, Ip_address = i.Ip_address, Additional = (i.Ip_address == "204.8.220.150" ? "Biuro" : "Zewnętrzne") };
+                foreach(A_Cart_ip s in results)
+                {
+                    result = "<tr><td><b>Adres</b></td><td>" + s.Ip_address+ "</td><td>" + s.Additional + "</td></tr>";
+                }
+            }
+            else
+            {
+                var info = _contextSp24.Ip_cart_sp24.Where(i => i.Id_cart == Cart_id);
+                var results = from i in info select new A_Cart_ip { Id_cart = i.Id_cart, Ip_address = i.Ip_address, Additional = (i.Ip_address == "204.8.220.150" ? "Biuro" : "Zewnętrzne") };
+                foreach (A_Cart_ip s in results)
+                {
+                    result = "<tr><td><b>Adres</b></td><td>" + s.Ip_address + "</td><td>" + s.Additional + "</td></tr>";
+                }
+
+            }
+            return Json(result);
+        }
         public IActionResult GetCartProducts(int Cart_id, string Shop_id)
         {
             var result = "";
