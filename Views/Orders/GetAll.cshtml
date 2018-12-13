@@ -10,6 +10,46 @@
 
     </div>
     <div class="box-body ">
+        <div style="float:left; width:100%; margin-bottom:20px; ">
+            <form method="post">
+                <div class="col-lg-2">
+                    <label for="shop">
+                        Sklep
+                    </label>
+                    <select name="shop" id="Orders_shop" class="form-control select2">
+                        <option value="0">Wszystkie</option>
+                        <option value="1">Sprzeglo.com.pl</option>
+                        <option value="2">Sprzegla24.pl</option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label for="payment">Typ płatności</label>
+                    <select name="payment" id="Orders_payment" class="form-control select2">
+                        <option value="0">Wszystkie</option>
+                        <option value="Przelewy24">Przelewy24</option>
+                        <option value="kuriera">Płatność u kuriera</option>
+                        <option value="konto">Przelew na konto</option>
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    <label for="status">Status</label>
+                    <select name="status" id="Orders_status" class="form-control select2">
+                        <option value="0">Wszystkie</option>
+                        <option value="4">Zamówienie wysłane</option>
+                        <option value="12">Zamówienie w realizacji</option>
+                        <option value="17">Oczekiwanie na płatność</option>
+                        <option value="18">Wymagana dodatkowa weryfikacja</option>
+                        <option value="5">Zrealizowane</option>
+                        <option value="6">Anulowane</option>
+                    </select>
+                </div>
+                <div class="col-lg-1">
+                    <label for="payment">Zastosuj filtry</label>
+                    <button id="submit_orders_filters" name="submit_orders_filters" class="btn bg-orange">Filtruj</button>
+                </div>
+            </form>
+            
+        </div>
         <table id="all_orders_sp24" class="table table-bordered table-hover">
             <thead>
                 <tr>
@@ -17,7 +57,7 @@
                     <th>Id</th>
                     <th>Data</th>
                     <th>Płatnośc</th>
-                    <th>Produkty</th>
+                    <th>Referencja</th>
                     <th>Dost.</th>
                     <th>Cena</th>
                     <th>Klient</th>
@@ -35,7 +75,7 @@
                     <th>Id</th>
                     <th>Data</th>
                     <th>Płatnośc</th>
-                    <th>Produkty</th>
+                    <th>Referencja</th>
                     <th>Dost.</th>
                     <th>Cena</th>
                     <th>Klient</th>

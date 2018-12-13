@@ -307,9 +307,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a asp-controller="Orders" asp-action="GetAll"><i class="fa fa-circle-o text-red"></i> Wszystkie zamówienia</a></li>
-                            <li><a asp-controller="Orders" asp-action="GetUnrealized"><i class="fa fa-circle-o text-red"></i> Zamówienia niezrealizowane</a></li>
-                            <li><a asp-controller="Orders" asp-action="GetSpcom"><i class="fa fa-circle-o text-red"></i> Zamówienia Sprzeglo.com.pl</a></li>
-                            <li><a asp-controller="Orders" asp-action="GetSp24"><i class="fa fa-circle-o text-red"></i> Zamówienia Sprzegla24.pl</a></li>
+                            <li><a asp-controller="Orders" asp-action="AddOrder"><i class="fa fa-circle-o text-red"></i> Dodaj zamówienie</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -591,7 +589,7 @@
                         html += '<td><b>Dostawca</b></td><td><b>Magazyn</b></td><td><b>Cena brutto</b></td><td><b>Stan</b></td></tr>';
                         html += json;
                         html += '</table></div>';
-                        
+
                         div.append(html);
                     }
                     else {
@@ -602,7 +600,7 @@
 
                         html += '<p style="text-align:center"><b>BRAK DANYCH</b></p>';
                         html += '</div>';
-                       
+
                         div.append(html);
                     }
                     $.ajax({
@@ -629,7 +627,7 @@
                             div.append(html);
                         }
                     });
-                    
+
                 }
             });
 
@@ -694,7 +692,7 @@
                 });
 
                 $('#end_selected').click(function (event) {
-                    
+
                     if (confirm("Czy jesteś pewien, że chcesz wyłączyć zaznaczone aukcje?")) {
                         var idR;
                         var rows_selected = table.column(0).checkboxes.selected();
@@ -715,7 +713,7 @@
                             });
                         });
 
-                        
+
                     }
                     else {
 
@@ -752,12 +750,7 @@
 
             });
 
-           
-            
                 // Tabela z produktami
-            
-                
-
                 var tableA = $('#example2').DataTable({
                     "destroy": true,
                     "processing": true, // for show progress bar
@@ -810,9 +803,9 @@
                     }
                 });
                 // click
-            
+
             // Tabela z produktami
-                
+
             $('#ktypes_search').submit(function (event) {
                 event.preventDefault();
                 $("#example2").DataTable().ajax.reload();

@@ -35,8 +35,51 @@ namespace Clutchlit.Controllers
         {
             return View();
         }
+        public IActionResult GetCartProducts(int Cart_id, string Shop_id)
+        {
+            var result = "";
+            if (Shop_id == "Sp1")
+            {
+                var cart_products = _contextSp.Carts_spcom.Where(c => c.Id_cart == Cart_id);
+                var products = _contextSp.Products_spcom;
+                var price = _contextSp24.Products_prices_sp24;
+
+                var results = from cp in cart_products
+                          join p in products on cp.Id_product equals p.Id_product
+                              join pp in price on cp.Id_product equals pp.Id_product
+                              select new A_products { Cart_Quantity = cp.Quantity, Id_product = p.Id_product, Name = p.Name, Cart_price = Math.Round((pp.Price * (decimal)1.23), 0) };
+
+                foreach (A_products s in results)
+                {
+                    result = result + "<tr><td><b>"+s.Name+"</b></td><td>" + s.Cart_price + "</td><td>" + s.Cart_Quantity + "</td><td>"+s.Id_product+"</td></tr>";
+                }
+                return Json(result);
+            }
+            else if (Shop_id == "Sp2")
+            {
+                var cart_products = _contextSp24.Carts_sp24.Where(c => c.Id_cart == Cart_id);
+                var products = _contextSp24.Products_sp24;
+                var price = _contextSp24.Products_prices_sp24;
+                var results = from cp in cart_products
+                              join p in products on cp.Id_product equals p.Id_product
+                              join pp in price on cp.Id_product equals pp.Id_product
+                              select new A_products { Cart_Quantity = cp.Quantity, Id_product = p.Id_product, Name = p.Name, Cart_price= Math.Round((pp.Price * (decimal)1.23),0) };
+
+                foreach (A_products s in results)
+                {
+                    result = result + "<tr><td><b>" + s.Name + "</b></td><td>" + s.Cart_price + "</td><td>" + s.Cart_Quantity + "</td><td>" + s.Id_product + "</td></tr>";
+                }
+                return Json(result);
+            }
+            else
+            {
+                return Json("<tr><td><b>Brak danych. Błędny sklep</b></td><td></td><td></td></tr>");
+            }
+            
+        }
         public IActionResult GetAllSp24()
         {
+
             var sp24 = _contextSp24.Orders_sp24;
             var spC = _contextSp.Orders_spcom;
             
@@ -49,7 +92,7 @@ namespace Clutchlit.Controllers
                             from msg1 in gh.DefaultIfEmpty()
                             select new A_orders_display()
                             {
-                                Shop = "Sprzegla24.pl",
+                                Shop = "Sp2",
                                 Created = orders.Created,
                                 Id_carrier = orders.Id_carrier,
                                 Id_address_i = string.Format("{0} {1} <br /> {2} {3} <br/><b>NIP:</b> {4}", invoice.Address1, invoice.Address2, invoice.ZipCode, invoice.City, invoice.Nip),
@@ -57,7 +100,7 @@ namespace Clutchlit.Controllers
                                 Current_state = states.Name,
                                 Id_address_d = string.Format("{0} {1} {2} {3}", addresses.Address1, addresses.Address2, addresses.ZipCode, addresses.City),
                                 Id_cart = orders.Id_cart,
-                                Id_customer = string.Format("<b>{2}</b> {0} {1}", customers.FirstName, customers.LastName, customers.Company),
+                                Id_customer = string.Format("{0} {1} <br/><b>{2}</b> ", customers.FirstName, customers.LastName, customers.Company),
                                 Payment = orders.Payment,
                                 Reference = orders.Reference,
                                 Total_paid = orders.Total_paid,
@@ -74,7 +117,7 @@ namespace Clutchlit.Controllers
                            from msg1 in gh.DefaultIfEmpty()
                            select new A_orders_display()
                            {
-                               Shop = "Sprzeglo.com.pl",
+                               Shop = "Sp1",
                                Created = orders.Created,
                                Id_carrier = orders.Id_carrier,
                                Id_address_i = string.Format("{0} {1} <br /> {2} {3} <br/><b>NIP:</b> {4}", invoice.Address1, invoice.Address2, invoice.ZipCode, invoice.City, invoice.Nip),
@@ -82,7 +125,7 @@ namespace Clutchlit.Controllers
                                Current_state = states.Name,
                                Id_address_d = string.Format("{0} {1} {2} {3}", addresses.Address1, addresses.Address2, addresses.ZipCode, addresses.City),
                                Id_cart = orders.Id_cart,
-                               Id_customer = string.Format("<b>{2}</b> {0} {1}", customers.FirstName, customers.LastName, customers.Company),
+                               Id_customer = string.Format("{0} {1} <br/><b>{2}</b> ", customers.FirstName, customers.LastName, customers.Company),
                                Payment = orders.Payment,
                                Reference = orders.Reference,
                                Total_paid = orders.Total_paid,
@@ -107,7 +150,7 @@ namespace Clutchlit.Controllers
             var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
-            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int pageSize = length != null ? Convert.ToInt32(length) : 10;
 
             int skip = start != null ? Convert.ToInt32(start) : 0;
 
@@ -116,7 +159,7 @@ namespace Clutchlit.Controllers
             result = concat_sorted.AsQueryable();
             var customerData = result;
             //Sorting  
- 
+            
             //Search  
             if (!string.IsNullOrEmpty(searchValue))
             {
@@ -125,22 +168,12 @@ namespace Clutchlit.Controllers
             //Paging   
             recordsTotal = customerData.Count();
             //Paging   
-            var data = customerData.Skip(skip).Take(10).ToList();
+            var data = customerData.Skip(skip).Take(pageSize).ToList();
             //Returning Json Data  
             Response.StatusCode = 200;
             return new JsonResult(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
         }
-        public IActionResult GetUnrealized()
-        {
-
-            return View();
-        }
-        public IActionResult GetSpcom()
-        {
-
-            return View();
-        }
-        public IActionResult GetSp24()
+        public IActionResult AddOrder()
         {
 
             return View();
