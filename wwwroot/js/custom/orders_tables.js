@@ -20,7 +20,7 @@
                 div.removeClass('loading');
                 div.addClass('child-table');
                 html += '<div class="col-lg-6"><h4>Produkty w koszyku</h4><table width="100%"><tr style="background-color:#efefef">';
-                html += '<td><b>Dostawca</b></td><td><b>Cena brutto</b></td><td><b>Stan</b></td><td>ID produktu</td></tr>';
+                html += '<td><b>Produkt</b></td><td><b>Cena brutto</b></td><td><b>Ilość</b></td><td>ID produktu</td></tr>';
                 html += json;
                 html += '</table></div>';
 
@@ -95,8 +95,14 @@ $(document).ready(function () {
             { "data": "additionalInfo", "name": "AdditionalInfo" },
             { "data": "current_state", "name": "Current State" },
             {
-                "render": function (data, type, full, meta) { return '<a target="_blank" class="btn btn-default" href="https://www.sprzegla24.pl/admin125fzmhfc/index.php?controller=AdminOrders&id_order=4341&vieworder' + full.id_order + '">Edytuj</a>'; }
+                "render": function (data, type, full, meta) {
+                    if (full.shop === "Sp2")
+                        return '<a target="_blank" class="btn btn-default" href="https://www.sprzegla24.pl/admin125fzmhfc/index.php?controller=AdminOrders&id_order=' + full.id_order + '&vieworder">Edytuj</a>';
+                    else
+                        return '<a target="_blank" class="btn btn-default" href="https://www.sprzeglo.com.pl/admin271tuwg4u/index.php?controller=AdminOrders&id_order=' + full.id_order + '&vieworder">Edytuj</a>';
+                }
             }
+
         ],
         "order": [[0, 'desc']],
         "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
@@ -140,7 +146,6 @@ $(document).ready(function () {
         }
         
     });
-
 
     $("#all_orders_sp24 tbody").on('click', 'tr', function () {
         //alert("dd");
