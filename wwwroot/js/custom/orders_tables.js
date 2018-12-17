@@ -69,6 +69,15 @@
     return div;
 }
 
+function CheckShop() {
+    return $("#Orders_shop").val();
+}
+function CheckPayment() {
+    return $("#Orders_payment").val();
+}
+function CheckStatus() {
+    return $("#Orders_status").val();
+}
 $(document).ready(function () {
     
     // Tabela z zamówieniami
@@ -85,7 +94,11 @@ $(document).ready(function () {
             "type": "POST",
             "datatype": "json",
             "contentType": "application/x-www-form-urlencoded; charset=UTF-8",
-            "data": ""
+            "data": function (d) {
+                d.FlagShop = CheckShop();
+                d.FlagPayment = CheckPayment();
+                d.FlagStatus = CheckStatus();
+            },
         },
         "columnDefs":
             [{
@@ -149,27 +162,7 @@ $(document).ready(function () {
             else {
                 $('td', nRow).css('background-color', '#fdff50');
             }
-        },
-        "initComplete": function () {
-            this.api().columns([2, 3]).every(function () {
-                var column = this;
-                var select = $('<select class="form-control"><option value=""></option></select>')
-                    .appendTo($(column.footer()).empty())
-                    .on('change', function () {
-                        var val = $(this).val();
-                        column.search(this.value).draw();
-                    });
-
-                // Only contains the *visible* options from the first page
-                console.log(column.data().unique());
-
-                // If I add extra data in my JSON, how do I access it here besides column.data?
-                column.data().unique().sort().each(function (d, j) {
-                    select.append('<option value="' + d + '">' + d + '</option>')
-                });
-            });
         }
-        
     });
 
     $("#all_orders_sp24 tbody").on('click', 'tr', function () {

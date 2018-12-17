@@ -49,5 +49,8 @@ namespace Clutchlit.Models
 
         [Column("id_customer")]
         public int Id_customer { get; set; }
+
+        [Column("module")]
+        public string Module { get; set; }
     }
 }
