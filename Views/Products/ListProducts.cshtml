@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "Wyszukiwarka produktów | Produkty | Dział handlowy";
+    ViewData["Title_1"] = "Produkty";
+    ViewData["Title_2"] = "Wyszukiwarka produktów";
+}
+
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Lista produktów</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Zwiń">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Zamknij">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body ">
+
+        <table id="products_list" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nazwa</th>
+                    <th>Referencja</th>
+                    <th>Cena brutto [S]</th>
+                    <th>Cena brutto [D]</th>
+                    <th class="distributors">Nazwa [D]</th>
+                    <th>Marża</th>
+                </tr>
+            </thead>
+            @foreach (var std in ViewData["products"] as IList<Product>)
+            {
+                <tr>
+                    <td>@std.Id</td>
+                    <td>@std.Name</td>
+                    <td>@std.Reference</td>
+                    <td>@std.Gross_price</td>
+                    <td>@std.LowestPrice</td>
+                    <td>@std.DistributorId</td>
+                    <td>@std.Markup</td>
+                </tr>
+            }
+                <tfoot>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nazwa</th>
+                        <th>Referencja</th>
+                        <th>C brutto [S]</th>
+                        <th>C brutto [D]</th>
+                        <th class="distributors">Nazwa [D]</th>
+                        <th>Marża</th>
+                    </tr>
+                </tfoot>
+            </table>
+
+    </div>
+    
+</div>
+ 

@@ -277,145 +277,145 @@
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
+               
+                    <form asp-controller="Products" asp-action="ListProducts" method="get" class="sidebar-form">
+                        <div class="input-group">
+                            <input type="text" name="q" class="form-control" value="@ViewData["search_string"]" placeholder="Szukaj...">
+                            <span class="input-group-btn">
+                                <button type="submit" id="search-btn" class="btn btn-flat">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
 
-                <form asp-controller="Products" asp-action="List" method="get" class="sidebar-form">
-                    <div class="input-group">
-                        <input type="text" name="q" class="form-control" placeholder="Szukaj...">
-                        <span class="input-group-btn">
-                            <button type="submit" id="search-btn" class="btn btn-flat">
-                                <i class="fa fa-search"></i>
-                            </button>
-                        </span>
-                    </div>
-                </form>
+                    <ul class="sidebar-menu" data-widget="tree">
 
-                <ul class="sidebar-menu" data-widget="tree">
+                        <li class="active">
+                            <a asp-controller="Home" asp-action="">
+                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="header">DZIAŁ HANDLOWY</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-file-text"></i>
+                                <span>Zamówienia</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a asp-controller="Orders" asp-action="GetAll"><i class="fa fa-circle-o text-red"></i> Wszystkie zamówienia</a></li>
+                                <li><a asp-controller="Orders" asp-action="AddOrder"><i class="fa fa-circle-o text-red"></i> Dodaj zamówienie</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
 
-                    <li class="active">
-                        <a asp-controller="Home" asp-action="">
-                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="header">DZIAŁ HANDLOWY</li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-file-text"></i>
-                            <span>Zamówienia</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a asp-controller="Orders" asp-action="GetAll"><i class="fa fa-circle-o text-red"></i> Wszystkie zamówienia</a></li>
-                            <li><a asp-controller="Orders" asp-action="AddOrder"><i class="fa fa-circle-o text-red"></i> Dodaj zamówienie</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        
-                        <a href="#">
-                            <i class="fa fa-inbox"></i>
-                            <span>Produkty</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a asp-controller="Products" asp-action="List"><i class="fa fa-circle-o text-red"></i> Lista produktów</a></li>
-                            <li><a asp-controller="Products" asp-action="History"><i class="fa fa-circle-o text-red"></i> Historia Cen</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-cubes"></i>
-                            <span>Dystrybutorzy</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a><i class="fa fa-circle-o text-red"></i> Lista dystrybutorów</a></li>
-                            <li><a><i class="fa fa-circle-o text-red"></i> Lista magazynów</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-bell"></i>
-                            <span>Centrum alertów</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a><i class="fa fa-circle-o text-red"></i> Lista alertów</a></li>
-                            <li><a><i class="fa fa-circle-o text-red"></i> Zarządzaj flagami</a></li>
-                            <li><a><i class="fa fa-circle-o text-red"></i> Zarządzaj alertami</a></li>
-                        </ul>
-                    </li>
+                            <a href="#">
+                                <i class="fa fa-inbox"></i>
+                                <span>Produkty</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a asp-controller="Products" asp-action="List"><i class="fa fa-circle-o text-red"></i> Lista produktów</a></li>
+                                <li><a asp-controller="Products" asp-action="History"><i class="fa fa-circle-o text-red"></i> Historia Cen</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-cubes"></i>
+                                <span>Dystrybutorzy</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a><i class="fa fa-circle-o text-red"></i> Lista dystrybutorów</a></li>
+                                <li><a><i class="fa fa-circle-o text-red"></i> Lista magazynów</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-bell"></i>
+                                <span>Centrum alertów</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a><i class="fa fa-circle-o text-red"></i> Lista alertów</a></li>
+                                <li><a><i class="fa fa-circle-o text-red"></i> Zarządzaj flagami</a></li>
+                                <li><a><i class="fa fa-circle-o text-red"></i> Zarządzaj alertami</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="header">DZIAŁ PRESTASHOP</li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-legal"></i>
-                            <span>Produkty</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a><i class="fa fa-circle-o text-blue"></i> Lista produktów</a></li>
-                            <li><a><i class="fa fa-circle-o text-blue"></i> Wyszukiwarka auta</a></li>
-                        </ul>
-                    </li>
+                        <li class="header">DZIAŁ PRESTASHOP</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-legal"></i>
+                                <span>Produkty</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a><i class="fa fa-circle-o text-blue"></i> Lista produktów</a></li>
+                                <li><a><i class="fa fa-circle-o text-blue"></i> Wyszukiwarka auta</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="header">DZIAŁ ALLEGRO</li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-dollar"></i>
-                            <span>Aukcje</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a href="/AllegroAuctions/GetList/"><i class="fa fa-circle-o text-yellow"></i> Lista aukcji</a></li>
-                            <li><a><i class="fa fa-circle-o text-yellow"></i> Wystaw aukcję</a></li>
-                        </ul>
-                    </li>
-                    <li class="">
-                        <a href="#">
-                            <i class="fa fa-cog"></i>
-                            <span>Konfiguracja</span>
-                        </a>
+                        <li class="header">DZIAŁ ALLEGRO</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-dollar"></i>
+                                <span>Aukcje</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="/AllegroAuctions/GetList/"><i class="fa fa-circle-o text-yellow"></i> Lista aukcji</a></li>
+                                <li><a><i class="fa fa-circle-o text-yellow"></i> Wystaw aukcję</a></li>
+                            </ul>
+                        </li>
+                        <li class="">
+                            <a href="#">
+                                <i class="fa fa-cog"></i>
+                                <span>Konfiguracja</span>
+                            </a>
 
-                    <li class="header">DZIAŁ MONITORINGU</li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-eye-slash"></i>
-                            <span>Monitoring chwilowy</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a><i class="fa fa-circle-o text-aqua"></i> Lista produktów</a></li>
-                            <li><a><i class="fa fa-circle-o text-aqua"></i> Lista konkurencji</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#">
-                            <i class="fa fa-eye"></i>
-                            <span>Monitoring stały</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li><a><i class="fa fa-circle-o text-aqua"></i> Historia</a></li>
-                            <li><a><i class="fa fa-circle-o text-aqua"></i> Konfiguracja</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
+                        <li class="header">DZIAŁ MONITORINGU</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-eye-slash"></i>
+                                <span>Monitoring chwilowy</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a><i class="fa fa-circle-o text-aqua"></i> Lista produktów</a></li>
+                                <li><a><i class="fa fa-circle-o text-aqua"></i> Lista konkurencji</a></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-eye"></i>
+                                <span>Monitoring stały</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a><i class="fa fa-circle-o text-aqua"></i> Historia</a></li>
+                                <li><a><i class="fa fa-circle-o text-aqua"></i> Konfiguracja</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </section>
             <!-- /.sidebar -->
         </aside>
         <div class="content-wrapper">
@@ -515,6 +515,7 @@
     <script src="~/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
     <link type="text/css" href="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/css/dataTables.checkboxes.css" rel="stylesheet" />
     <script type="text/javascript" src="https://gyrocode.github.io/jquery-datatables-checkboxes/1.2.11/js/dataTables.checkboxes.min.js"></script>
+    <script src="~/js/custom/products_tables.js" type="text/javascript"></script>
     <script>
         $(function () {
             $('#example1').DataTable()
@@ -530,110 +531,7 @@
     </script>
 
     <script type="text/javascript">
-        function getOpponents(rowData) {
-            var html = "";
-           // html += '<div class="col-lg-6"><h4>Ceny konkurencji</h4><table width="100%"><tr style="background-color:#efefef">';
-           // html += '<td><b>Konkurencja</b></td><td><b>Cena brutto</b></td><td><b>Stan</b></td></tr>';
-           // html += '';
-           // html += '</table></div>';
-            var div = $('div.child-table')
-            $.ajax({
-                url: '/Products/GetDistributorsPrices',
-                type: 'POST',
-                data: {
-                    id: rowData.id
-                },
-                dataType: 'json',
-                success: function (json) {
-                    if (json != '</table>') {
 
-                        html += '<div class="col-lg-6"><h4>Ceny dostawców</h4><table width="100%"><tr style="background-color:#efefef">';
-                        html += '<td><b>Dostawca</b></td><td><b>Magazyn</b></td><td><b>Cena brutto</b></td><td><b>Stan</b></td></tr>';
-                        html += json;
-                        html += '</table></div>';
-
-                        div.append(html);
-                    }
-                    else {
-                        html += '<div class="col-lg-6"><h4>Ceny dostawców</h4>';
-
-                        html += '<p style="text-align:center"><b>BRAK DANYCH</b></p>';
-                        html += '</div>';
-
-                        div.append(html);
-                    }
-
-                }
-            });
-        }
-        function format(rowData) {
-            var html = "";
-            var idR = rowData.id;
-            var div = $('<div>')
-                .addClass('loading')
-                .append('Pobiera dane przyjacielu...');
-            $.ajax({
-                url: '/Products/GetDistributorsPrices',
-                type: 'POST',
-                data: {
-                    id: idR
-                },
-                dataType: 'json',
-                success: function (json) {
-                    if (json != '</table>') {
-
-                        div.text('');
-                        div.removeClass('loading');
-                        div.addClass('child-table');
-                        html += '<div class="col-lg-6"><h4>Ceny dostawców</h4><table width="100%"><tr style="background-color:#efefef">';
-                        html += '<td><b>Dostawca</b></td><td><b>Magazyn</b></td><td><b>Cena brutto</b></td><td><b>Stan</b></td></tr>';
-                        html += json;
-                        html += '</table></div>';
-
-                        div.append(html);
-                    }
-                    else {
-                        div.text('');
-                        div.removeClass('loading');
-                        div.addClass('child-table');
-                        html += '<div class="col-lg-6"><h4>Ceny dostawców</h4>';
-
-                        html += '<p style="text-align:center"><b>BRAK DANYCH</b></p>';
-                        html += '</div>';
-
-                        div.append(html);
-                    }
-                    $.ajax({
-                        type: 'POST',
-                        url: '/Products/GetOpponentsPrices/'+idR+'/',
-                        data: {
-                            id: idR
-                        },
-                        contentType: 'application/json',
-                        success: function (data) {
-                            console.log(data);
-                            html = "";
-                            if (data != '</table>') {
-                                html += '<div class="col-lg-6"><h4>Ceny konkurencji</h4><table width="100%"><tr style="background-color:#efefef">';
-                                html += '<td><b>Konkurencja</b></td><td><b>Cena brutto</b></td><td><b>Stan</b></td></tr>';
-                                html += data;
-                                html += '</table></div>';
-                            }
-                            else {
-                                html += '<div class="col-lg-6"><h4>Ceny konkurencji</h4>';
-                                html += '<p style="text-align:center"><b>BRAK DANYCH</b></p>';
-                                html += '</div>';
-                            }
-                            div.append(html);
-                        }
-                    });
-
-                }
-            });
-
-            // div.append('</div>');
-            return div;
-        }
         function CheckEngine() {
             var ktype = 0;
             ktype = $('#engines').val();
@@ -700,7 +598,7 @@
                             idR = rowId;
                             $.ajax({
                                 type: "POST",
-                                url: "/AllegroAuctions/EndOffer/"+idR+"/",
+                                url: "/AllegroAuctions/EndOffer/" + idR + "/",
                                 data: { "Id": idR },
                                 contentType: "application/json;charset=utf-8",
                                 dataType: "json",
@@ -750,59 +648,59 @@
 
             });
 
-                // Tabela z produktami
-                var tableA = $('#example2').DataTable({
-                    "destroy": true,
-                    "processing": true, // for show progress bar
-                    "serverSide": true, // for process server side
-                    "filter": true, // this is for disable filter (search box)
-                    "orderMulti": false, // for disable multiple column at once
-                    "ajax": {
-                        "url": "/Products/ProductsList",
-                        "type": "POST",
-                        "datatype": "json",
-                        "data": function (d) {
-                                d.engine = CheckEngine();
-                                d.category_id = CheckcheckedVals();
-                        }
-                    },
-                    "columnDefs":
-                        [{
-                            "targets": [0],
-                            "visible": true,
-                            "searchable": false
-                        }],
-                    "columns": [
-                        { "data": "id", "name": "Id", "width": "10%" },
-                        { "data": "name", "name": "name", "width": "32%" },
-                        { "data": "reference", "name": "reference", "width": "15%" },
-                        { "data": "gross_price", "name": "gross_price", "width": "9%" },
-                        { "data": "lowestPrice", "name": "lowest_price", "width": "9%" },
-                        { "data": "distributorId", "name": "distributor_id", "width": "15%", "className": "distributors" },
-                        { "data": "markup", "name": "markup", "width": "10%" },
-                    ],
-                    "order": [[1, 'asc']],
-
-                });
-
-                $("#example2 tbody").on('click', 'tr', function () {
-                    //alert("dd");
-                    var tr = $(this).closest('tr');
-
-                    var row = tableA.row(tr);
-                    if (row.child.isShown()) {
-                        // This row is already open - close it
-                        row.child.hide();
-                        tr.removeClass('shown');
+            // Tabela z produktami
+            var tableA = $('#example2').DataTable({
+                "destroy": true,
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax": {
+                    "url": "/Products/ProductsList",
+                    "type": "POST",
+                    "datatype": "json",
+                    "data": function (d) {
+                        d.engine = CheckEngine();
+                        d.category_id = CheckcheckedVals();
                     }
-                    else {
-                        // Open this row
-                        //alert("da");
-                        row.child(format(row.data())).show();
-                        tr.addClass('shown');
-                    }
-                });
-                // click
+                },
+                "columnDefs":
+                    [{
+                        "targets": [0],
+                        "visible": true,
+                        "searchable": false
+                    }],
+                "columns": [
+                    { "data": "id", "name": "Id", "width": "10%" },
+                    { "data": "name", "name": "name", "width": "32%" },
+                    { "data": "reference", "name": "reference", "width": "15%" },
+                    { "data": "gross_price", "name": "gross_price", "width": "9%" },
+                    { "data": "lowestPrice", "name": "lowest_price", "width": "9%" },
+                    { "data": "distributorId", "name": "distributor_id", "width": "15%", "className": "distributors" },
+                    { "data": "markup", "name": "markup", "width": "10%" },
+                ],
+                "order": [[1, 'asc']],
+
+            });
+
+            $("#example2 tbody").on('click', 'tr', function () {
+                //alert("dd");
+                var tr = $(this).closest('tr');
+
+                var row = tableA.row(tr);
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                }
+                else {
+                    // Open this row
+                    //alert("da");
+                    row.child(format(row.data())).show();
+                    tr.addClass('shown');
+                }
+            });
+            // click
 
             // Tabela z produktami
 

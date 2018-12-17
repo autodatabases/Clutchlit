@@ -36,6 +36,26 @@ namespace Clutchlit.Controllers
             list = _context.Manufacturers.ToList();
             return View(list);
         }
+        
+        [HttpGet("/Products/ListProducts/")]
+        public IActionResult ListProducts([FromQuery]string q)
+        {
+            var search_string = System.Web.HttpUtility.HtmlEncode(q);
+        
+
+            // lista produktów
+            var all_p = _context.Products;
+            IQueryable<Product> result = null;
+            result = from p in all_p
+                     where p.Reference.ToUpper().Contains(search_string.Replace(" ","").ToUpper())
+            select p;
+            
+            var customerData = result.ToList();
+            //
+            ViewData["products"] = customerData;
+            ViewData["search_string"] = q;
+            return View();
+        }
         public IActionResult ModelsList(int id)
         {
             

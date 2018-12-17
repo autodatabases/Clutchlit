@@ -94,3 +94,4 @@ E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\GetAll
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\GetUnrealized.g.cshtml.cs
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\GetSp24.g.cshtml.cs
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Orders\GetSpcom.g.cshtml.cs
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Products\ListProducts.g.cshtml.cs
