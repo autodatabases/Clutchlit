@@ -9,6 +9,7 @@ using Clutchlit.Data;
 using Clutchlit.Models;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -36,7 +37,19 @@ namespace Clutchlit.Controllers
             list = _context.Manufacturers.ToList();
             return View(list);
         }
-        
+        public IActionResult AddToCart(int id)
+        {
+            string key = "product_id";
+            CookieOptions option = new CookieOptions();
+            option.Expires = DateTime.Now.AddMinutes(20);
+            
+            Response.Cookies.Append(key, id.ToString(), option);
+
+            // czytamy 
+            string cookieValueFromReq = Request.Cookies["product_id"];
+            return Json(cookieValueFromReq);
+
+        }
         [HttpGet("/Products/ListProducts/")]
         public IActionResult ListProducts([FromQuery]string q)
         {

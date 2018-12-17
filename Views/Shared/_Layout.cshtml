@@ -547,7 +547,7 @@
         }
 
         $(document).ready(function () {
-
+            
             $('#getoffers').submit(function (event) {
 
                 event.preventDefault();
@@ -678,11 +678,15 @@
                     { "data": "lowestPrice", "name": "lowest_price", "width": "9%" },
                     { "data": "distributorId", "name": "distributor_id", "width": "15%", "className": "distributors" },
                     { "data": "markup", "name": "markup", "width": "10%" },
+                    {
+                        "render": function (data, type, full, meta) { return '<a class="add_to_busket btn btn-default" name="'+full.id+'">Kup</a>'; }
+                    },  
                 ],
+
                 "order": [[1, 'asc']],
 
             });
-
+           
             $("#example2 tbody").on('click', 'tr', function () {
                 //alert("dd");
                 var tr = $(this).closest('tr');
@@ -709,6 +713,23 @@
                 $("#example2").DataTable().ajax.reload();
             });
 
+        });
+
+        $(document).on('click', '.add_to_busket', function (e) {
+            e.preventDefault();
+           // alert($(this).attr('name'));
+            $.ajax({
+                type: "POST",
+                url: "/Products/AddToCart/" + $(this).attr('name') + "/",
+                data: { "Id": $(this).attr('name') },
+                contentType: "application/json;charset=utf-8",
+                success: function (msg) {
+                    alert(msg);
+                },
+                error: function (msg) {
+                    alert("Nie udało się dodać produktu do koszyka");
+                }
+            });
         });
 
 

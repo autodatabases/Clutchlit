@@ -148,4 +148,9 @@ $(document).ready(function () {
         }
     });
                 // click
+
+    // obsługujemy koszyk - ciasteczka
+
+
+    // koszyk - ciasteczka
 });

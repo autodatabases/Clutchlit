@@ -676,7 +676,9 @@ namespace Clutchlit.Controllers
         }
         public IActionResult AddOrder()
         {
-
+            string cookieValueFromReq = Request.Cookies["product_id"];
+            ViewData["busket"] = cookieValueFromReq;
+            ViewData["dupa"] = "dd";
             return View();
         }
     }

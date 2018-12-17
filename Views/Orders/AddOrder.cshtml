@@ -1,0 +1,147 @@
+﻿@{
+    ViewData["Title"] = "Dodaj zamówienie | Zamówienia | Dział handlowy";
+    ViewData["Title_1"] = "Zamówienia";
+    ViewData["Title_2"] = "Dodaj zamówienie";
+}
+
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Dodaj zamówienie</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Zwiń">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Zamknij">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body ">
+        <div class="col-lg-12">
+            <div class="form-group has-warning">
+                <label class="control-label" for="inputWarning">
+                    <i class="fa fa-bell-o"></i> Wybierz sklep
+                </label>
+                <select class="form-control">
+                    <option value="1">Sprzeglo.com.pl</option>
+                    <option value="2">Sprzegla24.pl</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h3>Twój koszyk</h3>
+            <hr />
+            @ViewData["busket"] 
+            </div>
+        <div class="col-lg-6">
+            <h3>Dane klienta</h3>
+            <hr />
+            <div class="form-group">
+                <label for="exampleInputEmail1">Adres e-mail</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Adres e-mail">
+            </div>
+
+            <div class="form-group">
+                <label for="nameInput">Imię</label>
+                <input type="text" class="form-control" id="nameInput" placeholder="Imię">
+            </div>
+
+            <div class="form-group">
+                <label for="surnameInput">Nazwisko</label>
+                <input type="text" class="form-control" id="surnameInput" placeholder="Nazwisko">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <h3>Adres dostawy</h3>
+            <hr />
+
+            <div class="form-group">
+                <label for="deliveryName">Imię</label>
+                <input type="text" class="form-control" id="deliveryName" placeholder="Imię">
+            </div>
+
+            <div class="form-group">
+                <label for="deliverySurname">Nazwisko</label>
+                <input type="text" class="form-control" id="deliverySurname" placeholder="Nazwisko">
+            </div>
+
+            <div class="form-group">
+                <label for="deliveryCompany">Firma</label>
+                <input type="text" class="form-control" id="deliveryCompany" placeholder="Firma (gdy odbiorcą przesyłki jest firma)">
+            </div>
+
+            <div class="form-group">
+                <label for="deliveryAddress">Adres</label>
+                <input type="text" class="form-control" id="deliveryAddress" placeholder="Adres (ulica, nr domu)">
+            </div>
+
+            <div class="form-group">
+                <label for="deliveryZip">Kod pocztowy</label>
+                <input type="text" class="form-control" id="deliveryZip" placeholder="Kod pocztowy">
+            </div>
+
+            <div class="form-group">
+                <label for="deliveryCity">Miasto</label>
+                <input type="text" class="form-control" id="deliveryCity" placeholder="Miasto">
+            </div>
+
+            <div class="form-group">
+                <label for="deliveryCountry">Kraj</label>
+                <select name="deliveryCountry" id="deliveryCountry" class="form-control" style=""><option value="2">Austria</option><option value="3">Belgia</option><option value="236">Bułgaria</option><option value="74">Chorwacja</option><option value="16">Czechy</option><option value="20">Dania</option><option value="86">Estonia</option><option value="7">Finlandia</option><option value="8">Francja</option><option value="9">Grecja</option><option value="6">Hiszpania</option><option value="13">Holandia</option><option value="26">Irlandia</option><option value="131">Litwa</option><option value="12">Luksemburg</option><option value="1">Niemcy</option><option value="14" selected="selected">Polska</option><option value="15">Portugalia</option><option value="36">Rumunia</option><option value="18">Szwecja</option><option value="37">Słowacja</option><option value="193">Słowenia</option><option value="143">Węgry</option><option value="17">Wielka Brytania</option><option value="10">Włochy</option><option value="125">Łotwa</option> </select>
+            </div>
+
+            <div class="form-group">
+                <label for="deliveryCity">Nr telefonu</label>
+                <input type="tel" class="form-control" id="deliveryCity" placeholder="Nr telefonu (kontakt z kurierem)">
+            </div>
+
+        </div>
+        <div class="col-lg-6">
+            <h3>Dane do faktury (gdy inne niż dostawy)</h3>
+            <hr />
+
+            <div class="form-group">
+                <label for="invoiceName">Imię</label>
+                <input type="text" class="form-control" id="invoiceName" placeholder="Imię">
+            </div>
+
+            <div class="form-group">
+                <label for="invoiceSurname">Nazwisko</label>
+                <input type="text" class="form-control" id="invoiceSurname" placeholder="Nazwisko">
+            </div>
+
+            <div class="form-group">
+                <label for="invoiceCompany">Firma</label>
+                <input type="text" class="form-control" id="invoiceCompany" placeholder="Firma">
+            </div>
+
+            <div class="form-group">
+                <label for="invoiceAddress">Adres</label>
+                <input type="text" class="form-control" id="invoiceAddress" placeholder="Adres">
+            </div>
+
+            <div class="form-group">
+                <label for="invoiceZip">Kod pocztowy</label>
+                <input type="text" class="form-control" id="invoiceZip" placeholder="Kod pocztowy">
+            </div>
+
+            <div class="form-group">
+                <label for="invoiceCity">Miasto</label>
+                <input type="text" class="form-control" id="invoiceCity" placeholder="Miasto">
+            </div>
+
+            <div class="form-group">
+                <label for="invoiceCountry">Kraj</label>
+                <select name="invoiceCountry" id="invoiceCountry" class="form-control" style=""><option value="2">Austria</option><option value="3">Belgia</option><option value="236">Bułgaria</option><option value="74">Chorwacja</option><option value="16">Czechy</option><option value="20">Dania</option><option value="86">Estonia</option><option value="7">Finlandia</option><option value="8">Francja</option><option value="9">Grecja</option><option value="6">Hiszpania</option><option value="13">Holandia</option><option value="26">Irlandia</option><option value="131">Litwa</option><option value="12">Luksemburg</option><option value="1">Niemcy</option><option value="14" selected="selected">Polska</option><option value="15">Portugalia</option><option value="36">Rumunia</option><option value="18">Szwecja</option><option value="37">Słowacja</option><option value="193">Słowenia</option><option value="143">Węgry</option><option value="17">Wielka Brytania</option><option value="10">Włochy</option><option value="125">Łotwa</option> </select>
+            </div>
+
+            <div class="form-group">
+                <label for="invoiceNumber">Nr telefonu</label>
+                <input type="text" class="form-control" id="invoiceNumber" placeholder="Nr telefonu">
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
