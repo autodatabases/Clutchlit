@@ -27,6 +27,7 @@ namespace Clutchlit.Data
         public DbSet<A_address> Addresses_sp24 { get; set; }
         public DbSet<A_message> Messages_sp24 { get; set; }
         public DbSet<A_cart> Carts_sp24 { get; set; }
+        public DbSet<A_cart_main> Cart_main { get; set; }
         public DbSet<A_products> Products_sp24 { get; set; }
         public DbSet<A_product_price> Products_prices_sp24 { get; set; }
         public DbSet<A_Cart_ip> Ip_cart_sp24 { get; set; }

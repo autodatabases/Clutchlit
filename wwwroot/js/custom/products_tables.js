@@ -48,7 +48,7 @@ function format(rowData) {
         },
         dataType: 'json',
         success: function (json) {
-            if (json != '</table>') {
+            if (json !== '</table>') {
 
                 div.text('');
                 div.removeClass('loading');

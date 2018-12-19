@@ -191,6 +191,30 @@ $(document).ready(function () {
         $("#all_orders_sp24").DataTable().ajax.reload();
     });
     // filtry
+    // Usuwanie z koszyka
+    $(".deleteCartItem").on('click', function () {
+        if (confirm("Czy jesteś pewien, że chcesz usunąć ten produkt z koszyka?")) {
+            $.ajax({
+                type: 'POST',
+                url: '/Orders/DeleteItemFromCart',
+                data: {
+                    productId: $(this).attr("name")
+                },
+                dataType: 'json',
+                beforeSend: function () {
+                    $('.images-loader').show();
+                },
+                complete: function () {
+                    $('.images-loader').hide();
+                },
+                success: function (data) {
+                    console.log(data);
+                    window.location.reload();
+                }
+            });
+        }
+    });
+    // Usuwania z koszyka
 
     // dodawanie zamówienia
     $('#addOrderButton').on('click', function () {
@@ -251,43 +275,50 @@ $(document).ready(function () {
             invoiceNumber = deliveryNumber;
         }
 
-        $.ajax({
-            type: "POST",
-            url: "/Orders/CreateOrder/",
-            data:
-            {
-                "ShopType": shopType,
-                "DeliveryType": deliveryType,
-                "exampleInputEmail1": exampleInputEmail1,
-                "nameInput": nameInput,
-                "surnameInput": surnameInput,
-                "deliveryName": deliveryName,
-                "deliverySurname": deliverySurname,
-                "deliveryCompany": deliveryCompany,
-                "deliveryNip": deliveryNip,
-                "deliveryAddress": deliveryAddress,
-                "deliveryZip": deliveryZip,
-                "deliveryCity": deliveryCity,
-                "deliveryCountry": deliveryCountry,
-                "deliveryNumber": deliveryNumber,
-                "invoiceName": invoiceName,
-                "invoiceSurname": invoiceSurname,
-                "invoiceCompany": invoiceCompany,
-                "invoiceNip": invoiceNip,
-                "invoiceAddress": invoiceAddress,
-                "invoiceZip": invoiceZip,
-                "invoiceCity": invoiceCity,
-                "invoiceCountry": invoiceCountry,
-                "invoiceNumber": invoiceNumber
-            },
-            "datatype": "json",
-            success: function (msg) {
-                alert("Zamówienie zostało utworzone");
-            },
-            error: function (msg) {
-                alert("Nie udało się utworzyć zamówienia");
-            }
-        });
+        if (deliveryName === '' || deliveryZip === '') {
+            alert("Uzupełnij wszystkie pola poprawnie!");
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: "/Orders/CreateOrder/",
+                data:
+                {
+                    "ShopType": shopType,
+                    "DeliveryType": deliveryType,
+                    "exampleInputEmail1": exampleInputEmail1,
+                    "nameInput": nameInput,
+                    "surnameInput": surnameInput,
+                    "deliveryName": deliveryName,
+                    "deliverySurname": deliverySurname,
+                    "deliveryCompany": deliveryCompany,
+                    "deliveryNip": deliveryNip,
+                    "deliveryAddress": deliveryAddress,
+                    "deliveryZip": deliveryZip,
+                    "deliveryCity": deliveryCity,
+                    "deliveryCountry": deliveryCountry,
+                    "deliveryNumber": deliveryNumber,
+                    "invoiceName": invoiceName,
+                    "invoiceSurname": invoiceSurname,
+                    "invoiceCompany": invoiceCompany,
+                    "invoiceNip": invoiceNip,
+                    "invoiceAddress": invoiceAddress,
+                    "invoiceZip": invoiceZip,
+                    "invoiceCity": invoiceCity,
+                    "invoiceCountry": invoiceCountry,
+                    "invoiceNumber": invoiceNumber
+                },
+                "datatype": "json",
+                success: function (msg) {
+                    alert("Zamówienie zostało utworzone");
+                },
+                error: function (msg) {
+                    alert("Nie udało się utworzyć zamówienia");
+                }
+            });
+        }
+
+        
        
     });
     // dodawanie zamówienia
