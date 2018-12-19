@@ -185,11 +185,112 @@ $(document).ready(function () {
     // click
 
     // filtry
-    $("#submit_orders_filters").on('click', function () {
+    $("#submit_orders_filters").on('click', function (event) {
         event.preventDefault();
         
         $("#all_orders_sp24").DataTable().ajax.reload();
     });
     // filtry
- 
+
+    // dodawanie zamówienia
+    $('#addOrderButton').on('click', function () {
+        var differentInvoiceData = $("#differentInvoiceData");
+        var shopType = $("#shopType").val();
+        var deliveryType = $("#deliveryType").val();
+
+        //dane klienta
+        var exampleInputEmail1 = $("#exampleInputEmail1").val();
+        var nameInput = $("#nameInput").val();
+        var surnameInput = $("#surnameInput").val();
+        //dane klienta
+
+        //adres dostawy
+        var deliveryName = $("#deliveryName").val();
+        var deliverySurname = $("#deliverySurname").val();
+        var deliveryCompany = $("#deliveryCompany").val();
+        var deliveryNip = $("#deliveryNip").val();
+        var deliveryAddress = $("#deliveryAddress").val();
+        var deliveryZip = $("#deliveryZip").val();
+        var deliveryCity = $("#deliveryCity").val();
+        var deliveryCountry = $("#deliveryCountry").val();
+        var deliveryNumber = $("#deliveryNumber").val();
+        //adres dostawy
+
+        //adres faktury
+        var invoiceName;
+        var invoiceSurname;
+        var invoiceCompany;
+        var invoiceNip;
+        var invoiceAddress;
+        var invoiceZip;
+        var invoiceCity;
+        var invoiceCountry;
+        var invoiceNumber;
+
+        //adres faktury
+        if (differentInvoiceData.is(":checked")) {
+            invoiceName = $("#invoiceName").val();
+            invoiceSurname = $("#invoiceSurname").val();
+            invoiceCompany = $("#invoiceCompany").val();
+            invoiceNip = $("#invoiceNip").val();
+            invoiceAddress = $("#invoiceAddress").val();
+            invoiceZip = $("#invoiceZip").val();
+            invoiceCity = $("#invoiceCity").val();
+            invoiceCountry = $("#invoiceCountry").val();
+            invoiceNumber = $("#invoiceNumber").val();
+        }
+        else {
+            invoiceName = deliveryName;
+            invoiceSurname = deliverySurname;
+            invoiceCompany = deliveryCompany;
+            invoiceNip = deliveryNip;
+            invoiceAddress = deliveryAddress;
+            invoiceZip = deliveryZip;
+            invoiceCity = deliveryCity;
+            invoiceCountry = deliveryCountry;
+            invoiceNumber = deliveryNumber;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Orders/CreateOrder/",
+            data:
+            {
+                "ShopType": shopType,
+                "DeliveryType": deliveryType,
+                "exampleInputEmail1": exampleInputEmail1,
+                "nameInput": nameInput,
+                "surnameInput": surnameInput,
+                "deliveryName": deliveryName,
+                "deliverySurname": deliverySurname,
+                "deliveryCompany": deliveryCompany,
+                "deliveryNip": deliveryNip,
+                "deliveryAddress": deliveryAddress,
+                "deliveryZip": deliveryZip,
+                "deliveryCity": deliveryCity,
+                "deliveryCountry": deliveryCountry,
+                "deliveryNumber": deliveryNumber,
+                "invoiceName": invoiceName,
+                "invoiceSurname": invoiceSurname,
+                "invoiceCompany": invoiceCompany,
+                "invoiceNip": invoiceNip,
+                "invoiceAddress": invoiceAddress,
+                "invoiceZip": invoiceZip,
+                "invoiceCity": invoiceCity,
+                "invoiceCountry": invoiceCountry,
+                "invoiceNumber": invoiceNumber
+            },
+            "datatype": "json",
+            success: function (msg) {
+                alert("Zamówienie zostało utworzone");
+            },
+            error: function (msg) {
+                alert("Nie udało się utworzyć zamówienia");
+            }
+        });
+       
+    });
+    // dodawanie zamówienia
 });
+
+

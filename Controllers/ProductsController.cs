@@ -15,12 +15,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Clutchlit.Controllers
 {
-
-
+   
     [Authorize]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public static List<string> busketList = new List<string>();
 
         public ProductsController(ApplicationDbContext context)
         {
@@ -40,14 +40,21 @@ namespace Clutchlit.Controllers
         public IActionResult AddToCart(int id)
         {
             string key = "product_id";
+            busketList.Add(id.ToString());
+            string data = string.Join(",", busketList.ToArray());
+
             CookieOptions option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(20);
             
-            Response.Cookies.Append(key, id.ToString(), option);
+            Response.Cookies.Append(key, data, option);
+
+            // aktualizujemy koszyk
+            ViewData["busketItemsNumber"] = "ass";
+            //
 
             // czytamy 
             string cookieValueFromReq = Request.Cookies["product_id"];
-            return Json(cookieValueFromReq);
+            return Json("Dodano do koszyka");
 
         }
         [HttpGet("/Products/ListProducts/")]

@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Clutchlit.Data;
 using Clutchlit.Models;
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Clutchlit.Controllers
 {
@@ -21,11 +25,13 @@ namespace Clutchlit.Controllers
     {
         private readonly MysqlContext _contextSp24;
         private readonly AMysqlContext _contextSp;
+        private readonly ApplicationDbContext _context;
 
-        public OrdersController(MysqlContext contextSp24, AMysqlContext contextSp)
+        public OrdersController(ApplicationDbContext context, MysqlContext contextSp24, AMysqlContext contextSp)
         {
             _contextSp24 = contextSp24;
-            _contextSp = contextSp; 
+            _contextSp = contextSp;
+            _context = context;
         }
         public IActionResult Index()
         {
@@ -677,9 +683,117 @@ namespace Clutchlit.Controllers
         public IActionResult AddOrder()
         {
             string cookieValueFromReq = Request.Cookies["product_id"];
-            ViewData["busket"] = cookieValueFromReq;
-            ViewData["dupa"] = "dd";
+            
+            if (cookieValueFromReq != null)
+            {
+                List<string> itemList = cookieValueFromReq.Split(",").ToList();
+                List<Product> productsList = new List<Product>();
+                foreach (var singleItem in itemList)
+                {
+                    productsList.Add(_context.Products.Where(x => x.Id == int.Parse(singleItem)).SingleOrDefault());
+                }
+                ViewData["busketIT"] = productsList;
+
+            }
+            else
+            {
+                ViewData["busketIT"] = null;
+            }
+
+            
             return View();
+        }
+        static string GetMd5Hash(string input)
+        {
+            MD5 md5 = System.Security.Cryptography.MD5.Create();
+            byte[] data = md5.ComputeHash(Encoding.UTF8.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
+        }
+        public IActionResult CreateOrder(string ShopType, string deliveryType, string exampleInputEmail1, string nameInput, string surnameInput, string deliveryName, string deliverySurname, string deliveryCompany, string deliveryNip, string deliveryAddress, string deliveryZip, string deliveryCity, string deliveryCountry, string deliveryNumber, string invoiceName, string invoiceSurname, string invoiceCompany, string invoiceNip, string invoiceAddress, string invoiceZip, string invoiceCity, string invoiceCountry, string invoiceNumber)
+        {
+            var user = User.Identity.Name;
+            
+            int noOfRowInserted = _context.Database.ExecuteSqlCommand("insert into cl_orders(order_date, order_creator) values (NOW(),'"+ user +"')");
+
+            // dodajemy zamówienie do sprzegla24.pl
+            int id = _contextSp24.Orders_sp24.LastOrDefault().Id_order + 1; // Id nowego zamówienia
+            string reference = "SP24-" + id.ToString(); // referencja nowego zamówienia
+            string secure_key = GetMd5Hash(Guid.NewGuid().ToString()); // secure key do ps_orders
+            string deliveryTypeS = "";
+            string module = "";
+            switch (deliveryType)
+            {
+                case "18":
+                    {
+                        deliveryTypeS = "Płatność u kuriera przy odbiorze";
+                        module = "cashondelivery"; 
+                        break;
+                    }
+                case "20":
+                    {
+                        deliveryTypeS = "Przelew na konto";
+                        module = "bankwire";
+                        break;
+                    }
+                case "22":
+                    {
+                        deliveryTypeS = "Płatność gotówką lub przelewem";
+                        module = "cheque";
+                        break;
+                    }
+            }
+
+
+            // podliczamy koszyk
+            List<Product> productsList = new List<Product>();
+            string cookieValueFromReq = Request.Cookies["product_id"];
+
+            if (cookieValueFromReq != null)
+            {
+                List<string> itemList = cookieValueFromReq.Split(",").ToList();
+                foreach (var singleItem in itemList)
+                {
+                    productsList.Add(_context.Products.Where(x => x.Id == int.Parse(singleItem)).SingleOrDefault());
+                }
+            }
+
+            decimal totalPaid = 0;
+            decimal totalPaidTaxIncl = 0;
+            decimal totalPaidTaxExcl = 0;
+            decimal totalPaidReal = 0;
+            decimal totalProducts = 0;
+            decimal totalProductsWt = 0;
+            decimal totalShipping = 0;
+            decimal totalShippingTaxIncl = 0;
+            decimal totalShippingTaxExcl = 0;
+            decimal CarrierTaxRate = 0;
+
+            // podliczamy koszyk
+
+            int noPsCustomer = _contextSp24.Database.ExecuteSqlCommand("INSERT INTO ps_customer (id_shop_group, id_shop, id_gender, id_default_group, id_lang, id_risk, company, siret, ape, firstname, lastname, email, passwd, last_passwd_gen, birthday, newsletter, ip_registration_newsletter, newsletter_date_add, optin, website, outstanding_allow_amount, show_public_prices, max_payment_days, secure_key, note, active, is_guest, deleted, date_add, date_upd) VALUES (1, 1, 0, 2, 1, 0, '"+invoiceCompany+"', NULL, NULL, '"+nameInput+"', '"+surnameInput+"', '"+exampleInputEmail1+"', 'AA', NOW(), '0000-00-00', 0, NULL, '0000-00-00 00:00:00', 0, NULL, 0.00, 0, 0, '"+secure_key+"', NULL, 1, 1, 0, NOW(),NOW())");
+            int customerLastId = _contextSp24.Customers_sp24.Last().Id_customer; // id nowo-dodanego klienta. 
+
+            int NoPsAddressDelivery = _contextSp24.Database.ExecuteSqlCommand("INSERT INTO ps_address (id_country, id_state, id_customer, id_manufacturer, id_supplier, id_warehouse, alias, company, lastname, firstname, address1, address2, postcode, city, other, phone, phone_mobile, vat_number, dni, date_add, date_upd, active, deleted) VALUES ('"+deliveryCountry+"', 0, '"+customerLastId+"', 0, 0, 0, 'Mój adres', '"+deliveryCompany+"', '"+deliveryName+"', '"+deliverySurname+"', '"+deliveryAddress+"', '', '"+deliveryZip+"', '"+deliveryCity+"', '', '', '"+deliveryNumber+"', '"+deliveryNip+"', '', NOW(), NOW(), 1, 0) ");
+            int addressDeliveryId = _contextSp24.Addresses_sp24.Last().Id_address;
+
+            int NoPsAddressInvoice = _contextSp24.Database.ExecuteSqlCommand("INSERT INTO ps_address (id_country, id_state, id_customer, id_manufacturer, id_supplier, id_warehouse, alias, company, lastname, firstname, address1, address2, postcode, city, other, phone, phone_mobile, vat_number, dni, date_add, date_upd, active, deleted) VALUES ('" + invoiceCountry + "', 0, '" + customerLastId + "', 0, 0, 0, 'Mój adres rozliczeniowy', '" + invoiceCompany + "', '" + invoiceName + "', '" + invoiceSurname + "', '" + invoiceAddress + "', '', '" + invoiceZip + "', '" + invoiceCity + "', '', '', '" + invoiceNumber + "', '" + invoiceNip + "', '', NOW(), NOW(), 1, 0) ");
+            int addressInvoiceId = _contextSp24.Addresses_sp24.Last().Id_address;
+
+            int NoPsCart = _contextSp24.Database.ExecuteSqlCommand("INSERT INTO ps_cart (id_shop_group, id_shop, id_carrier, delivery_option, id_lang, id_address_delivery, id_address_invoice, id_currency, id_customer, id_guest, secure_key, recyclable, gift, gift_message, mobile_theme, allow_seperated_package, date_add, date_upd) VALUES (1, 1, "+deliveryType+", 'a:1:{i:"+addressDeliveryId+";s:3:\""+deliveryType+",\";}', 1, "+addressDeliveryId+", "+addressInvoiceId+", 1, "+customerLastId+", 9999, '"+secure_key+"', 0, 0, '', 0, 0, NOW(), NOW())");
+            int cartId = _contextSp24.Carts_sp24.Last().Id_cart;
+
+            _contextSp24.Database.ExecuteSqlCommand("INSERT INTO ps_oav_order_ip_log (id_cart, ip) VALUES ('"+cartId+"','200.200.200.200') ");
+            _contextSp24.Database.ExecuteSqlCommand("INSERT INTO ps_oav_ip_info (ip, info, lastdate) VALUES ('200.200.200.200','CLUTCHLIT','1477559381')");
+
+            int NoPsOrders = _contextSp24.Database.ExecuteSqlCommand("INSERT INTO ps_orders (reference, id_shop_group, id_shop, id_carrier, id_lang, id_customer, id_cart, id_currency, id_address_delivery, id_address_invoice, current_state, secure_key, payment, conversion_rate, module, recyclable, gift, gift_message, mobile_theme, shipping_number, total_discounts, total_discounts_tax_incl, total_discounts_tax_excl, total_paid, total_paid_tax_incl, total_paid_tax_excl, total_paid_real, total_products, total_products_wt, total_shipping, total_shipping_tax_incl, total_shipping_tax_excl, carrier_tax_rate, total_wrapping, total_wrapping_tax_incl, total_wrapping_tax_excl, round_mode, round_type, invoice_number, delivery_number, invoice_date, delivery_date, valid, date_add, date_upd, dhl_lp, dhl_shipment_id) VALUES ('"+reference+"', 1, 1, '"+deliveryType+"', 1, '"+customerLastId+"', '"+cartId+"', 1, '"+addressDeliveryId+"', '"+addressInvoiceId+"', '10', '"+secure_key+"', '"+deliveryTypeS+"', 1.00, '"+module+"', 0, 0, '', 0, '', 0.00, 0.00, 0.00, '"+totalPaid+"', '"+totalPaidTaxIncl+"', '"+totalPaidTaxExcl+"', '"+totalPaidReal+"', '"+totalProducts+"', '"+totalProductsWt+"', '"+totalShipping+"', '"+totalShippingTaxIncl+"', '"+totalShippingTaxExcl+"', '"+CarrierTaxRate+ "', '0.00', '0.00', '0.00', 2, 2, 0, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 1, NOW(), NOW(), NULL,NULL) ");
+            
+            // sprzegla24
+            return Json(customerLastId);
         }
     }
 }

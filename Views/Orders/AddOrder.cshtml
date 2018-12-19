@@ -17,38 +17,82 @@
         </div>
     </div>
     <div class="box-body ">
+       
         <div class="col-lg-12">
             <div class="form-group has-warning">
                 <label class="control-label" for="inputWarning">
                     <i class="fa fa-bell-o"></i> Wybierz sklep
                 </label>
-                <select class="form-control">
+                <select class="form-control" name="shopType" id="shopType">
                     <option value="1">Sprzeglo.com.pl</option>
                     <option value="2">Sprzegla24.pl</option>
                 </select>
+
+            </div>
+            <div class="form-group has-warning">
+                <label class="control-label" for="inputWarning">
+                    <i class="fa fa-car"></i> Dostawa i płatność
+                </label>
+                <select class="form-control" name="deliveryType" id="deliveryType">
+                    <option value="18">DPD pobranie</option>
+                    <option value="20">DPD przelew</option>
+                    <option value="22">Odbiór osobisty</option>
+                </select>
+
             </div>
         </div>
-        <div class="col-lg-6">
-            <h3>Twój koszyk</h3>
-            <hr />
-            @ViewData["busket"] 
-            </div>
-        <div class="col-lg-6">
-            <h3>Dane klienta</h3>
-            <hr />
-            <div class="form-group">
-                <label for="exampleInputEmail1">Adres e-mail</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Adres e-mail">
-            </div>
+        <div class="col-lg-12" style="padding:0">
+            <div class="col-lg-6">
+                <h3>Twój koszyk</h3>
+                <hr />
+                
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Lp. </th>
+                        <th>ID </th>
+                        <th>Nazwa </th>
+                        <th>Ilość </th>
+                        <th>Cena</th>
+                        <th>Akcje</th>
+                    </tr>
+                    @{int i = 1;}
+                    @if (ViewData["busketIT"] != null)
+                    {
+                        @foreach (var product in ViewData["busketIT"] as IList<Product> )
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@product.Id</td>
+                                <td>@product.Name</td>
+                                <td>1</td>
+                                <td>@product.Gross_price</td>
+                                <td></td>
+                            </tr>
+                            @product.Id
+                            i++;
+                        }
+                    }
 
-            <div class="form-group">
-                <label for="nameInput">Imię</label>
-                <input type="text" class="form-control" id="nameInput" placeholder="Imię">
-            </div>
 
-            <div class="form-group">
-                <label for="surnameInput">Nazwisko</label>
-                <input type="text" class="form-control" id="surnameInput" placeholder="Nazwisko">
+                </table>
+            </div>
+            <div class="col-lg-6">
+                <h3>Dane klienta</h3>
+                <hr />
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Adres e-mail</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Adres e-mail">
+                </div>
+
+                <div class="form-group">
+                    <label for="nameInput">Imię</label>
+                    <input type="text" class="form-control" id="nameInput" placeholder="Imię">
+                </div>
+
+                <div class="form-group">
+                    <label for="surnameInput">Nazwisko</label>
+                    <input type="text" class="form-control" id="surnameInput" placeholder="Nazwisko">
+                </div>
             </div>
         </div>
         <div class="col-lg-6">
@@ -68,6 +112,11 @@
             <div class="form-group">
                 <label for="deliveryCompany">Firma</label>
                 <input type="text" class="form-control" id="deliveryCompany" placeholder="Firma (gdy odbiorcą przesyłki jest firma)">
+            </div>
+
+            <div class="form-group">
+                <label for="deliveryCompany">NIP</label>
+                <input type="text" class="form-control" id="deliveryNip" placeholder="NIP">
             </div>
 
             <div class="form-group">
@@ -92,14 +141,15 @@
 
             <div class="form-group">
                 <label for="deliveryCity">Nr telefonu</label>
-                <input type="tel" class="form-control" id="deliveryCity" placeholder="Nr telefonu (kontakt z kurierem)">
+                <input type="tel" class="form-control" id="deliveryNumber" placeholder="Nr telefonu (kontakt z kurierem)">
             </div>
 
         </div>
         <div class="col-lg-6">
             <h3>Dane do faktury (gdy inne niż dostawy)</h3>
             <hr />
-
+            <label for="differentInvoiceData">Inne dane do faktury</label>
+            <input type="checkbox" class="minimal-red" name="differentInvoiceData" id="differentInvoiceData" value="1" />
             <div class="form-group">
                 <label for="invoiceName">Imię</label>
                 <input type="text" class="form-control" id="invoiceName" placeholder="Imię">
@@ -113,6 +163,11 @@
             <div class="form-group">
                 <label for="invoiceCompany">Firma</label>
                 <input type="text" class="form-control" id="invoiceCompany" placeholder="Firma">
+            </div>
+
+            <div class="form-group">
+                <label for="invoiceNip">NIP</label>
+                <input type="text" class="form-control" id="invoiceNip" placeholder="NIP">
             </div>
 
             <div class="form-group">
@@ -141,6 +196,7 @@
             </div>
 
         </div>
+        <button type="submit" class="btn btn-success" id="addOrderButton">Dodaj zamówienie</button>
     </div>
 
 </div>
