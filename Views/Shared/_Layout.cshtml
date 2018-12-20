@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -59,10 +63,10 @@
                                 <li class="header">W koszyku masz: @ViewData["busketItemsNumber"]</li>
                                 <li>
                                     <ul class="menu">
-                                        
+
                                         <li>
                                             <a href="#">
-                                                
+
                                                 <h4>
                                                     Support Team
                                                     <small><i class="fa fa-clock-o"></i> 5 mins</small>
@@ -204,15 +208,15 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="~/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                                <span class="hidden-xs">Mikołaj Ferfet</span>
+                                <span class="hidden-xs">@UserManager.GetUserName(User)</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
                                     <img src="~/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                     <p>
-                                        Mikołaj Ferfet - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        @UserManager.GetUserName(User)
+                                        <small></small>
                                     </p>
                                 </li>
                                 <!-- Menu Footer-->
@@ -228,25 +232,27 @@
         <aside class="main-sidebar">
             <!-- sidebar: style can be found in sidebar.less -->
             <section class="sidebar">
-               
-                    <form asp-controller="Products" asp-action="ListProducts" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" value="@ViewData["search_string"]" placeholder="Szukaj...">
-                            <span class="input-group-btn">
-                                <button type="submit" id="search-btn" class="btn btn-flat">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
 
-                    <ul class="sidebar-menu" data-widget="tree">
+                <form asp-controller="Products" asp-action="ListProducts" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" value="@ViewData["search_string"]" placeholder="Szukaj...">
+                        <span class="input-group-btn">
+                            <button type="submit" id="search-btn" class="btn btn-flat">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </form>
 
-                        <li class="active">
-                            <a asp-controller="Home" asp-action="">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                            </a>
-                        </li>
+                <ul class="sidebar-menu" data-widget="tree">
+
+                    <li class="active">
+                        <a asp-controller="Home" asp-action="">
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("IT") || User.IsInRole("Manager") || User.IsInRole("Saler") || User.IsInRole("Storekeeper"))
+                    {
                         <li class="header">DZIAŁ HANDLOWY</li>
                         <li class="treeview">
                             <a href="#">
@@ -258,66 +264,87 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a asp-controller="Orders" asp-action="GetAll"><i class="fa fa-circle-o text-red"></i> Wszystkie zamówienia</a></li>
-                                <li><a asp-controller="Orders" asp-action="AddOrder"><i class="fa fa-circle-o text-red"></i> Dodaj zamówienie</a></li>
+                                @if (User.IsInRole("Admin") || User.IsInRole("IT") || User.IsInRole("Manager") || User.IsInRole("Saler"))
+                                {
+                                    <li><a asp-controller="Orders" asp-action="AddOrder"><i class="fa fa-circle-o text-red"></i> Dodaj zamówienie</a></li>
+                                }
                             </ul>
                         </li>
-                        <li class="treeview">
+                        @if (User.IsInRole("Admin") || User.IsInRole("IT") || User.IsInRole("Manager") || User.IsInRole("Saler"))
+                        {
+                            <li class="treeview">
 
-                            <a href="#">
-                                <i class="fa fa-inbox"></i>
-                                <span>Produkty</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a asp-controller="Products" asp-action="List"><i class="fa fa-circle-o text-red"></i> Lista produktów</a></li>
-                                <li><a asp-controller="Products" asp-action="History"><i class="fa fa-circle-o text-red"></i> Historia Cen</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-cubes"></i>
-                                <span>Dystrybutorzy</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a><i class="fa fa-circle-o text-red"></i> Lista dystrybutorów</a></li>
-                                <li><a><i class="fa fa-circle-o text-red"></i> Lista magazynów</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-bell"></i>
-                                <span>Centrum alertów</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a><i class="fa fa-circle-o text-red"></i> Lista alertów</a></li>
-                                <li><a><i class="fa fa-circle-o text-red"></i> Zarządzaj flagami</a></li>
-                                <li><a><i class="fa fa-circle-o text-red"></i> Zarządzaj alertami</a></li>
-                            </ul>
-                        </li>
+                                <a href="#">
+                                    <i class="fa fa-inbox"></i>
+                                    <span>Produkty</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a asp-controller="Products" asp-action="List"><i class="fa fa-circle-o text-red"></i> Lista produktów</a></li>
+                                    @if (User.IsInRole("Admin") || User.IsInRole("IT") || User.IsInRole("Manager"))
+                                    {
+                                        <li><a asp-controller="Products" asp-action="History"><i class="fa fa-circle-o text-red"></i> Historia Cen</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("IT") || User.IsInRole("Manager") || User.IsInRole("Saler"))
+                        {
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-cubes"></i>
+                                    <span>Dystrybutorzy</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a><i class="fa fa-circle-o text-red"></i> Lista dystrybutorów</a></li>
+                                    <li><a><i class="fa fa-circle-o text-red"></i> Lista magazynów</a></li>
+                                </ul>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin") || User.IsInRole("IT") || User.IsInRole("Manager"))
+                        {
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-bell"></i>
+                                    <span>Centrum alertów</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a><i class="fa fa-circle-o text-red"></i> Lista alertów</a></li>
+                                    <li><a><i class="fa fa-circle-o text-red"></i> Zarządzaj flagami</a></li>
+                                    <li><a><i class="fa fa-circle-o text-red"></i> Zarządzaj alertami</a></li>
+                                </ul>
+                            </li>
+                        }
 
-                        <li class="header">DZIAŁ PRESTASHOP</li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-legal"></i>
-                                <span>Produkty</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a><i class="fa fa-circle-o text-blue"></i> Lista produktów</a></li>
-                                <li><a><i class="fa fa-circle-o text-blue"></i> Wyszukiwarka auta</a></li>
-                            </ul>
-                        </li>
+                    }
 
+                    @if (User.IsInRole("Admin") || User.IsInRole("IT") || User.IsInRole("Manager") || User.IsInRole("Saler") || User.IsInRole("Storekeeper"))
+                    {
+                        @if (User.IsInRole("Admin") || User.IsInRole("IT") || User.IsInRole("Manager") || User.IsInRole("Saler"))
+                        {
+                            <li class="header">DZIAŁ PRESTASHOP</li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-legal"></i>
+                                    <span>Produkty</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a><i class="fa fa-circle-o text-blue"></i> Lista produktów</a></li>
+                                    <li><a><i class="fa fa-circle-o text-blue"></i> Wyszukiwarka auta</a></li>
+                                </ul>
+                            </li>
+                        }
                         <li class="header">DZIAŁ ALLEGRO</li>
                         <li class="treeview">
                             <a href="#">
@@ -329,29 +356,40 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><a href="/AllegroAuctions/GetList/"><i class="fa fa-circle-o text-yellow"></i> Lista aukcji</a></li>
-                                <li><a><i class="fa fa-circle-o text-yellow"></i> Wystaw aukcję</a></li>
-                            </ul>
-                        </li>
-                        <li class="">
-                            <a href="#">
-                                <i class="fa fa-cog"></i>
-                                <span>Konfiguracja</span>
-                            </a>
+                                @if (User.IsInRole("Admin") || User.IsInRole("IT") || User.IsInRole("Manager"))
+                                {
+                                    <li><a><i class="fa fa-circle-o text-yellow"></i> Wystaw aukcję</a></li>
+                                }
 
-                        <li class="header">DZIAŁ MONITORINGU</li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-eye-slash"></i>
-                                <span>Monitoring chwilowy</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a><i class="fa fa-circle-o text-aqua"></i> Lista produktów</a></li>
-                                <li><a><i class="fa fa-circle-o text-aqua"></i> Lista konkurencji</a></li>
                             </ul>
-                        </li>
+                            @if (User.IsInRole("Admin") || User.IsInRole("IT"))
+                            {
+                                <a href="#">
+                                    <i class="fa fa-cog"></i>
+                                    <span>Konfiguracja</span>
+                                </a>
+                            }
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="header">DZIAŁ MONITORINGU</li>
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-eye-slash"></i>
+                                    <span>Monitoring chwilowy</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li><a><i class="fa fa-circle-o text-aqua"></i> Lista produktów</a></li>
+                                    <li><a><i class="fa fa-circle-o text-aqua"></i> Lista konkurencji</a></li>
+                                </ul>
+                            </li>
+
+
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-eye"></i>
@@ -365,8 +403,9 @@
                                 <li><a><i class="fa fa-circle-o text-aqua"></i> Konfiguracja</a></li>
                             </ul>
                         </li>
+                        }
                     </ul>
-                </section>
+            </section>
             <!-- /.sidebar -->
         </aside>
         <div class="content-wrapper">
@@ -498,7 +537,7 @@
         }
 
         $(document).ready(function () {
-            
+
             $('#getoffers').submit(function (event) {
 
                 event.preventDefault();
@@ -630,14 +669,14 @@
                     { "data": "distributorId", "name": "distributor_id", "width": "15%", "className": "distributors" },
                     { "data": "markup", "name": "markup", "width": "10%" },
                     {
-                        "render": function (data, type, full, meta) { return '<a class="add_to_busket btn btn-default" name="'+full.id+'">Kup</a>'; }
-                    },  
+                        "render": function (data, type, full, meta) { return '<a class="add_to_busket btn btn-default" name="' + full.id + '">Kup</a>'; }
+                    },
                 ],
 
                 "order": [[1, 'asc']],
 
             });
-           
+
             $("#example2 tbody").on('click', 'tr', function () {
                 //alert("dd");
                 var tr = $(this).closest('tr');
@@ -668,7 +707,7 @@
 
         $(document).on('click', '.add_to_busket', function (e) {
             e.preventDefault();
-           // alert($(this).attr('name'));
+            // alert($(this).attr('name'));
             $.ajax({
                 type: "POST",
                 url: "/Products/AddToCart/" + $(this).attr('name') + "/",
