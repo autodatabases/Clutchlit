@@ -180,10 +180,96 @@ namespace Clutchlit.Controllers
             string autodoc_string = "";
             string ceneo_string = "";
             string czesci_string = "";
+            string ebay_string = "";
+
             //
             Product product = _context.Products.Where(m => m.Id == Id).Single();
             string manufacturer_name = "DUPA";
             manufacturer_name = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).First().Description.ToUpper().Replace(" ", "");
+
+            // EBAY
+            Task<string> ebay = Task<string>.Factory.StartNew(() =>
+            {
+            string result = "";
+            HttpClient client = new HttpClient();
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
+            string resultA = "";
+            Double lowestPrice = 100000;
+            string partialResult = "";
+
+            try
+            {
+                using (var response = client.GetAsync("https://www.ebay.com/sch/i.html?_from=R40&_trksid=m570.l1313&_nkw=+" + product.Reference.ToUpper().Replace(" ", "") + "&_sacat=0").Result)
+                {
+                    using (var content = response.Content)
+                    {
+                        // read answer in non-blocking way
+                        var resultB = content.ReadAsStringAsync().Result;
+                        var document = new HtmlDocument();
+                        document.LoadHtml(resultB);
+
+                        var nodes = document.DocumentNode.SelectNodes("//li[@class=\"s-item  \"]");
+                        if (nodes != null)
+                        {
+                            foreach (HtmlNode node in nodes)
+                            {
+                                if (node != null)
+                                {
+                                    var titleA = node.SelectSingleNode(".//h3[@class=\"s-item__title\"]");
+                                        if(titleA != null)
+                                        {
+                                            var title = titleA.InnerText.ToUpper().Replace(" ", "");
+                                            if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                            {
+                                                if (title.Contains(manufacturer_name.ToUpper()))
+                                                {//delivery
+                                                    var price = node.SelectSingleNode(".//span[@class=\"s-item__price\"]").InnerText;
+                                                    var stock = "Dostępny";
+
+                                                    string shippingPrice = "";
+                                                    var shipprice = node.SelectSingleNode(".//span[@class=\"s-item__shipping s-item__logisticsCost\"]").InnerText;
+                                                    if ( shipprice != null)
+                                                    {
+                                                        shippingPrice +=  shipprice.Replace(".", ",");
+                                                    }
+
+                                                    double TotalPrice = Double.Parse(price.Replace("$", "").Replace(".", ",").Trim());
+
+                                                    if (TotalPrice < lowestPrice)
+                                                    {
+                                                        lowestPrice = TotalPrice;
+                                                        string pr = Math.Round((lowestPrice * 3.76),2).ToString();
+                                                        partialResult = "<tr class='green'><td><b>EBAY</b></td><td>" + pr + " PLN "+ shipprice+"</td><td>" + stock.Trim() + "</td></tr>";
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                        else
+                                        {
+                                        }
+                                    }
+                                    
+                                }
+                                resultA = resultA + partialResult;
+                                result = resultA;
+                            }
+                            else
+                            {
+                                result = "<tr class='orange'><td><b>EBAY</b></td><td colspan='2'>B/D</td></tr>";
+                            }
+                        }
+                    }
+                }
+                catch (AggregateException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                return result;
+            });
+
+            // EBAY
+
 
             // IPARTS
             Task<string> iparts = Task<string>.Factory.StartNew(() =>
@@ -548,7 +634,10 @@ namespace Clutchlit.Controllers
                 ceneo_string = ceneo.Result;
             if (czesciauto.Result != null)
                 czesci_string = czesciauto.Result;
-            var res = iparts_string + ucando_string + interCars_string + autodoc_string + ceneo_string + czesci_string +"</table>";
+            if(ebay != null)
+                ebay_string = ebay.Result;
+
+            var res = iparts_string + ucando_string + interCars_string + autodoc_string + ceneo_string + czesci_string + ebay_string +"</table>";
             return Json(res);
         }
         [HttpPost]
