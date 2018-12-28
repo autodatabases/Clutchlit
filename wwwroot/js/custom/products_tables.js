@@ -12,6 +12,12 @@
             id: rowData.id
         },
         dataType: 'json',
+        beforeSend: function () {
+            $('.images-loader').show();
+        },
+        complete: function () {
+            $('.images-loader').hide();
+        },
         success: function (json) {
             if (json != '</table>') {
 
@@ -78,6 +84,12 @@ function format(rowData) {
                     id: idR
                 },
                 contentType: 'application/json',
+                beforeSend: function () {
+                    $('.images-loader').show();
+                },
+                complete: function () {
+                    $('.images-loader').hide();
+                },
                 success: function (data) {
                     console.log(data);
                     html = "";
