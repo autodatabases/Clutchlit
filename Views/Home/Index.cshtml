@@ -72,9 +72,9 @@
     <!-- ./col -->
 </div>
 <!-- /.row -->
-<div class="box">
+<div class="box col-md-6" style="width:50%; font-size:13px;">
     <div class="box-header with-border">
-        <h3 class="box-title">Podgląd zamówień</h3>
+        <h3 class="box-title">Sprzegla24.pl</h3>
         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Zwiń">
                 <i class="fa fa-minus"></i>
@@ -86,16 +86,65 @@
     </div>
 
     <div class="box-body">
+        <table id="order_list" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Wartość</th>
+                    <th>Wartość bez dostawy</th>
+                    <th>Płatność</th>
+                    <th>Referencja</th>
+                </tr>
+            </thead>
+            @foreach (var std in ViewData["products"] as IList<A_orders>)
+            {
+                <tr>
+                    <td>@std.Created</td>
+                    <td>@(Math.Round(std.Total_paid, 2)) PLN</td>
+                    <td>@(Math.Round(std.Total_paid_products, 2)) PLN</td>
+                    <td>@std.Payment</td>
+                    <td>@std.Reference</td>
+                </tr>
+            }
 
+        </table>
     </div>
 
 </div>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="fb-page" data-href="https://www.facebook.com/sprzegla24/" data-tabs="timeline" data-small-header="false" data-width="500" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/sprzegla24/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/sprzegla24/">Sprzegla24.pl</a></blockquote></div>
+<div class="box col-md-6" style="width:50%; font-size:13px;">
+    <div class="box-header with-border">
+        <h3 class="box-title">Sprzeglo.com.pl</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Zwiń">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Zamknij">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
     </div>
-    <div class="col-md-6">
-        <div class="fb-page" data-href="https://www.facebook.com/sprzeglocompl/" data-tabs="timeline" data-adapt-container-width="true" data-width="500" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/sprzeglocompl/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/sprzeglocompl/">Sprzeglo.com.pl</a></blockquote></div>
+
+    <div class="box-body">
+        <table id="order_list" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Wartość</th>
+                    <th>Wartość bez dostawy</th>
+                    <th>Płatność</th>
+                    <th>Referencja</th>
+                </tr>
+            </thead>
+            @foreach (var std in ViewData["productsB"] as IList<B_orders>)
+            {
+                <tr>
+                    <td>@std.Created</td>
+                    <td>@(Math.Round(std.Total_paid, 2)) PLN</td>
+                    <td>@(Math.Round(std.Total_paid_products, 2)) PLN</td>
+                    <td>@std.Payment</td>
+                    <td>@std.Reference</td>
+                </tr>
+            }
+        </table>
     </div>
 </div>

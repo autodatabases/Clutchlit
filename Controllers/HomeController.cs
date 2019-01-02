@@ -28,6 +28,12 @@ namespace Clutchlit.Controllers
             int numberSp24 = _contextSp24.Orders_sp24.Where(p => p.Current_state == 1 || p.Current_state == 3 || p.Current_state == 16).Count();
             int numberSpcom = _contextSp.Orders_spcom.Where(p => p.Current_state == 1 || p.Current_state == 3 || p.Current_state == 16).Count();
 
+            List<A_orders> sp24 = _contextSp24.Orders_sp24.OrderByDescending(c => c.Id_order).Take(5).ToList();
+            List<B_orders> spCom = _contextSp.Orders_spcom.OrderByDescending(c => c.Id_order).Take(5).ToList();
+
+            ViewData["products"] = sp24;
+            ViewData["productsB"] = spCom;
+
             int disPrices = _context.PdPrices.Count();
 
             int customers = _contextSp24.Customers_sp24.Count() + _contextSp.Customers_spcom.Count();
@@ -35,6 +41,7 @@ namespace Clutchlit.Controllers
             ViewData["newOrders"] = numberSp24 + numberSpcom;
             ViewData["distributorsPrices"] = disPrices;
             ViewData["customerAmount"] = customers;
+
             return View();
         }
 
