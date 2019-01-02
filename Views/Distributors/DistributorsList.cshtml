@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Distributor>
+
+    @{
+    ViewData["Title"] = "View";
+    }
+
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Dystrybutorzy</h3>
+            
+        </div>
+        <div class="box-body ">
+            <table id="order_list" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Id </th>
+                        <th>
+                            Nazwa
+                        </th>
+                        <th>Akcje</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model) {
+                    <tr>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td style="text-align:right;">
+                            <a class="btn btn-info" asp-action="DistributorEdit" asp-route-id="@item.Id">Edytuj</a> |
+                            <a class="btn btn-warning" asp-action="DistributorDetails" asp-route-id="@item.Id">Szczegóły</a> |
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+                        </td>
+                    </tr>
+}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+   

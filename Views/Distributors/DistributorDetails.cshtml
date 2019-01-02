@@ -1,0 +1,24 @@
+﻿@model Clutchlit.Models.Distributor
+
+@{
+    ViewData["Title"] = "DistributorDetails";
+}
+
+<h2>DistributorDetails</h2>
+
+<div>
+    <h4>Distributor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="5" class="btn btn-info">Edytuj</a> |
+    <a asp-action="DistributorsList" class="btn btn-default">Wróć do listy</a>
+</div>
