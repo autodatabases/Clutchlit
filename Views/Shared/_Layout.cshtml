@@ -358,7 +358,7 @@
                                 <li><a href="/AllegroAuctions/GetList/"><i class="fa fa-circle-o text-yellow"></i> Lista aukcji</a></li>
                                 @if (User.IsInRole("Admin") || User.IsInRole("IT") || User.IsInRole("Manager"))
                                 {
-                                    <li><a><i class="fa fa-circle-o text-yellow"></i> Wystaw aukcję</a></li>
+                                    <li><a asp-controller="AllegroAuctions" asp-action="AddAuction"><i class="fa fa-circle-o text-yellow"></i> Wystaw aukcję</a></li>
                                 }
 
                             </ul>

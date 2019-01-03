@@ -208,3 +208,4 @@ D:\WORK\Customers\[SPRZĘGŁA]\Clutchlit\Clutchlit\obj\Debug\netcoreapp2.1\Clutc
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Distributors\DistributorsList.g.cshtml.cs
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Distributors\DistributorDetails.g.cshtml.cs
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Distributors\DistributorEdit.g.cshtml.cs
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\AllegroAuctions\AddAuction.g.cshtml.cs

@@ -82,12 +82,12 @@ using Microsoft.AspNetCore.Identity;
             WriteLiteral("    ");
             EndContext();
             BeginContext(191, 660, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "22275abc3c7e4e858b99547e3c042b8a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bef52e5745d949a4af296171a6072704", async() => {
                 BeginContext(376, 123, true);
                 WriteLiteral("\r\n        <ul class=\"nav navbar-nav navbar-left\" style=\"width:100%;\">\r\n            <li class=\"pull-left\">\r\n                ");
                 EndContext();
                 BeginContext(499, 160, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6c8699eedee94bc8aa6f0f0122ef25b4", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c4793a20cd61427688026c162892305d", async() => {
                     BeginContext(625, 29, false);
 #line 11 "E:\[DOTNET] Projekty\Clutchlit\Views\Shared\_LoginPartial.cshtml"
                                                                                                                                         Write(UserManager.GetUserName(User));
@@ -168,7 +168,7 @@ else
             WriteLiteral("    <ul class=\"nav navbar-nav navbar-right\">\r\n        <li>");
             EndContext();
             BeginContext(923, 67, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bc9d4fdd128242af83d6f261b341ad37", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "80e1c2638c5a48e7aa6cc57f65c8ad77", async() => {
                 BeginContext(975, 11, true);
                 WriteLiteral("Zarejestruj");
                 EndContext();
@@ -192,7 +192,7 @@ else
             WriteLiteral("</li>\r\n        <li>");
             EndContext();
             BeginContext(1009, 60, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e413f2f715bd40079f5178c9b1eaacd7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e73c6fd2268f476da8c0cca493865c55", async() => {
                 BeginContext(1058, 7, true);
                 WriteLiteral("Zaloguj");
                 EndContext();

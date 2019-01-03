@@ -15,7 +15,10 @@ namespace Clutchlit.Controllers
 {
     public class AllegroAuctionsController : Controller
     {
-        public static string Token = ""; 
+        public static string Token = "";
+        private static string SellerId = "sprzeglo-com-pl";
+        private static string AccessToken = "";
+
         HttpClient client = new HttpClient();
         public List<Auction> list = new List<Auction>();
         
@@ -40,6 +43,7 @@ namespace Clutchlit.Controllers
             }
             return new List<string>();
         }
+        
         public string GetToken(string token)
         {
             string response = "";
@@ -57,7 +61,11 @@ namespace Clutchlit.Controllers
                 foreach (var property in resource.Properties())
                 {
                     if (property.Name == "access_token")
+                    {
                         response = property.Value.ToString();
+                        AccessToken = response;
+                    }
+                        
                 }
                
                 return response;
@@ -239,6 +247,72 @@ namespace Clutchlit.Controllers
             return new JsonResult(new { data = data });
 
 
+        }
+
+        // dodawanie ręczne oferty
+
+        // pobieramy metody dostawy
+        public List<List<string>> GetDeliveryMethods()
+        {
+            List<List<string>> deliveryMethod = new List<List<string>>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/delivery-methods");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Accept = "application/vnd.allegro.beta.v1+json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = streamReader.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                var methods = x.deliveryMethods;
+                foreach (var method in methods)
+                {
+                    List<string> temp_list = new List<string>();
+                    temp_list.Add(method.id);
+                    temp_list.Add(method.name);
+                    deliveryMethod.Add(temp_list);
+                }
+            }
+            return deliveryMethod;
+        }
+        // pobieranie metod dostawy
+
+            // pobieranie cennika dostaw
+        public void GetShippingRates(string sellerId)
+        {
+            List<List<string>> deliveryMethod = new List<List<string>>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/delivery-methods");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Accept = "application/vnd.allegro.beta.v1+json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = streamReader.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                var methods = x.deliveryMethods;
+                foreach (var method in methods)
+                {
+                    List<string> temp_list = new List<string>();
+                    temp_list.Add(method.id);
+                    temp_list.Add(method.name);
+                    deliveryMethod.Add(temp_list);
+                }
+            }
+            return deliveryMethod;
+        }
+            //
+        public IActionResult AddAuction()
+        {
+
+
+            return View(); 
         }
     }
 }
