@@ -362,6 +362,8 @@
                                 }
 
                             </ul>
+                        </li>
+                        <li>
                             @if (User.IsInRole("Admin") || User.IsInRole("IT"))
                             {
                                 <a href="#">
@@ -369,25 +371,25 @@
                                     <span>Konfiguracja</span>
                                 </a>
                             }
-                            </li>
-                        }
+                        </li>
+                    }
 
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <li class="header">DZIAŁ MONITORINGU</li>
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa fa-eye-slash"></i>
-                                    <span>Monitoring chwilowy</span>
-                                    <span class="pull-right-container">
-                                        <i class="fa fa-angle-left pull-right"></i>
-                                    </span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a><i class="fa fa-circle-o text-aqua"></i> Lista produktów</a></li>
-                                    <li><a><i class="fa fa-circle-o text-aqua"></i> Lista konkurencji</a></li>
-                                </ul>
-                            </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class="header">DZIAŁ MONITORINGU</li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-eye-slash"></i>
+                                <span>Monitoring chwilowy</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a><i class="fa fa-circle-o text-aqua"></i> Lista produktów</a></li>
+                                <li><a><i class="fa fa-circle-o text-aqua"></i> Lista konkurencji</a></li>
+                            </ul>
+                        </li>
 
 
                         <li class="treeview">
@@ -403,8 +405,8 @@
                                 <li><a><i class="fa fa-circle-o text-aqua"></i> Konfiguracja</a></li>
                             </ul>
                         </li>
-                        }
-                    </ul>
+                    }
+                </ul>
             </section>
             <!-- /.sidebar -->
         </aside>
@@ -452,7 +454,14 @@
     -->
     <partial name="_CookieConsentPartial" />
     <script src="~/bower_components/jquery/dist/jquery.js"></script>
-
+    <script>
+        (function (w, d, s, g, js, fs) {
+            g = w.gapi || (w.gapi = {}); g.analytics = { q: [], ready: function (f) { this.q.push(f); } };
+            js = d.createElement(s); fs = d.getElementsByTagName(s)[0];
+            js.src = 'https://apis.google.com/js/platform.js';
+            fs.parentNode.insertBefore(js, fs); js.onload = function () { g.load('analytics'); };
+        }(window, document, 'script'));
+    </script>
     <script type="text/javascript">
 
         $(function () {
