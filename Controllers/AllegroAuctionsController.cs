@@ -310,7 +310,7 @@ namespace Clutchlit.Controllers
             //
         public IActionResult AddAuction()
         {
-
+            ViewData["Delivery"] = GetDeliveryMethods();
 
             return View(); 
         }
