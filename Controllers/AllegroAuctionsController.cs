@@ -216,7 +216,7 @@ namespace Clutchlit.Controllers
             Response.StatusCode = 200;
             return new JsonResult("Aukcja została zakończona");
         }
-        [HttpGet("[controller]/[action]/{id}/")]
+        [HttpGet("[controller]/[action]s/{id}/")]
         public IActionResult EditOffer(string id)
         { // edytujemy ofertę o ID
 
@@ -252,9 +252,9 @@ namespace Clutchlit.Controllers
         // dodawanie ręczne oferty
 
         // pobieramy metody dostawy
-        public List<List<string>> GetDeliveryMethods()
+        public List<string[]> GetDeliveryMethods()
         {
-            List<List<string>> deliveryMethod = new List<List<string>>();
+            List<string[]> deliveryMethod = new List<string[]>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/delivery-methods");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
@@ -270,9 +270,8 @@ namespace Clutchlit.Controllers
                 var methods = x.deliveryMethods;
                 foreach (var method in methods)
                 {
-                    List<string> temp_list = new List<string>
-                    {
-                        method.id.ToString(),
+                    string[] temp_list = new string[] {
+                        method.id.ToString(), 
                         method.name.ToString()
                     };
                     deliveryMethod.Add(temp_list);
@@ -283,11 +282,11 @@ namespace Clutchlit.Controllers
         // pobieranie metod dostawy
 
             // pobieranie cennika dostaw
-        public List<List<string>> GetShippingRates(string sellerId)
+        public List<string[]> GetShippingRates(string sellerId)
         {
-            List<List<string>> deliveryMethod = new List<List<string>>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/delivery-methods");
-            httpWebRequest.ContentType = "application/json";
+            List<string[]> shippingRates = new List<string[]>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("/sale/shipping-rates?seller.id="+sellerId+"");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "GET";
             httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
@@ -301,19 +300,21 @@ namespace Clutchlit.Controllers
                 var methods = x.deliveryMethods;
                 foreach (var method in methods)
                 {
-                    List<string> temp_list = new List<string>();
-                    temp_list.Add(method.id);
-                    temp_list.Add(method.name);
-                    deliveryMethod.Add(temp_list);
+                    string[] temp_list = new string[] {
+                        method.id.ToString(),
+                        method.name.ToString()
+                        };
+                    shippingRates.Add(temp_list);
                 }
             }
-            return deliveryMethod;
+            return shippingRates;
         }
             //
         public IActionResult AddAuction()
         {
+            ViewData["token"] = AccessToken;
             ViewData["Delivery"] = GetDeliveryMethods();
-
+            //ViewData["Shipping"] = GetShippingRates("45582318");
             return View(); 
         }
     }
