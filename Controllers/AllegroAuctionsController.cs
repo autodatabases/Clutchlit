@@ -281,7 +281,7 @@ namespace Clutchlit.Controllers
         // pobieranie metod dostawy
 
             // pobieranie cennika dostaw
-        public void GetShippingRates(string sellerId)
+        public List<List<string>> GetShippingRates(string sellerId)
         {
             List<List<string>> deliveryMethod = new List<List<string>>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/delivery-methods");
