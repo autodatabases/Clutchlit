@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Clutchlit.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -252,9 +253,9 @@ namespace Clutchlit.Controllers
         // dodawanie ręczne oferty
 
         // pobieramy metody dostawy
-        public List<string[]> GetDeliveryMethods()
+        public List<SelectListItem> GetDeliveryMethods()
         {
-            List<string[]> deliveryMethod = new List<string[]>();
+            List<SelectListItem> deliveryMethod = new List<SelectListItem>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/delivery-methods");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
@@ -270,11 +271,7 @@ namespace Clutchlit.Controllers
                 var methods = x.deliveryMethods;
                 foreach (var method in methods)
                 {
-                    string[] temp_list = new string[] {
-                        method.id.ToString(), 
-                        method.name.ToString()
-                    };
-                    deliveryMethod.Add(temp_list);
+                    deliveryMethod.Add(new SelectListItem { Selected = false, Text = method.name.ToString(), Value = method.id.ToString() });
                 }
             }
             return deliveryMethod;
