@@ -285,7 +285,7 @@ namespace Clutchlit.Controllers
         public List<string[]> GetShippingRates(string sellerId)
         {
             List<string[]> shippingRates = new List<string[]>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("/sale/shipping-rates?seller.id="+sellerId+"");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/shipping-rates?seller.id=" + sellerId+"");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "GET";
