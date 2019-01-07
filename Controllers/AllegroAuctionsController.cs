@@ -270,9 +270,11 @@ namespace Clutchlit.Controllers
                 var methods = x.deliveryMethods;
                 foreach (var method in methods)
                 {
-                    List<string> temp_list = new List<string>();
-                    temp_list.Add(method.id);
-                    temp_list.Add(method.name);
+                    List<string> temp_list = new List<string>
+                    {
+                        method.id.ToString(),
+                        method.name.ToString()
+                    };
                     deliveryMethod.Add(temp_list);
                 }
             }
@@ -286,7 +288,7 @@ namespace Clutchlit.Controllers
             List<List<string>> deliveryMethod = new List<List<string>>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/delivery-methods");
             httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Accept = "application/vnd.allegro.beta.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "GET";
             httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
 
