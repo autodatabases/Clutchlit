@@ -312,9 +312,9 @@ namespace Clutchlit.Controllers
             //
         public IActionResult AddAuction()
         {
-            ViewData["token"] = AccessToken;
+            //ViewData["token"] = AccessToken;
             ViewData["Delivery"] = GetDeliveryMethods();
-            //ViewData["Shipping"] = GetShippingRates("45582318");
+            ViewData["Shipping"] = GetShippingRates("45582318");
             return View(); 
         }
     }
