@@ -297,14 +297,12 @@ namespace Clutchlit.Controllers
             {
                 var resource = streamReader.ReadToEnd();
                 dynamic x = JsonConvert.DeserializeObject(resource);
-                var methods = x.rates;
+                var methods = x.shippingRates;
                 foreach (var method in methods)
                 {
                     string[] temp_list = new string[] {
-                        method.deliveryMethod.ToString(),
-                        method.maxQuantityPerPackage.ToString(),
-                        method.nextItemRate.ToString(),
-                        method.shippingTime.ToString()
+                        method.id.ToString(),
+                        method.name.ToString()
                         };
                     shippingRates.Add(temp_list);
                 }
