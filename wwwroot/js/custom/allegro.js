@@ -20,7 +20,7 @@
         var url = '/AllegroAuctions/GetChildCategories';
         var ddlsource = "#mark";
 
-        $.getJSON(url, { parent_id: $('#maincategories').val() }, function (data) {
+        $.getJSON(url, { parent_id: $('#category2').val() }, function (data) {
             var items = ' ';
             $("#category3").empty();
             $.each(data, function (i, row) {
@@ -35,7 +35,7 @@
         var url = '/AllegroAuctions/GetChildCategories';
         var ddlsource = "#mark";
 
-        $.getJSON(url, { parent_id: $('#maincategories').val() }, function (data) {
+        $.getJSON(url, { parent_id: $('#category3').val() }, function (data) {
             var items = ' ';
             $("#category4").empty();
             $.each(data, function (i, row) {
@@ -50,7 +50,7 @@
         var url = '/AllegroAuctions/GetChildCategories';
         var ddlsource = "#mark";
 
-        $.getJSON(url, { parent_id: $('#maincategories').val() }, function (data) {
+        $.getJSON(url, { parent_id: $('#category5').val() }, function (data) {
             var items = ' ';
             $("#category5").empty();
             $.each(data, function (i, row) {
