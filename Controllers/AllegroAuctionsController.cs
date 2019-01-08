@@ -388,7 +388,7 @@ namespace Clutchlit.Controllers
             {
                 var resource = streamReader.ReadToEnd();
                 dynamic x = JsonConvert.DeserializeObject(resource);
-                var methods = x.returnPolicies;
+                var methods = x.categories;
                 foreach (var method in methods)
                 {
                     categories.Add(new AllegroCategory { Id = method.id, Name = method.name, ParentId = method.parent.id, Advertisement = method.options.advertisement, Leaf = method.leaf, AdvertisementPriceOptional = method.options.advertisementPriceOptional });
