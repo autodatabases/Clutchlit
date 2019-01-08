@@ -5,7 +5,7 @@
         var url = '@Url.Content("~/")' + 'AllegroAuctions/GetChildCategories';
         var ddlsource = "#mark";
 
-        $.getJSON(url, { id: $('#maincategories').val() }, function (data) {
+        $.getJSON(url, { parent_id: $('#maincategories').val() }, function (data) {
             var items = ' ';
             $("#category2").empty();
             $.each(data, function (i, row) {
