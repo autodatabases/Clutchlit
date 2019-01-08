@@ -2,7 +2,7 @@
 
     $("#maincategories").change(function () {
         $('#category2').find('option').remove().end().append('<option  selected=""> - Wybierz kateogrię - </option>').val('kategoria');
-        var url = '@Url.Content("~/")' + 'AllegroAuctions/GetChildCategories';
+        var url = 'AllegroAuctions/GetChildCategories';
         var ddlsource = "#mark";
 
         $.getJSON(url, { parent_id: $('#maincategories').val() }, function (data) {
