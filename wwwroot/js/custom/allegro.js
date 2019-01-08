@@ -45,7 +45,7 @@
         })
     });
 
-    $("#category5").change(function () {
+    $("#category4").change(function () {
         $('#category5').find('option').remove().end().append('<option  selected=""> - Wybierz kateogrię - </option>').val('kategoria');
         var url = '/AllegroAuctions/GetChildCategories';
         var ddlsource = "#mark";
