@@ -10,8 +10,8 @@ namespace Clutchlit.Models
         public string Id { get; set; }
         public string Name { get; set;}
         public string ParentId { get; set; }
-        public Boolean Leaf { get; set; }
-        public Boolean Advertisement { get; set; }
-        public Boolean AdvertisementPriceOptional { get; set; }
+        public string Leaf { get; set; }
+        public string Advertisement { get; set; }
+        public string AdvertisementPriceOptional { get; set; }
     }
 }
