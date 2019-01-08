@@ -47,7 +47,7 @@
 
     $("#category4").change(function () {
         $('#category5').find('option').remove().end().append('<option  selected=""> - Wybierz kateogrię - </option>').val('kategoria');
-        $('$confirmCategory').show();
+        $('#confirmCategory').show();
         var url = '/AllegroAuctions/GetChildCategories';
         var ddlsource = "#mark";
 
