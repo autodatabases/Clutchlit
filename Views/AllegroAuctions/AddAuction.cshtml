@@ -37,8 +37,8 @@
             <div class="col-md-12">
                 
                 <div class="col-md-6">
-                    <h4>Dostawa i płatność</h4>
-                    @Html.DropDownList("SelectedEmployee", new SelectList((System.Collections.IEnumerable)ViewData["Delivery"],"Value","Text"))
+                    <h4>Wybierz cennik dostaw</h4>
+                    @Html.DropDownList("shippingrate", new SelectList((System.Collections.IEnumerable)ViewData["Shipping"],"Value","Text"))
                 </div>
                 <div class="col-md-6">
                     <h4>

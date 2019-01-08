@@ -279,9 +279,9 @@ namespace Clutchlit.Controllers
         // pobieranie metod dostawy
 
             // pobieranie cennika dostaw
-        public List<string[]> GetShippingRates(string sellerId)
+        public List<SelectListItem> GetShippingRates(string sellerId)
         {
-            List<string[]> shippingRates = new List<string[]>();
+            List<SelectListItem> shippingRates = new List<SelectListItem>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/shipping-rates?seller.id=" + sellerId+"");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
@@ -297,11 +297,7 @@ namespace Clutchlit.Controllers
                 var methods = x.shippingRates;
                 foreach (var method in methods)
                 {
-                    string[] temp_list = new string[] {
-                        method.id.ToString(),
-                        method.name.ToString()
-                        };
-                    shippingRates.Add(temp_list);
+                    shippingRates.Add(new SelectListItem { Selected = false, Text = method.name.ToString(), Value = method.id.ToString() });
                 }
             }
             return shippingRates;
