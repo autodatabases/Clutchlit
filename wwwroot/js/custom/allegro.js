@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    $("#confirmCategory").hide();
     $("#maincategories").change(function () {
         $('#category2').find('option').remove().end().append('<option  selected=""> - Wybierz kateogrię - </option>').val('kategoria');
         var url = '/AllegroAuctions/GetChildCategories';
@@ -47,10 +47,11 @@
 
     $("#category4").change(function () {
         $('#category5').find('option').remove().end().append('<option  selected=""> - Wybierz kateogrię - </option>').val('kategoria');
+        $('$confirmCategory').show();
         var url = '/AllegroAuctions/GetChildCategories';
         var ddlsource = "#mark";
 
-        $.getJSON(url, { parent_id: $('#category5').val() }, function (data) {
+        $.getJSON(url, { parent_id: $('#category4').val() }, function (data) {
             var items = ' ';
             $("#category5").empty();
             $.each(data, function (i, row) {
@@ -59,5 +60,7 @@
             $('#category5').html(items);
         })
     });
+
+   
 
 });
