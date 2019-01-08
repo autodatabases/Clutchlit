@@ -303,11 +303,83 @@ namespace Clutchlit.Controllers
             return shippingRates;
         }
             //
+        public List<SelectListItem> GetWarranties(string sellerId)
+        {
+            List<SelectListItem> warrenties = new List<SelectListItem>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/after-sales-service-conditions/warranties?seller.id=" + sellerId + "");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = streamReader.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                var methods = x.warranties;
+                foreach (var method in methods)
+                {
+                    warrenties.Add(new SelectListItem { Selected = false, Text = method.name.ToString(), Value = method.id.ToString() });
+                }
+            }
+            return warrenties;
+        }
+        public List<SelectListItem> GetImpliedWarranties(string sellerId)
+        {
+            List<SelectListItem> warrenties = new List<SelectListItem>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/after-sales-service-conditions/implied-warranties?seller.id=" + sellerId + "");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = streamReader.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                var methods = x.impliedWarranties;
+                foreach (var method in methods)
+                {
+                    warrenties.Add(new SelectListItem { Selected = false, Text = method.name.ToString(), Value = method.id.ToString() });
+                }
+            }
+            return warrenties;
+        }
+        public List<SelectListItem> GetReturnPolicy(string sellerId)
+        {
+            List<SelectListItem> warrenties = new List<SelectListItem>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/after-sales-service-conditions/return-policies?seller.id=" + sellerId + "");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = streamReader.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                var methods = x.returnPolicies;
+                foreach (var method in methods)
+                {
+                    warrenties.Add(new SelectListItem { Selected = false, Text = method.name.ToString(), Value = method.id.ToString() });
+                }
+            }
+            return warrenties;
+        }
         public IActionResult AddAuction()
         {
             //ViewData["token"] = AccessToken;
             ViewData["Delivery"] = GetDeliveryMethods();
             ViewData["Shipping"] = GetShippingRates("45582318");
+            ViewData["Warranty"] = GetWarranties("45582318");
+            ViewData["ImpliesWarranty"] = GetImpliedWarranties("45582318");
+            ViewData["ReturnPolicy"] = GetReturnPolicy("45582318");
             return View(); 
         }
     }
