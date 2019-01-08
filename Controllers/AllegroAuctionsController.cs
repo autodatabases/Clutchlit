@@ -372,6 +372,32 @@ namespace Clutchlit.Controllers
             }
             return warrenties;
         }
+        // OBSŁUGA KATEGORII
+        public List<AllegroCategory> GetCategory()
+        {
+            List<AllegroCategory> categories = new List<AllegroCategory>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/categories");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = streamReader.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                var methods = x.returnPolicies;
+                foreach (var method in methods)
+                {
+                    categories.Add(new AllegroCategory { Id = method.id, Name = method.name, ParentId = method.parent.id, Advertisement = method.options.advertisement, Leaf = method.leaf, AdvertisementPriceOptional = method.options.advertisementPriceOptional });
+                }
+            }
+            return categories;
+
+        }
+        // OBSŁUGA KATEGORII
         public IActionResult AddAuction()
         {
             //ViewData["token"] = AccessToken;
@@ -380,6 +406,7 @@ namespace Clutchlit.Controllers
             ViewData["Warranty"] = GetWarranties("45582318");
             ViewData["ImpliesWarranty"] = GetImpliedWarranties("45582318");
             ViewData["ReturnPolicy"] = GetReturnPolicy("45582318");
+            ViewData["MainCategories"] = GetCategory();
             return View(); 
         }
     }

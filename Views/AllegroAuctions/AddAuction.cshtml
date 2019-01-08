@@ -33,7 +33,12 @@
                 </div>
                 
             </div>
-
+            <div class="col-md-12">
+                <h4>Wybierz kategorię</h4>
+                <div class="col-md-3">
+                    @Html.DropDownList("maincategories", new SelectList((System.Collections.IEnumerable)ViewData["MainCategories"], "Id", "Name"), new { @class = "form-control" })
+                </div>
+            </div>
             <div class="col-md-12">
                 
                 <div class="col-md-6">
