@@ -397,6 +397,31 @@ namespace Clutchlit.Controllers
             return categories;
 
         }
+        public IActionResult GetChildCategories(string parent_id)
+        {
+            List<AllegroCategory> categories = new List<AllegroCategory>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/categories?parent.id="+parent_id+"");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = streamReader.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                var methods = x.categories;
+                foreach (var method in methods)
+                {
+                    categories.Add(new AllegroCategory { Id = method.id, Name = method.name, ParentId = method.parent.id });
+                }
+            }
+            Response.StatusCode = 200;
+            return new JsonResult(new SelectList(categories, "Id", "Name"));
+            
+        }
         // OBSŁUGA KATEGORII
         public IActionResult AddAuction()
         {
