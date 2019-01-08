@@ -391,7 +391,7 @@ namespace Clutchlit.Controllers
                 var methods = x.categories;
                 foreach (var method in methods)
                 {
-                    categories.Add(new AllegroCategory { Id = method.id.ToString(), Name = method.name.ToString(), ParentId = method.parent.id.ToString(), Advertisement = method.options.advertisement.ToString(), Leaf = method.leaf.ToString(), AdvertisementPriceOptional = method.options.advertisementPriceOptional.ToString() });
+                    categories.Add(new AllegroCategory { Id = method.id, Name = method.name});
                 }
             }
             return categories;
