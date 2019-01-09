@@ -423,6 +423,35 @@ namespace Clutchlit.Controllers
             
         }
         // OBSŁUGA KATEGORII
+
+        // pobieranie parametrów dla wybranej kategorii
+        public IActionResult GetParametersForCategory(string catId)
+        {
+            List<string> categories = new List<string>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/categories/"+catId+"/parameters");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = streamReader.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                var methods = x.parameters;
+                foreach (var method in methods)
+                {
+                    string temp = method.id + ":" + method.name + ":"+ method.type;
+                    categories.Add(temp);
+                }
+            }
+
+            Response.StatusCode = 200;
+            return new JsonResult(categories);
+        }
+        // pobieranie parametrów dla wybranej kategorii
         public IActionResult AddAuction()
         {
             //ViewData["token"] = AccessToken;

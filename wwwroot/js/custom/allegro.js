@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+
     $("#confirmCategory").hide();
     $("#maincategories").change(function () {
         $('#category2').find('option').remove().end().append('<option  selected=""> - Wybierz kateogrię - </option>').val('kategoria');
@@ -60,6 +61,13 @@
             $('#category5').html(items);
         })
     });
+
+    // pobieramy parametry dla kategorii
+   $("#confirmCategory").on('click', 'tr', function () {
+       var categoryId = $("#category5").val();
+        alert(categoryId);
+    });
+    // pobieramy parametry dla kategorii
 
    
 
