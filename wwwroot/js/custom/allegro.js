@@ -63,8 +63,9 @@
     });
 
     // pobieramy parametry dla kategorii
-   $("#confirmCategory").on('click', 'tr', function () {
-       var categoryId = $("#category5").val();
+    $("#confirmCategory").on('click', function (e) {
+        e.preventDefault();
+        var categoryId = $("#category5").val();
         alert(categoryId);
     });
     // pobieramy parametry dla kategorii
