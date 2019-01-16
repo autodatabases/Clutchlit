@@ -470,7 +470,7 @@ namespace Clutchlit.Controllers
                     { // input
 
                         temp += "<label for='" + method.id + "'><strong>" + method.name + "</strong></label>";
-                        temp += "<input type='text' value='' name='"+method.id+"' />";
+                        temp += "<input type='text' class='form-control' value='' name='"+method.id+"' />";
                     }
                     categories += temp;
                 }
