@@ -72,7 +72,7 @@
             data: {
                 catId: categoryId
             },
-            dataType: 'text',
+            dataType: 'html',
             beforeSend: function () {
                 $('.images-loader').show();
             },
@@ -81,7 +81,8 @@
             },
             success: function (data) {
                 console.log(data);
-                $('#offer_parameters').append(data);
+                $('#offer_parameters').empty();
+                $('#offer_parameters').html(data);
             }
         });
     });

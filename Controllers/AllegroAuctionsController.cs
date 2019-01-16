@@ -457,11 +457,20 @@ namespace Clutchlit.Controllers
                     }
                     else if(method.type == "dictionary" && method.restrictions.multipleChoices == true)
                     { // checkboxes
-
+                        temp += "<label for='" + method.id + "'><strong>" + method.name + "</strong></label>";
+                        temp += "<select multiple class='dictionary form-control' name='" + method.id + "'>";
+                        var variants = method.dictionary;
+                        foreach (var variant in variants)
+                        {
+                            temp += "<option value='" + variant.id + "'>" + variant.value + "</option>";
+                        }
+                        temp += "</select>";
                     }
                     else if(method.type == "string" || method.type == "float" || method.type == "integer")
                     { // input
 
+                        temp += "<label for='" + method.id + "'><strong>" + method.name + "</strong></label>";
+                        temp += "<input type='text' value='' name='"+method.id+"' />";
                     }
                     categories += temp;
                 }
