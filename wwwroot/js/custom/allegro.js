@@ -66,7 +66,24 @@
     $("#confirmCategory").on('click', function (e) {
         e.preventDefault();
         var categoryId = $("#category5").val();
-        alert(categoryId);
+        $.ajax({
+            type: 'POST',
+            url: '/AllegroAuctions/GetParametersForCategory',
+            data: {
+                catId: categoryId
+            },
+            dataType: 'text',
+            beforeSend: function () {
+                $('.images-loader').show();
+            },
+            complete: function () {
+                $('.images-loader').hide();
+            },
+            success: function (data) {
+                console.log(data);
+                window.location.reload();
+            }
+        });
     });
     // pobieramy parametry dla kategorii
 

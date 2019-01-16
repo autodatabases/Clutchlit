@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Xml;
 using Clutchlit.Data;
 using Clutchlit.Models;
 using HtmlAgilityPack;
@@ -644,6 +647,11 @@ namespace Clutchlit.Controllers
         public IActionResult GetDistributorsPrices(int Id)
         {
             string result = "";
+            //
+            Product product = new Product();
+            product = _context.Products.Where(d => d.Id == Id).SingleOrDefault();
+            string reference = "";
+            //
             List<PdPrices> list = new List<PdPrices>();
             list = _context.PdPrices.Where(d => d.ProductId == Id).ToList();
             if(list == null)
@@ -658,6 +666,13 @@ namespace Clutchlit.Controllers
                 }
                 result = result + "</table>";
             }
+            // pobieramy API ELIT
+            var thread_elit = new Thread(start =>
+            {
+                // zadanie do wykonania
+            });
+            thread_elit.Start();
+            // API ELIT
             Response.StatusCode = 200;
             return new JsonResult(result); 
         }

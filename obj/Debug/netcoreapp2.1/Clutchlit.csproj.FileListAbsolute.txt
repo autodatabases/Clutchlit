@@ -54,7 +54,6 @@ E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.csprojAssemblyR
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.csproj.CoreCompileInputs.cache
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.RazorAssemblyInfo.cache
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.RazorAssemblyInfo.cs
-E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.AssemblyInfoInputs.cache
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.AssemblyInfo.cs
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Clutchlit.TagHelpers.input.cache
