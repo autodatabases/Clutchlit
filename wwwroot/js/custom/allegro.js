@@ -81,7 +81,7 @@
             },
             success: function (data) {
                 console.log(data);
-                window.location.reload();
+                alert('pobrano parametry');
             }
         });
     });
