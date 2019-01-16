@@ -427,7 +427,7 @@ namespace Clutchlit.Controllers
         // pobieranie parametrów dla wybranej kategorii
         public IActionResult GetParametersForCategory(string catId)
         {
-            List<string> categories = new List<string>();
+            string categories = "";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/categories/"+catId+"/parameters");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
@@ -447,7 +447,7 @@ namespace Clutchlit.Controllers
                     if(method.type == "dictionary" && method.restrictions.multipleChoices == false )
                     { // simple select form
                         temp += "<label for='"+method.id+"'><strong>"+method.name+"</strong></label>";
-                        temp += "<select class='dictionary' name='"+method.id+"'>";
+                        temp += "<select class='dictionary form-control' name='" + method.id+"'>";
                         var variants = method.dictionary;
                         foreach(var variant in variants)
                         {
@@ -463,7 +463,7 @@ namespace Clutchlit.Controllers
                     { // input
 
                     }
-                    categories.Add(temp);
+                    categories += temp;
                 }
             }
 
