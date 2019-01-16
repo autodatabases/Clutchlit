@@ -199,7 +199,8 @@ namespace Clutchlit.Controllers
             {
 
             }
-            
+            return Json(manufacturer_name);
+            /*
             // EBAY
             Task<string> ebay = Task<string>.Factory.StartNew(() =>
             {
@@ -663,6 +664,7 @@ namespace Clutchlit.Controllers
 
             var res = iparts_string + ucando_string + interCars_string + autodoc_string + ceneo_string + czesci_string + ebay_string +"</table>";
             return Json(res);
+            */
         }
         [HttpPost]
         public IActionResult GetDistributorsPrices(int Id)
