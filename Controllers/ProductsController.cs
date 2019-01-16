@@ -282,8 +282,6 @@ namespace Clutchlit.Controllers
             });
 
             // EBAY
-
-
             // IPARTS
             Task<string> iparts = Task<string>.Factory.StartNew(() =>
             {
@@ -367,11 +365,14 @@ namespace Clutchlit.Controllers
                                     var title = node.SelectSingleNode(".//h3[@class=\"c-product-item__name\"]").InnerText.ToUpper().Replace(" ", "");
                                     if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
                                     {
-                                        if (title.Contains(manufacturer_name))
+                                        if(manufacturer_name != "" && manufacturer_name != null && manufacturer_name != "DUPA")
                                         {
-                                            var price = node.SelectSingleNode(".//span[@class=\"c-price__current\"]").InnerText;
-                                            var stock = node.SelectSingleNode(".//span[@class=\"c-price__delivery-note c-price__delivery-note--inStock\"]").InnerText;
-                                            resultA = resultA + "<tr class='" + CheckUcandoBackground(stock) + "'><td><b>UCANDO</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Replace("Dostępny.", "").Trim() + "</td></tr>";
+                                            if (title.Contains(manufacturer_name))
+                                            {
+                                                var price = node.SelectSingleNode(".//span[@class=\"c-price__current\"]").InnerText;
+                                                var stock = node.SelectSingleNode(".//span[@class=\"c-price__delivery-note c-price__delivery-note--inStock\"]").InnerText;
+                                                resultA = resultA + "<tr class='" + CheckUcandoBackground(stock) + "'><td><b>UCANDO</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Replace("Dostępny.", "").Trim() + "</td></tr>";
+                                            }
                                         }
                                         break;
                                     }
