@@ -29,6 +29,6 @@ namespace Clutchlit.Models
         public double LowestPrice { get; set; }
         [Column("product_lowest_price_distributor_id")]
         public Int32 DistributorId { get; set; }
-        public double Markup { get  { return Math.Round(((Gross_price - LowestPrice) / Gross_price)*100,2);  } }
+        public double Markup { get  { return Math.Round((Gross_price - LowestPrice),0);  } }
     }
 }
