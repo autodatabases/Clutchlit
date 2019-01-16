@@ -282,7 +282,71 @@ namespace Clutchlit.Controllers
             });
 
             // EBAY
-           
+            // IPARTS
+            Task<string> iparts = Task<string>.Factory.StartNew(() =>
+            {
+                string result = "";
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
+                string resultA = "";
+                try
+                {
+                    using (var response = client.GetAsync("https://www.iparts.pl/wyszukaj/art" + EncodeBase64(product.Reference) + ".html").Result)
+                    {
+                        using (var content = response.Content)
+                        {
+                            // read answer in non-blocking way
+                            var resultB = content.ReadAsStringAsync().Result;
+                            var document = new HtmlDocument();
+                            document.LoadHtml(resultB);
+                            var nodes = document.DocumentNode.SelectNodes("//div[@class=\"small-12 medium-12 columns\"]");
+                            if (nodes != null)
+                            {
+                                foreach (HtmlNode node in nodes)
+                                {
+                                    if (node != null)
+                                    {
+                                        var title = node.SelectSingleNode(".//h2[@class=\"nazwa naglowek\"]").InnerText.ToUpper().Replace(" ", "");
+                                        if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                        {
+                                            if (title.Contains(manufacturer_name))
+                                            {
+                                                var price = node.SelectSingleNode(".//div[@class=\"cena\"]").InnerText;
+                                                var stock = node.SelectSingleNode(".//div[@class=\"katalog-akcje-kosz\"]").InnerText;
+                                                resultA = resultA + "<tr class='" + CheckIpartsBackground(stock) + "'><td><b>IPARTS</b></td><td>" + price.Replace(" ", "").Replace("złzVAT", " PLN").Trim() + "</td><td>" + stock.Trim() + "</td></tr>";
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    else
+                                    {
+                                    }
+                                }
+                                result = resultA;
+                            }
+                            else
+                            {
+                                result = "<tr class='orange'><td><b>IPARTS</b></td><td colspan='2'>B/D</td></tr>";
+                            }
+                        }
+                    }
+                }
+                catch (AggregateException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                
+                return result;
+            });
+            // IPARTS
+
+            // UCANDO
+            
+
+            ////////////////////////////////////
+            if (iparts.Result != null)
+                iparts_string = iparts.Result;
+            
             if(ebay != null)
                 ebay_string = ebay.Result;
 
