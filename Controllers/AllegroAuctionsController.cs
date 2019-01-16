@@ -444,7 +444,7 @@ namespace Clutchlit.Controllers
                 foreach (var method in methods)
                 {
                     string temp = "";
-                    if(method.type == "dictionary" && method.multipleChoices == "false" )
+                    if(method.type == "dictionary" && method.restrictions.multipleChoices == false )
                     { // simple select form
                         temp += "<select class='dictionary' name='"+method.id+"'>";
                         var variants = method.dictionary;
@@ -454,7 +454,7 @@ namespace Clutchlit.Controllers
                         }
                         temp += "</select>";
                     }
-                    else if(method.type == "dictionary" && method.multipleChoices == "true")
+                    else if(method.type == "dictionary" && method.restrictions.multipleChoices == true)
                     { // checkboxes
 
                     }
