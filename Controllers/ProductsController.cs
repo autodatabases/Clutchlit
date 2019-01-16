@@ -188,8 +188,18 @@ namespace Clutchlit.Controllers
             //
             Product product = _context.Products.Where(m => m.Id == Id).SingleOrDefault();
             string manufacturer_name = "DUPA";
-            manufacturer_name = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).FirstOrDefault().Description.ToUpper().Replace(" ", "");
+            if(product != null)
+            {
+                if(_context.Suppliers.Where(p => p.Tecdoc_id == product.Manufacturer_id) != null)
+                {
+                    manufacturer_name = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).FirstOrDefault().Description.ToUpper().Replace(" ", "");
+                }
+            }
+            else
+            {
 
+            }
+            
             // EBAY
             Task<string> ebay = Task<string>.Factory.StartNew(() =>
             {
