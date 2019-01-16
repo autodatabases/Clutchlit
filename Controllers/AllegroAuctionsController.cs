@@ -446,6 +446,7 @@ namespace Clutchlit.Controllers
                     string temp = "";
                     if(method.type == "dictionary" && method.restrictions.multipleChoices == false )
                     { // simple select form
+                        temp += "<label for='"+method.id+"'><strong>"+method.name+"</strong></label>";
                         temp += "<select class='dictionary' name='"+method.id+"'>";
                         var variants = method.dictionary;
                         foreach(var variant in variants)

@@ -81,7 +81,7 @@
             },
             success: function (data) {
                 console.log(data);
-                alert('pobrano parametry');
+                $('#offer_parameters').append(data);
             }
         });
     });
