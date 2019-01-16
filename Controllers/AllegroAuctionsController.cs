@@ -443,7 +443,25 @@ namespace Clutchlit.Controllers
                 var methods = x.parameters;
                 foreach (var method in methods)
                 {
-                    string temp = method.id + ":" + method.name + ":"+ method.type;
+                    string temp = "";
+                    if(method.type == "dictionary" && method.multipleChoices == "false" )
+                    { // simple select form
+                        temp += "<select class='dictionary' name='"+method.id+"'>";
+                        var variants = method.dictionary;
+                        foreach(var variant in variants)
+                        {
+                            temp += "<option value='"+variant.id+"'>"+variant.value+"</option>";
+                        }
+                        temp += "</select>";
+                    }
+                    else if(method.type == "dictionary" && method.multipleChoices == "true")
+                    { // checkboxes
+
+                    }
+                    else if(method.type == "string" || method.type == "float" || method.type == "integer")
+                    { // input
+
+                    }
                     categories.Add(temp);
                 }
             }
