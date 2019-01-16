@@ -347,47 +347,57 @@ namespace Clutchlit.Controllers
                 HttpClient client = new HttpClient();
                 client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
                 string resultA = "";
-                using (var response = client.GetAsync("https://www.ucando.pl/szukaj?text=" + product.Reference.Replace(" ", "") + "").Result)
+
+                try
                 {
-                    using (var content = response.Content)
+                    using (var response = client.GetAsync("https://www.ucando.pl/szukaj?text=" + product.Reference.Replace(" ", "") + "").Result)
                     {
-                        // read answer in non-blocking way
-                        var resultB = content.ReadAsStringAsync().Result;
-                        var document = new HtmlDocument();
-                        document.LoadHtml(resultB);
-                        var nodes = document.DocumentNode.SelectNodes("//product-item[@class=\"o-product-list__item c-product-item\"]");
-                        if (nodes != null)
+                        using (var content = response.Content)
                         {
-                            foreach (HtmlNode node in nodes)
+                            // read answer in non-blocking way
+                            var resultB = content.ReadAsStringAsync().Result;
+                            var document = new HtmlDocument();
+                            document.LoadHtml(resultB);
+                            var nodes = document.DocumentNode.SelectNodes("//product-item[@class=\"o-product-list__item c-product-item\"]");
+                            if (nodes != null)
                             {
-                                if (node != null)
+                                foreach (HtmlNode node in nodes)
                                 {
-                                    var title = node.SelectSingleNode(".//h3[@class=\"c-product-item__name\"]").InnerText.ToUpper().Replace(" ", "");
-                                    if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
+                                    if (node != null)
                                     {
-                                        if(manufacturer_name != "" && manufacturer_name != null && manufacturer_name != "DUPA")
+                                        var title = node.SelectSingleNode(".//h3[@class=\"c-product-item__name\"]").InnerText.ToUpper().Replace(" ", "");
+
+                                        if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
                                         {
-                                            if (title.Contains(manufacturer_name))
+                                            if (manufacturer_name != "" && manufacturer_name != null && manufacturer_name != "DUPA")
                                             {
-                                                var price = node.SelectSingleNode(".//span[@class=\"c-price__current\"]").InnerText;
-                                                var stock = node.SelectSingleNode(".//span[@class=\"c-price__delivery-note c-price__delivery-note--inStock\"]").InnerText;
-                                                resultA = resultA + "<tr class='" + CheckUcandoBackground(stock) + "'><td><b>UCANDO</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Replace("Dostępny.", "").Trim() + "</td></tr>";
+                                                if (title.Contains(manufacturer_name))
+                                                {
+                                                    var price = node.SelectSingleNode(".//span[@class=\"c-price__current\"]").InnerText;
+                                                    var stock = node.SelectSingleNode(".//span[@class=\"c-price__delivery-note c-price__delivery-note--inStock\"]").InnerText;
+                                                    resultA = resultA + "<tr class='" + CheckUcandoBackground(stock) + "'><td><b>UCANDO</b></td><td>" + price.Replace(" ", "").Replace("zł", " PLN").Trim() + "</td><td>" + stock.Replace("Dostępny.", "").Trim() + "</td></tr>";
+                                                }
                                             }
+                                            break;
                                         }
-                                        break;
+                                    }
+                                    else
+                                    {
                                     }
                                 }
-                                else
-                                {
-                                }
+                                result = resultA;
                             }
-                            result = resultA;
-                        }
-                        else
-                        {
-                            result = "<tr class='orange'><td><b>UCANDO</b></td><td colspan='2'>B/D</td></tr>";
+                            else
+                            {
+                                result = "<tr class='orange'><td><b>UCANDO</b></td><td colspan='2'>B/D</td></tr>";
+                            }
                         }
                     }
+                    
+                }
+                catch (AggregateException e)
+                {
+                    Console.WriteLine(e.Message);
                 }
                 return result;
             });
