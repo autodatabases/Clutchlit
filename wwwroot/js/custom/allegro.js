@@ -90,7 +90,7 @@
 
     // wysyłamy zdjęcia na serwer
     $("#confirmPhotos").on('click', function (e) {
-        
+            e.preventDefault();
             var formData = new FormData();
             var totalFiles = $("#imageUploadForm").files.length;
             for (var i = 0; i < totalFiles; i++) {
@@ -106,7 +106,7 @@
                 processData: false,
                 success: function (response) {
                     alert('succes!!');
-                },
+                }
                 //error: function(error) {
                 //    alert("errror");
                 //}
