@@ -482,47 +482,26 @@ namespace Clutchlit.Controllers
         }
         // pobieranie parametrów dla wybranej kategorii
         // przesyłanie plików zdjęć na serwer allegro
-        public IActionResult UploadPhotos(List<IFormFile> files)
+        public async Task<IActionResult> UploadPhotos(List<IFormFile> files)
         {
-            string result = "";
-            if(Request.Form.Files.Count > 0)
+            if (files == null || files.Count == 0)
+                return Content("files not selected");
+
+            foreach (var file in files)
             {
-                try
+                var path = Path.Combine(
+                        Directory.GetCurrentDirectory(), "wwwroot",
+                        file.FileName);
+
+                using (var stream = new FileStream(path, FileMode.Create))
                 {
-                    for (int i = 0; i < files.Count; i++)
-                    {
-                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
-                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
-
-                        IFormFile file = files[i];
-                        string fname;
-
-                        string[] testfiles = file.FileName.Split(new char[] { '\\' });
-                        fname = testfiles[testfiles.Length - 1];
-
-                        result += fname;
-                        result += ";";
-                        // Get the complete folder path and store the file inside it.  
-                        //fname = Path.Combine(Server.MapPath("~/Uploads/"), fname);
-                        //file.SaveAs(fname);
-                    }
-                    // Returns message that successfully uploaded
-                    Response.StatusCode = 200;
-                    //return Json("File Uploaded Successfully!");
+                    await file.CopyToAsync(stream);
                 }
-                catch (Exception ex)
-                {
-                    Response.StatusCode = 400;
-                    //return Json("Error occurred. Error details: " + ex.Message);
-                }
-                
             }
-            else
-                Response.StatusCode = 400;
 
-            return Json(result);
-
+            return RedirectToAction("Files");
         }
+
 
         // przesyłanie plików zdjęć na serwer
         public IActionResult AddAuction()
