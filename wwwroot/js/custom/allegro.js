@@ -91,26 +91,26 @@
     // wysyłamy zdjęcia na serwer
     $("#confirmPhotos").on('click', function (e) {
             e.preventDefault();
-        var formData = new FormData();
-        var totalFiles = document.getElementById("imageUploadForm").files.length;
-            for (var i = 0; i < totalFiles; i++) {
-                var file = document.getElementById("imageUploadForm").files[i];
-                formData.append("imageUploadForm", file);
+        var fileUpload = $("#imageUploadForm").get(0);
+        var files = fileUpload.files;
+        var data = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            data.append(files[i].name, files[i]);
+        }
+        $.ajax({
+            type: "POST",
+            url: "/AllegroAuctions/UploadPhotos",
+            contentType: false,
+            processData: false,
+            data: data,
+            success: function (message) {
+                alert(message);
+            },
+            error: function () {
+                alert("There was error uploading files!");
             }
-            $.ajax({
-                type: "POST",
-                url: '/AllegroAuctions/UploadPhotos',
-                data: formData,
-                dataType: 'json',
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    alert('succes!!');
-                }
-                //error: function(error) {
-                //    alert("errror");
-                //}
-            });   
+        });
+    });
     });
     
 

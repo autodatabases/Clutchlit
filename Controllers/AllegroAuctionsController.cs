@@ -4,9 +4,11 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Clutchlit.Models;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -20,20 +22,24 @@ namespace Clutchlit.Controllers
         public static string Token = "";
         private static string SellerId = "sprzeglo-com-pl";
         private static string AccessToken = "";
+        private IHostingEnvironment hostingEnv; 
 
         HttpClient client = new HttpClient();
+
         public List<Auction> list = new List<Auction>();
         
         public IActionResult Index()
         {
             return View();
         }
-        public AllegroAuctionsController()
+
+        public AllegroAuctionsController(IHostingEnvironment env)
         {
             client.BaseAddress = new Uri("https://api.allegro.pl/");
             client.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
                 );
+            this.hostingEnv = env;
         }
         public async Task<List<string>> GetAsync(CancellationToken cancellationToken)
         {
@@ -482,24 +488,26 @@ namespace Clutchlit.Controllers
         }
         // pobieranie parametrów dla wybranej kategorii
         // przesyłanie plików zdjęć na serwer allegro
-        public async Task<IActionResult> UploadPhotos(List<IFormFile> files)
+        public IActionResult UploadPhotos()
         {
-            if (files == null || files.Count == 0)
-                return Content("files not selected");
-
+            long size = 0;
+            var files = Request.Form.Files;
             foreach (var file in files)
             {
-                var path = Path.Combine(
-                        Directory.GetCurrentDirectory(), "wwwroot",
-                        file.FileName);
-
-                using (var stream = new FileStream(path, FileMode.Create))
+                var filename = ContentDispositionHeaderValue
+                                .Parse(file.ContentDisposition)
+                                .FileName
+                                .Trim('"');
+                filename = hostingEnv.WebRootPath + $@"\{filename}";
+                size += file.Length;
+                using (FileStream fs = System.IO.File.Create(filename))
                 {
-                    await file.CopyToAsync(stream);
+                    file.CopyTo(fs);
+                    fs.Flush();
                 }
             }
-
-            return RedirectToAction("Files");
+            string message = $"{files.Count} file(s) / {size} bytes uploaded successfully!";
+            return Json(message);
         }
 
 
