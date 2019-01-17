@@ -110,8 +110,5 @@
                 alert("There was error uploading files!");
             }
         });
-    });
-    });
-    
-
+    });   
 });
