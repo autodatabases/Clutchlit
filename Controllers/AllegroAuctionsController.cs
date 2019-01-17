@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Clutchlit.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -480,6 +481,20 @@ namespace Clutchlit.Controllers
             return new JsonResult(categories);
         }
         // pobieranie parametrów dla wybranej kategorii
+        // przesyłanie plików zdjęć na serwer allegro
+        public IActionResult UploadPhotos(IFormFile file)
+        {
+            List<string> errors = new List<string>(); // added this just to return something
+            string result = "";
+            if (file != null)
+            {
+                result = "cos tam jest";
+            }
+
+            Response.StatusCode = 200;
+            return new JsonResult(result);
+        }
+        // przesyłanie plików zdjęć na serwer
         public IActionResult AddAuction()
         {
             //ViewData["token"] = AccessToken;

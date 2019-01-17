@@ -88,6 +88,28 @@
     });
     // pobieramy parametry dla kategorii
 
-   
+    // wysyłamy zdjęcia na serwer
+    $("#imageUploadForm").change(function() {
+         var formData = new FormData();
+         var totalFiles = document.getElementById("imageUploadForm").files.length;
+         for (var i = 0; i < totalFiles; i++) {
+           var file = document.getElementById("imageUploadForm").files[i];
+           formData.append("imageUploadForm", file);
+         }
+        $.ajax({
+            type: "POST",
+            url: '/AllegroAuctions/UploadPhotos',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                alert('succes!!');
+            },
+            //error: function(error) {
+            //    alert("errror");
+            //}
+        });
+    });   
 
 });
