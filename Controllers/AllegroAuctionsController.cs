@@ -484,16 +484,18 @@ namespace Clutchlit.Controllers
         // przesyłanie plików zdjęć na serwer allegro
         public IActionResult UploadPhotos(IFormFile file)
         {
-            List<string> errors = new List<string>(); // added this just to return something
             string result = "";
-            if (file != null)
+            if(Request.Form.Files.Count > 0)
             {
                 result = "cos tam jest";
+                Response.StatusCode = 200;
             }
-
-            Response.StatusCode = 200;
+            else
+                Response.StatusCode = 400;
+            
             return new JsonResult(result);
         }
+
         // przesyłanie plików zdjęć na serwer
         public IActionResult AddAuction()
         {
