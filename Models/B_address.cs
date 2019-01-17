@@ -27,6 +27,8 @@ namespace Clutchlit.Models
         public string ZipCode { get; set; }
         [Column("city")]
         public string City { get; set; }
+        [Column("phone")]
+        public string PhoneNumber { get; set; }
         [Column("phone_mobile")]
         public string Phone { get; set; }
         [Column("vat_number")]
