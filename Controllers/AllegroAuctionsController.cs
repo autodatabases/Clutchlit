@@ -482,18 +482,46 @@ namespace Clutchlit.Controllers
         }
         // pobieranie parametrów dla wybranej kategorii
         // przesyłanie plików zdjęć na serwer allegro
-        public IActionResult UploadPhotos(IFormFile file)
+        public IActionResult UploadPhotos(List<IFormFile> files)
         {
             string result = "";
             if(Request.Form.Files.Count > 0)
             {
-                result = "cos tam jest";
-                Response.StatusCode = 200;
+                try
+                {
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        //string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";  
+                        //string filename = Path.GetFileName(Request.Files[i].FileName);  
+
+                        IFormFile file = files[i];
+                        string fname;
+
+                        string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                        fname = testfiles[testfiles.Length - 1];
+
+                        result += fname;
+                        result += ";";
+                        // Get the complete folder path and store the file inside it.  
+                        //fname = Path.Combine(Server.MapPath("~/Uploads/"), fname);
+                        //file.SaveAs(fname);
+                    }
+                    // Returns message that successfully uploaded
+                    Response.StatusCode = 200;
+                    //return Json("File Uploaded Successfully!");
+                }
+                catch (Exception ex)
+                {
+                    Response.StatusCode = 400;
+                    //return Json("Error occurred. Error details: " + ex.Message);
+                }
+                
             }
             else
                 Response.StatusCode = 400;
-            
-            return new JsonResult(result);
+
+            return Json(result);
+
         }
 
         // przesyłanie plików zdjęć na serwer
