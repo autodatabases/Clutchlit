@@ -488,26 +488,36 @@ namespace Clutchlit.Controllers
         }
         // pobieranie parametrów dla wybranej kategorii
         // przesyłanie plików zdjęć na serwer allegro
-        public IActionResult UploadPhotos()
+        public async Task<IActionResult> UploadPhotos(IEnumerable<IFormFile> files)
         {
-            long size = 0;
-            var files = Request.Form.Files;
-            foreach (var file in files)
+            if (ModelState.IsValid)
             {
-                var filename = ContentDispositionHeaderValue
-                                .Parse(file.ContentDisposition)
-                                .FileName
-                                .Trim('"');
-                filename = hostingEnv.WebRootPath + $@"\{filename}";
-                size += file.Length;
-                using (FileStream fs = System.IO.File.Create(filename))
+                var uploads = Path.Combine(hostingEnv.WebRootPath, "images");
+                foreach (var file in files)
                 {
-                    file.CopyTo(fs);
-                    fs.Flush();
+                    if (file != null && file.Length > 0)
+                    {
+                        var fileName = Guid.NewGuid().ToString().Replace("-", "") +
+                                        Path.GetExtension(file.FileName);
+                        using (var s = new FileStream(Path.Combine(uploads, fileName),
+                                                                    FileMode.Create))
+                        {
+                            await file.CopyToAsync(s);
+                           
+                        }
+                    }
                 }
+                return Json(new { status = "success", message = "success" });
             }
-            string message = $"{files.Count} file(s) / {size} bytes uploaded successfully!";
-            return Json(message);
+            else
+            {
+                var list = new List<string>();
+                foreach (var modelStateVal in ViewData.ModelState.Values)
+                {
+                    list.AddRange(modelStateVal.Errors.Select(error => error.ErrorMessage));
+                }
+                return Json(new { status = "error", errors = list });
+            }
         }
 
 
