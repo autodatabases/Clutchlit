@@ -499,7 +499,7 @@ namespace Clutchlit.Controllers
                     {
                         var fileName = Guid.NewGuid().ToString().Replace("-", "") +
                                         Path.GetExtension(file.FileName);
-                        using (var s = new FileStream(Path.Combine(uploads, fileName),
+                        using (var s = new FileStream(Path.Combine(uploads, "dupa.jpg"),
                                                                     FileMode.Create))
                         {
                             await file.CopyToAsync(s);
