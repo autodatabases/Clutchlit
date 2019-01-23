@@ -496,16 +496,8 @@ namespace Clutchlit.Controllers
 
                 foreach (var file in files)
                 {
-                    if (file != null && file.Length > 0)
-                    {
-                        var fileName = Path.GetFileName(file.FileName);
-                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", fileName);
-                        filePath2 = filePath;
-                        using (var s = new FileStream(filePath,FileMode.Create))
-                        {
-                            await file.CopyToAsync(s);
-                        }
-                    }
+                    var fileName = Path.GetFileName(file.FileName);
+                    filePath2 += fileName;
                 }
                 return Json(new { status = "success", message = filePath2 });
             }
