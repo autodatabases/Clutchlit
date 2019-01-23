@@ -118,10 +118,10 @@
                     false);
                 return xhr;
             }
-        }).done(function (data, textStatus, jqXhr) {
+        }).done(function (data) {
             alert("Uploading is done");
             var array = data.split(';');
-            var string_to_put = "";
+            var string_to_put = "A";
 
             for (i = 0; i < array.lenth; ++i) {
                 string_to_put += '<img src="'+array[i]+'" width="100px" />';
