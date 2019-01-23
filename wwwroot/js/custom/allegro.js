@@ -90,7 +90,7 @@
 
     // wysyłamy zdjęcia na serwer
     $("#confirmPhotos").on('click', function (e) {
-            e.preventDefault();
+        e.preventDefault();
         var fileupload = $("#imageUploadForm").get(0);
         var files = fileupload.files;
         var data = new FormData();
@@ -103,13 +103,34 @@
             url: "/AllegroAuctions/UploadPhotos",
             contentType: false,
             processData: false,
+            cache: false,
+            async: false,
             data: data,
-            success: function (message) {
-                alert(message);
-            },
-            error: function () {
-                alert("there was error uploading files!");
+            xhr: function () {
+                var xhr = new window.XMLHttpRequest();
+                xhr.upload.addEventListener("progress",
+                    function (evt) {
+                        if (evt.lengthComputable) {
+                            var progress = Math.round((evt.loaded / evt.total) * 100);
+                            // Do something with the progress
+                        }
+                    },
+                    false);
+                return xhr;
             }
-        });
-    });  
+        }).done(function (data, textStatus, jqXhr) {
+            alert("Uploading is done");
+
+            // Clear the input
+            $("#imageUploadForm").val();
+        }).fail(function (jqXhr, textStatus, errorThrown) {
+            if (errorThrown === "abort") {
+                alert("Uploading was aborted");
+            } else {
+                alert("Uploading failed");
+            }
+        }).always(function (data, textStatus, jqXhr) { });
+
+
+    });
 });
