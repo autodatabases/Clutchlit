@@ -488,25 +488,25 @@ namespace Clutchlit.Controllers
         }
         // pobieranie parametrów dla wybranej kategorii
         // przesyłanie plików zdjęć na serwer allegro
-        public async Task<IActionResult> UploadPhotos(IEnumerable<IFormFile> files)
+        public async Task<IActionResult> UploadPhotos(List<IFormFile> files)
         {
             if (ModelState.IsValid)
             {
                 var uploads = Path.Combine(hostingEnv.WebRootPath, "images");
-                var filePath = Path.GetTempFileName();
                 foreach (var file in files)
                 {
                     if (file != null && file.Length > 0)
                     {
-                        //var fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
-                        using (var s = new FileStream(filePath,FileMode.Create))
+                        var fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
+                        var stringToStream = Path.Combine(uploads, fileName);
+                        using (var s = new FileStream(stringToStream,FileMode.Create))
                         {
                             await file.CopyToAsync(s);
                            
                         }
                     }
                 }
-                return Json(new { status = "success", message = filePath });
+                return Json(new { status = "success", message = uploads });
             }
             else
             {
