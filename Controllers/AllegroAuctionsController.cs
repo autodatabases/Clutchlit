@@ -497,7 +497,7 @@ namespace Clutchlit.Controllers
                 foreach (var file in files)
                 {
                     var fileName = Path.GetFileName(file.FileName);
-                    filePath2 += fileName;
+                    filePath2 = fileName;
                 }
                 return Json(new { status = "success", message = filePath2 });
             }
