@@ -95,7 +95,7 @@
         var files = fileupload.files;
         var data = new FormData();
         for (var i = 0; i < files.length; i++) {
-            data.append(files[i].name, files[i]);
+            data.append("files", files[i]);
         }
 
         $.ajax({
