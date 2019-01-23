@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Clutchlit.Models;
@@ -22,12 +23,12 @@ namespace Clutchlit.Controllers
         public static string Token = "";
         private static string SellerId = "sprzeglo-com-pl";
         private static string AccessToken = "";
-        private IHostingEnvironment hostingEnv; 
+        private IHostingEnvironment hostingEnv;
 
         HttpClient client = new HttpClient();
 
         public List<Auction> list = new List<Auction>();
-        
+
         public IActionResult Index()
         {
             return View();
@@ -45,17 +46,17 @@ namespace Clutchlit.Controllers
         {
             cancellationToken.ThrowIfCancellationRequested();
             HttpResponseMessage response = await client.GetAsync("sale/offers", cancellationToken);
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadAsAsync<List<string>>();
             }
             return new List<string>();
         }
-        
+
         public string GetToken(string token)
         {
             string response = "";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://allegro.pl/auth/oauth/token?grant_type=authorization_code&code="+token+"&redirect_uri=http://clutchlit.trimfit.pl/AllegroAuctions/GetList/api/");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://allegro.pl/auth/oauth/token?grant_type=authorization_code&code=" + token + "&redirect_uri=http://clutchlit.trimfit.pl/AllegroAuctions/GetList/api/");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "*/*";
             httpWebRequest.Method = "POST";
@@ -73,9 +74,9 @@ namespace Clutchlit.Controllers
                         response = property.Value.ToString();
                         AccessToken = response;
                     }
-                        
+
                 }
-               
+
                 return response;
             }
 
@@ -87,7 +88,7 @@ namespace Clutchlit.Controllers
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "application/vnd.allegro.beta.v1+json";
             httpWebRequest.Method = "GET";
-            httpWebRequest.Headers.Add("Authorization", "Bearer "+token+"");
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + token + "");
 
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
 
@@ -96,7 +97,7 @@ namespace Clutchlit.Controllers
                 var resource = streamReader.ReadToEnd();
                 dynamic x = JsonConvert.DeserializeObject(resource);
                 var offers = x.offers;
-                foreach(var offer in offers)
+                foreach (var offer in offers)
                 {
                     Auction of = new Auction()
                     {
@@ -118,27 +119,27 @@ namespace Clutchlit.Controllers
         {
             var uuid = Guid.NewGuid().ToString();
             string data = "{" +
-  "\"offerCriteria\": ["+
-    "{"+
-      "\"offers\": ["+
-        "{"+
-          "\"id\": \""+Id+"\""+
-        "}"+
-      "],"+
-      "\"type\": \"CONTAINS_OFFERS\""+
-    "}"+
-  "],"+
-  "\"publication\": {"+
-    "\"action\": \"END\""+
-    "}"+
+  "\"offerCriteria\": [" +
+    "{" +
+      "\"offers\": [" +
+        "{" +
+          "\"id\": \"" + Id + "\"" +
+        "}" +
+      "]," +
+      "\"type\": \"CONTAINS_OFFERS\"" +
+    "}" +
+  "]," +
+  "\"publication\": {" +
+    "\"action\": \"END\"" +
+    "}" +
     "}";
-           
+
             string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/"+uuid+"");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/" + uuid + "");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "PUT";
-            httpWebRequest.Headers.Add("Authorization", "Bearer "+Token+"");
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
@@ -153,7 +154,7 @@ namespace Clutchlit.Controllers
                 response = streamReader.ReadToEnd();
             }
             var resource = "";
-            var httpWebRequest2 = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/"+uuid+"");
+            var httpWebRequest2 = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/" + uuid + "");
             httpWebRequest2.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest2.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest2.Method = "GET";
@@ -233,21 +234,21 @@ namespace Clutchlit.Controllers
         [HttpGet("[controller]/[action]/")]
         public IActionResult GetList()
         {
-            
+
             return View();
         }
         [HttpGet("[controller]/[action]/api/")]
         public IActionResult GetList([FromQuery(Name = "code")] string a_query)
         {
-            
+
             var result = this.GetToken(a_query);
             ViewData["token"] = result;
             Token = result;
             ViewData["code"] = a_query;
-            
+
             return View();
         }
-        
+
         public IActionResult OffersList()
         {
             GetOffersList(Token);
@@ -285,11 +286,11 @@ namespace Clutchlit.Controllers
         }
         // pobieranie metod dostawy
 
-            // pobieranie cennika dostaw
+        // pobieranie cennika dostaw
         public List<SelectListItem> GetShippingRates(string sellerId)
         {
             List<SelectListItem> shippingRates = new List<SelectListItem>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/shipping-rates?seller.id=" + sellerId+"");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/shipping-rates?seller.id=" + sellerId + "");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "GET";
@@ -309,7 +310,7 @@ namespace Clutchlit.Controllers
             }
             return shippingRates;
         }
-            //
+        //
         public List<SelectListItem> GetWarranties(string sellerId)
         {
             List<SelectListItem> warrenties = new List<SelectListItem>();
@@ -398,7 +399,7 @@ namespace Clutchlit.Controllers
                 var methods = x.categories;
                 foreach (var method in methods)
                 {
-                    categories.Add(new AllegroCategory { Id = method.id, Name = method.name});
+                    categories.Add(new AllegroCategory { Id = method.id, Name = method.name });
                 }
             }
             return categories;
@@ -407,7 +408,7 @@ namespace Clutchlit.Controllers
         public IActionResult GetChildCategories(string parent_id)
         {
             List<AllegroCategory> categories = new List<AllegroCategory>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/categories?parent.id="+parent_id+"");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/categories?parent.id=" + parent_id + "");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "GET";
@@ -427,7 +428,7 @@ namespace Clutchlit.Controllers
             }
             Response.StatusCode = 200;
             return new JsonResult(new SelectList(categories, "Id", "Name"));
-            
+
         }
         // OBSŁUGA KATEGORII
 
@@ -435,7 +436,7 @@ namespace Clutchlit.Controllers
         public IActionResult GetParametersForCategory(string catId)
         {
             string categories = "";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/categories/"+catId+"/parameters");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/categories/" + catId + "/parameters");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "GET";
@@ -451,18 +452,18 @@ namespace Clutchlit.Controllers
                 foreach (var method in methods)
                 {
                     string temp = "";
-                    if(method.type == "dictionary" && method.restrictions.multipleChoices == false )
+                    if (method.type == "dictionary" && method.restrictions.multipleChoices == false)
                     { // simple select form
-                        temp += "<label for='"+method.id+"'><strong>"+method.name+"</strong></label>";
-                        temp += "<select class='dictionary form-control' name='" + method.id+"'>";
+                        temp += "<label for='" + method.id + "'><strong>" + method.name + "</strong></label>";
+                        temp += "<select class='dictionary form-control' name='" + method.id + "'>";
                         var variants = method.dictionary;
-                        foreach(var variant in variants)
+                        foreach (var variant in variants)
                         {
-                            temp += "<option value='"+variant.id+"'>"+variant.value+"</option>";
+                            temp += "<option value='" + variant.id + "'>" + variant.value + "</option>";
                         }
                         temp += "</select>";
                     }
-                    else if(method.type == "dictionary" && method.restrictions.multipleChoices == true)
+                    else if (method.type == "dictionary" && method.restrictions.multipleChoices == true)
                     { // checkboxes
                         temp += "<label for='" + method.id + "'><strong>" + method.name + "</strong></label>";
                         temp += "<select multiple class='dictionary form-control' name='" + method.id + "'>";
@@ -473,11 +474,11 @@ namespace Clutchlit.Controllers
                         }
                         temp += "</select>";
                     }
-                    else if(method.type == "string" || method.type == "float" || method.type == "integer")
+                    else if (method.type == "string" || method.type == "float" || method.type == "integer")
                     { // input
 
                         temp += "<label for='" + method.id + "'><strong>" + method.name + "</strong></label>";
-                        temp += "<input type='text' class='form-control' value='' name='"+method.id+"' />";
+                        temp += "<input type='text' class='form-control' value='' name='" + method.id + "' />";
                     }
                     categories += temp;
                 }
@@ -488,33 +489,54 @@ namespace Clutchlit.Controllers
         }
         // pobieranie parametrów dla wybranej kategorii
         // przesyłanie plików zdjęć na serwer allegro
-        
+
         public async Task<IActionResult> UploadPhotos(List<IFormFile> files)
         {
             var filesPath = $"{this.hostingEnv.WebRootPath}/images";
+            string response = "";
             foreach (var file in files)
             {
                 var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName;
-
                 // Ensure the file name is correct
                 fileName = fileName.Contains("\\")
                     ? fileName.Trim('"').Substring(fileName.LastIndexOf("\\", StringComparison.Ordinal) + 1)
                     : fileName.Trim('"');
 
                 var fullFilePath = Path.Combine(filesPath, fileName);
-
-                if (file.Length <= 0)
+                if (file != null)
                 {
-                    continue;
-                }
+                    using (var stream = new FileStream(fullFilePath, FileMode.Create))
+                    {
+                        using (var ms = new MemoryStream())
+                        {
+                            file.CopyTo(ms);
+                            var fileBytes = ms.ToArray();
+                            string image = Convert.ToBase64String(fileBytes); // obrazek w binarnej formie
 
-                using (var stream = new FileStream(fullFilePath, FileMode.Create))
-                {
-                    await file.CopyToAsync(stream);
+                            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
+                            httpWebRequest.ContentType = "image/jpeg";
+                            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+                            httpWebRequest.Method = "POST";
+                            httpWebRequest.Headers.Add("Accept-language","pl-PL");
+                            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+                            Stream requestStream = httpWebRequest.GetRequestStream();
+                            requestStream.Write(fileBytes, 0, fileBytes.Length);
+                            requestStream.Close();
+
+                            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse(); // odczytujemy response od allegro
+                            Stream responseStream = httpResponse.GetResponseStream();
+                            StreamReader readStream = new StreamReader(responseStream, Encoding.Default);
+
+                            response += readStream.ReadToEnd() + "\n";
+                        }
+                        await file.CopyToAsync(stream);
+                    }
                 }
+                else
+                    return Json("Wystąpił błąd podczas dodawania!");
             }
-
-            return this.Ok();
+            return Json("Zdjęcia dodano poprawnie :-) \n "+response+"");
         }
 
 
@@ -528,7 +550,7 @@ namespace Clutchlit.Controllers
             ViewData["ImpliesWarranty"] = GetImpliedWarranties("45582318");
             ViewData["ReturnPolicy"] = GetReturnPolicy("45582318");
             ViewData["MainCategories"] = GetCategory();
-            return View(); 
+            return View();
         }
     }
 }
