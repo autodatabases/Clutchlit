@@ -497,7 +497,7 @@ namespace Clutchlit.Controllers
             foreach (var file in files)
             {
                 var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName;
-                // Ensure the file name is correct
+
                 fileName = fileName.Contains("\\")
                     ? fileName.Trim('"').Substring(fileName.LastIndexOf("\\", StringComparison.Ordinal) + 1)
                     : fileName.Trim('"');
@@ -525,10 +525,15 @@ namespace Clutchlit.Controllers
                             requestStream.Close();
 
                             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse(); // odczytujemy response od allegro
-                            Stream responseStream = httpResponse.GetResponseStream();
-                            StreamReader readStream = new StreamReader(responseStream, Encoding.Default);
 
-                            response += readStream.ReadToEnd() + "\n";
+                            using (var readStream = new StreamReader(httpResponse.GetResponseStream(), Encoding.Default))
+                            {
+                                var resource = readStream.ReadToEnd();
+                                dynamic x = JsonConvert.DeserializeObject(resource);
+                                var location = x.location;
+                                var expiresAt = x.expiresAt;
+                                response += location + ";";
+                            }
                         }
                         await file.CopyToAsync(stream);
                     }
@@ -536,7 +541,7 @@ namespace Clutchlit.Controllers
                 else
                     return Json("Wystąpił błąd podczas dodawania!");
             }
-            return Json("Zdjęcia dodano poprawnie :-) \n "+response+"");
+            return Json(response);
         }
 
 

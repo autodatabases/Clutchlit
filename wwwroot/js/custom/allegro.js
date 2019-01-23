@@ -112,7 +112,7 @@
                     function (evt) {
                         if (evt.lengthComputable) {
                             var progress = Math.round((evt.loaded / evt.total) * 100);
-                            // Do something with the progress
+                            $('#progress').append(progress);
                         }
                     },
                     false);
@@ -120,8 +120,15 @@
             }
         }).done(function (data, textStatus, jqXhr) {
             alert("Uploading is done");
+            var array = data.split(';');
+            var string_to_put = "";
 
-            // Clear the input
+            for (i = 0; i < array.lenth; ++i) {
+                string_to_put += '<img src="'+array[i]+'" width="100px" />';
+            }
+            $('#progress').html('');
+            $('#progress').html(string_to_put);
+
             $("#imageUploadForm").val();
         }).fail(function (jqXhr, textStatus, errorThrown) {
             if (errorThrown === "abort") {
