@@ -13,7 +13,7 @@
                 items += "<option value='" + row.value + "'>" + row.text + "</option>";
             });
             $('#category2').html(items);
-        })
+        });
     });
 
     $("#category2").change(function () {
@@ -28,7 +28,7 @@
                 items += "<option value='" + row.value + "'>" + row.text + "</option>";
             });
             $('#category3').html(items);
-        })
+        });
     });
 
     $("#category3").change(function () {
@@ -43,7 +43,7 @@
                 items += "<option value='" + row.value + "'>" + row.text + "</option>";
             });
             $('#category4').html(items);
-        })
+        });
     });
 
     $("#category4").change(function () {
@@ -59,7 +59,7 @@
                 items += "<option value='" + row.value + "'>" + row.text + "</option>";
             });
             $('#category5').html(items);
-        })
+        });
     });
 
     // pobieramy parametry dla kategorii
@@ -100,7 +100,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/AllegroAuctionsController/UploadPhotos",
+            url: "/AllegroAuctions/UploadPhotos",
             contentType: false,
             processData: false,
             data: data,
