@@ -123,9 +123,10 @@
             var array = data.split(';');
             var string_to_put = "A";
 
-            for (i = 0; i < array.lenth; ++i) {
+            for (i = 0; i < array.length; ++i) {
                 string_to_put += '<img src="'+array[i]+'" width="100px" />';
             }
+
             $('#progress').html('');
             $('#progress').html(string_to_put);
 
