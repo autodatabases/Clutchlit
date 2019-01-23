@@ -506,7 +506,7 @@ namespace Clutchlit.Controllers
                         }
                     }
                 }
-                return Json(new { status = "success", message = "success" });
+                return Json(new { status = "success", message = filePath });
             }
             else
             {
