@@ -111,17 +111,19 @@
                 xhr.upload.addEventListener("progress",
                     function (evt) {
                         if (evt.lengthComputable) {
-                            var progress = Math.round((evt.loaded / evt.total) * 100);
+                            var progress = Math.round(evt.loaded/evt.total*100);
                             $('#progress').append(progress);
+                            $('.images-loader').show();
                         }
                     },
                     false);
                 return xhr;
             }
         }).done(function (data) {
+            $('.images-loader').hide();
             alert("Uploading is done");
             var array = data.split(';');
-            var string_to_put = "A";
+            var string_to_put = "";
 
             for (i = 0; i < array.length; ++i) {
                 string_to_put += '<span class="allegro_img col-md-3"><img src="'+array[i]+'" width="150px" /></span>';
