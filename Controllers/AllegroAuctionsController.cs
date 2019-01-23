@@ -492,21 +492,23 @@ namespace Clutchlit.Controllers
         {
             if (ModelState.IsValid)
             {
-                var uploads = Path.Combine(hostingEnv.WebRootPath, "images/");
+                string filePath2 = "";
+
                 foreach (var file in files)
                 {
                     if (file != null && file.Length > 0)
                     {
-                        var fileName = Guid.NewGuid().ToString().Replace("-", "") + ".jpg";
-                        var stringToStream = Path.Combine(uploads, fileName);
-                        using (var s = new FileStream(stringToStream,FileMode.Create))
+                        var fileName = Path.GetFileName(file.FileName);
+                        var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\images", fileName);
+                        filePath2 = filePath;
+                        using (var s = new FileStream(filePath,FileMode.Create))
                         {
                             await file.CopyToAsync(s);
                            
                         }
                     }
                 }
-                return Json(new { status = "success", message = uploads });
+                return Json(new { status = "success", message = filePath2 });
             }
             else
             {
