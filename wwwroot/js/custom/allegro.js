@@ -124,7 +124,7 @@
             var string_to_put = "A";
 
             for (i = 0; i < array.length; ++i) {
-                string_to_put += '<img src="'+array[i]+'" width="100px" />';
+                string_to_put += '<span class="allegro_img col-md-3"><img src="'+array[i]+'" width="150px" /></span>';
             }
 
             $('#progress').html('');
