@@ -492,12 +492,12 @@ namespace Clutchlit.Controllers
         {
             if (ModelState.IsValid)
             {
-                var uploads = Path.Combine(hostingEnv.WebRootPath, "images");
+                var uploads = Path.Combine(hostingEnv.WebRootPath, "images/");
                 foreach (var file in files)
                 {
                     if (file != null && file.Length > 0)
                     {
-                        var fileName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(file.FileName);
+                        var fileName = Guid.NewGuid().ToString().Replace("-", "") + ".jpg";
                         var stringToStream = Path.Combine(uploads, fileName);
                         using (var s = new FileStream(stringToStream,FileMode.Create))
                         {
