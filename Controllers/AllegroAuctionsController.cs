@@ -562,102 +562,7 @@ namespace Clutchlit.Controllers
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt)
         {
             string ProductId = "SP100";
-            string data = "" +
-                "{" +
-                "\"id\": \""+AuctionId+"\",                   " +
-                "\"name\": \""+Title+"\"," +
-                "\"category\": {" +
-                "\"id\": \""+Category+"\"" +
-                "}," +
-                "\"parameters\": [" +
-                "{" +
-                "\"id\": \"11323\"," +
-                " \"valuesIds\": [" +
-                "\"11323_1\"" +
-                "]," +
-                "\"values\": []," +
-                "\"rangeValue\": null" +
-                "}," +
-                "{" +
-                "\"id\": \"128188\"," +
-                "\"valuesIds\": [" +
-                "\"128188_1\"" +
-                "]," +
-                "\"values\": []," +
-                "\"rangeValue\": null" +
-                "}," +
-                "]," +
-                "\"ean\": \"6901443187416\"," +
-                "\"description\": {" +
-                "\"sections\": [" +
-                "{" +
-                "\"items\": [" +
-                "{" +
-                "\"type\": \"TEXT\"," +
-                "\"content\": \"<p>Tekstowy opis sprzyngła</p>\"" +
-                "}," +
-                "{" +
-                "\"type\": \"IMAGE\"," +
-                "\"url\": \"https://e.allegroimg.com/original/01fd60/4ea8d18e4275b0878b7f0562067e\"" +
-                "}" +
-                "]" +
-                "}," +
-                "{" +
-                "\"items\": [" +
-                "{" +
-                "\"type\": \"TEXT\"," +
-                "\"content\": \"<p>Tekstowy opis sprzyngła</p>\"" +
-                "}" +
-                "]" +
-                "}" +
-                "]" +
-                "}," +
-                "\"images\": [" +
-                "{" +
-                "\"url\": \"https://e.allegroimg.com/original/01fd60/4ea8d18e4275b0878b7f0562067e\"" +
-                "}," +
-                "{" +
-                "\"url\": \"https://e.allegroimg.com/original/018474/c62b54a74120a7983b09d0fa4a4e\"" +
-                "}" +
-                "]," +
-                "\"compatibilityList\" : {   " +
-                "\"items\" : [" +
-                "{\"text\" : \"Skoda FABIA II (542) 1.2 TDI 75 KM / 55 KW 1199 ccm\"}," +
-                "{\"text\" : \"BMW 3 (E46) 330 d 204 KM / 150 kW 2993 ccm\"}," +
-                "{\"text\" : \"BMW 3 (E46) 330 i 231 KM / 170 kW 2979 ccm\"}," +
-                "{\"text\" : \"BMW 3 (E46) 330 xi 231 KM / 170 kW 2979 ccm\"}," +
-                "]" +
-                "}," +
-                "\"sellingMode\": {                      " +
-                "\"format\": \"BUY_NOW\"," +
-                "\"price\": {" +
-                "\"amount\": \"99\"," +
-                "\"currency\": \"PLN\"" +
-                "}," +
-                "\"startingPrice\": null," +
-                "\"minimalPrice\": null" +
-                "}," +
-                "\"stock\": {" +
-                "\"available\": 1000," +
-                "\"unit\": \"UNIT\"" +
-                "}," +
-                "\"publication\": {" +
-                "\"duration\": null," +
-                "\"status\": \"ACTIVE\"," +
-                "\"startingAt\": null," +
-                "\"endingAt\": null" +
-                "}," +
-                "\"delivery\": {" +
-                "\"shippingRates\": {" +
-                "\"id\": \"b25e1a2e-3f2d-4206-97de-234a9dbf91bf\"" +
-                "}," +
-                "\"handlingTime\": \"PT24H\"," +
-                "\"additionalInfo\": \"Dodatkowe informacje o dostawie\"," +
-                "\"shipmentDate\":\"2018-04-01T08:00:00Z\"" +
-                "}," +
-                "\"payments\": {" +
-                "\"invoice\": \"VAT\"" +
-                "}," +
+            string data = "{\"additionalServices\": null," +
                 "\"afterSalesServices\": {" +
                 "\"impliedWarranty\": {" +
                 "\"id\": \"c2683ac1-b36b-42a1-b0f5-b45bdaf55928\"" +
@@ -669,31 +574,138 @@ namespace Clutchlit.Controllers
                 "\"id\": \"0dd88048-8163-4eba-9c12-768551bf407d\"" +
                 "}" +
                 "}," +
-                "\"additionalServices\": null," +
-                "\"sizeTable\": null," +
-                "\"promotion\": {" +
-                "\"emphasized\": false," +
-                "\"bold\": false," +
-                "\"highlight\": false," +
-                "\"departmentPage\": false," +
-                "\"emphasizedHighlightBoldPackage\": false" +
+                "\"category\": {" +
+                "\"id\": \""+Category+"\"" +
                 "}," +
-                "\"location\": {" +
-                "\"countryCode\": \"PL\"," +
-                "\"province\": \"MAZOWIECKIE\"," +
-                "\"city\": \"Warszawa\"," +
-                "\"postCode\": \"02-180\"" +
+                "\"compatibilityList\": {" +
+                "\"items\": [" +
+                "{" +
+                "\"text\": \"Skoda FABIA II (542) 1.2 TDI 75 KM / 55 KW 1199 ccm\"" +
+                "}" +
+                "]" +
                 "}," +
+                "\"contact\": {" +
+                "\"id\": null," +
+                "}," +
+                "\"createdAt\": \"2019-01-29T09:15:55.927Z\"," +
+                "\"delivery\": {" +
+                "\"additionalInfo\": \"string\"," +
+                "\"handlingTime\": \"PDT12H30M5S\"," +
+                "\"shipmentDate\": \"2018-04-01T08:00:00Z\"," +
+                "\"shippingRates\": {" +
+                "\"id\": \"b25e1a2e-3f2d-4206-97de-234a9dbf91bf\"" +
+                "}" +
+                "}," +
+                "\"description\": {" +
+                "\"sections\": [" +
+                "{" +
+                "\"items\": [" +
+                "{" +
+                "\"type\": \"string\"," +
+                "\"content\": \"string\"" +
+                "}," +
+                "{" +
+                "\"type\": \"string\"," +
+                "\"url\": \"string\"" +
+                "}" +
+                "]" +
+                "}" +
+                "]" +
+                "}," +
+                "\"ean\": \"string\"," +
                 "\"external\": {" +
-                "\"id\":\""+ProductId+"\" -- ID produktu w sklepie" +
+                "\"id\": \"SP100\"" +
                 "}," +
-                "\"contact\": null," +
+                "\"id\": \""+AuctionId+"\"," +
+                "\"images\": [" +
+                "{" +
+                "\"url\": \"https://e.allegroimg.com/original/01fd60/4ea8d18e4275b0878b7f0562067e\"" +
+                "}" +
+                "]," +
+                "\"location\": {" +
+                "\"city\": \"Warszawa\"," +
+                "\"countryCode\": \"PL\"," +
+                "\"postCode\": \"02-180\"," +
+                "\"province\": \"MAZOWIECKIE\"" +
+                "}," +
+                "\"name\": \"string\"," +
+                "\"parameters\": [" +
+                "{" +
+                "\"id\": \"11323\"," +
+                "\"valuesIds\": [" +
+                "\"11323_1\"" +
+                "]," +
+                "\"values\": []," +
+                "\"rangeValue\": null" +
+                "}," +
+                "{" +
+                "\"id\": \"214434\"," +
+                "\"valuesIds\": [" +
+                "\"214434_266982\"" +
+                "]," +
+                "\"values\": []," +
+                "\"rangeValue\": null" +
+                "}," +
+                "{" +
+                "\"id\": \"130531\"," +
+                "\"valuesIds\": [" +
+                "\"130531_1\"," +
+                "\"130531_2\"" +
+                "]," +
+                "\"values\": []," +
+                "\"rangeValue\": null" +
+                "}," +
+                "{" +
+                "\"id\": \"127417\"," +
+                "\"valuesIds\": [" +
+                "\"127417_8\"" +
+                "]," +
+                "\"values\": []," +
+                "\"rangeValue\": null" +
+                "}," +
+                "{" +
+                "\"id\": \"129591\"," +
+                "\"valuesIds\": [" +
+                "\"129591_1\"," +
+                "\"129591_2\"" +
+                "]," +
+                "\"values\": []," +
+                "\"rangeValue\": null" +
+                "}" +
+                "]," +
+                "\"payments\": {" +
+                "\"invoice\": \"VAT\"" +
+                "}," +
+                "\"promotion\": {" +
+                "\"bold\": false," +
+                "\"departmentPage\": false," +
+                "\"emphasized\": false," +
+                "\"emphasizedHighlightBoldPackage\": false," +
+                "\"highlight\": false" +
+                "}," +
+                "\"publication\": {" +
+                "\"duration\": \"PDT12H30M5S\"," +
+                "\"endingAt\": \"2020-01-29T09:15:55.927Z\"," +
+                "\"startingAt\": \"2019-01-29T09:15:55.927Z\"," +
+                "\"status\": \"ACTIVE\"" +
+                "}," +
+                "\"sellingMode\": {" +
+                "\"format\": \"BUY_NOW\"," +
+                "\"price\": {" +
+                "\"amount\": \"123.45\"," +
+                "\"currency\": \"PLN\"" +
+                "}," +
+                "\"startingPrice\": null" +
+                "}," +
+                "\"sizeTable\": null," +
+                "\"stock\": {" +
+                "\"available\": 1000," +
+                "\"unit\": \"UNIT\"" +
+                "}," +
+                "\"updatedAt\": \"2019-01-29T09:15:55.928Z\"," +
                 "\"validation\": {" +
                 "\"errors\": []," +
-                "\"validatedAt\": \"2018-04-06T08:29:37.461Z\"" +
-                "}," +
-                "\"createdAt\": \""+CreatedAt+"\"," +
-                "\"updatedAt\": \""+CreatedAt+"\"" +
+                "\"validatedAt\": \"2019-01-29T09:15:55.928Z\"" +
                 "}";
 
             List<string> Errors = new List<string>();
