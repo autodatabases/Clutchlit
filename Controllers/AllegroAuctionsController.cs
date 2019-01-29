@@ -568,6 +568,12 @@ namespace Clutchlit.Controllers
                 "}" +
                 "}";
             string response = "";
+            string Auction_id = "";
+            string ValidatedAt = "";
+            string CreatedAt = "";
+            string UpdatedAt = "";
+            string Errors = "";
+
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
@@ -583,11 +589,22 @@ namespace Clutchlit.Controllers
             }
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
 
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
             {
-                response = streamReader.ReadToEnd();
+                var resource = readStream.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                Auction_id = x.id;
+                ValidatedAt = x.validatedAt;
+                CreatedAt = x.createdAt;
+                UpdatedAt = x.updatedAt;
+
+                var errors = x.validation.errors;
+                foreach (var error in errors)
+                {
+                    Errors += error + " \n ";
+                }
             }
-            return Json(response);
+            return Json(Errors + " \n " + Auction_id );
         }
     }
 }
