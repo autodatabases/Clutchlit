@@ -731,6 +731,26 @@
             });
         });
 
+        $(document).on('click', '#allegro_test', function (e) {
+            e.preventDefault();
+            // alert($(this).attr('name'));
+            $.ajax({
+                headers: {
+                    Accept: "application/vnd.allegro.public.v1+json",
+                    "Content-Type": "application/vnd.allegro.public.v1+json",
+                    "Authorization": "Bearer "
+                },
+                type: "POST",
+                data: "",
+                url: "https://api.allegro.pl/sale/offers/7809337738/",
+                success: function (msg) {
+                    alert(msg);
+                },
+                error: function (msg) {
+                    alert(msg);
+                }
+            });
+        });
 
     </script>
     <script src="~/js/custom/allegro.js" type="text/javascript"></script>

@@ -52,7 +52,10 @@ namespace Clutchlit.Controllers
             }
             return new List<string>();
         }
-
+        public IActionResult getTokTest()
+        {
+            return Json(Token);
+        }
         public string GetToken(string token)
         {
             string response = "";
