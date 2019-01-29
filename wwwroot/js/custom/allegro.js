@@ -121,12 +121,12 @@
             }
         }).done(function (data) {
             $('.images-loader').hide();
-            alert("Uploading is done");
+            alert("Dodano pomyślnie!");
             var array = data.split(';');
             var string_to_put = "";
 
             for (i = 0; i < array.length; ++i) {
-                string_to_put += '<span class="allegro_img col-md-3"><img src="'+array[i]+'" width="150px" /></span>';
+                string_to_put += '<span class="allegro_img col-md-3"><img src="'+array[i]+'" width="100%" /></span>';
             }
 
             $('#progress').html('');
@@ -137,7 +137,7 @@
             if (errorThrown === "abort") {
                 alert("Uploading was aborted");
             } else {
-                alert("Uploading failed");
+                alert("Błąd! Zdjęcia ma niepoprawne rozszerzenie lub wielkość");
             }
         }).always(function (data, textStatus, jqXhr) { });
 

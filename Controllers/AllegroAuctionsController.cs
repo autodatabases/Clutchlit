@@ -557,5 +557,36 @@ namespace Clutchlit.Controllers
             ViewData["MainCategories"] = GetCategory();
             return View();
         }
+        public IActionResult PostAuction(string title)
+        {
+            string data = "" +
+                "{" +
+                "\"name\": \""+title+"\"," +
+                "\"category\": {" +
+                "\"id\": \"50884\"" +
+                "}" +
+                "}";
+            string response = "";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(data);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                response = streamReader.ReadToEnd();
+            }
+            return Json(response);
+        }
     }
 }

@@ -666,6 +666,84 @@ namespace Clutchlit.Controllers
             return Json(res);
      
         }
+        public static HttpWebRequest CreateWebRequest()
+        {
+            HttpWebRequest webRequest = (HttpWebRequest)WebRequest.Create(@"https://katalog.adpolska.pl/ws/api?wsdl");
+            webRequest.ContentType = "text/xml;charset=\"utf-8\"";
+            webRequest.Accept = "text/xml";
+            webRequest.Method = "POST";
+            return webRequest;
+        }
+        public string Api_elit_call(string Reference , int Manufacturer)
+        {
+            Reference = "826705";
+            Manufacturer = 21;
+            string result = "";
+            string Prefix = "";
+            string Ref = "";
+            Ref = Reference.Replace(" ", "").ToUpper();
+            switch (Manufacturer)
+            {
+                case 6:
+                    {
+                        Prefix = "L";
+                        break;
+                    }
+                case 15:
+                    {
+                        Prefix = "NGK";
+                        break;
+                    }
+                case 21:
+                    {
+                        Prefix = "V";
+                        break;
+                    }
+                case 32:
+                    {
+                        Prefix = "SCH";
+                        break;
+                    }
+            }
+            Ref = Prefix + " " +Ref;
+
+            string query = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
+                "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://katalog.adpolska.pl/ws/api/1.0/\">" +
+                "<SOAP-ENV:Header>" +
+                "<api_key>c86d4779cd53fae70b16d047973caf4f42441e57</api_key>" +
+                "<kh_kod>066140</kh_kod>" +
+                "<personal_key>6f41ed68678895eae1df0f0fae28c8a3445e01ca</personal_key>" +
+                "</SOAP-ENV:Header>" +
+                "<SOAP-ENV:Body>" +
+                "<ns1:getProductPrice>" +
+                "<id>" +
+                "<item>" +
+                "<index>" + Ref + "</index>" +
+                "</item>" +
+                "</id>" +
+                "</ns1:getProductPrice>" +
+                "</SOAP-ENV:Body>" +
+                "</SOAP-ENV:Envelope>";
+
+            HttpWebRequest request = CreateWebRequest();
+            XmlDocument soapEnvelopeXml = new XmlDocument();
+            soapEnvelopeXml.LoadXml(@query);
+
+            using (Stream stream = request.GetRequestStream())
+            {
+                soapEnvelopeXml.Save(stream);
+            }
+
+            using (WebResponse response = request.GetResponse())
+            {
+                using (StreamReader rd = new StreamReader(response.GetResponseStream()))
+                {
+                    string soapResult = rd.ReadToEnd();
+                    result += soapResult;
+                }
+            }
+            return result;
+        }
         [HttpPost]
         public IActionResult GetDistributorsPrices(int Id)
         {
