@@ -559,6 +559,7 @@ namespace Clutchlit.Controllers
         }
         public IActionResult PostAuction(string title)
         {
+            title = "Tytuł oferty";
             string data = "" +
                 "{" +
                 "\"name\": \""+title+"\"," +
