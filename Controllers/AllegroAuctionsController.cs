@@ -557,22 +557,190 @@ namespace Clutchlit.Controllers
             ViewData["MainCategories"] = GetCategory();
             return View();
         }
-        public IActionResult PostAuction(string title)
+
+
+        public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt)
+        {
+            string ProductId = "SP100";
+            string data = "" +
+                "{" +
+                "\"id\": \""+AuctionId+"\",                   " +
+                "\"name\": \""+Title+"\"," +
+                "\"category\": {" +
+                "\"id\": \""+Category+"\"" +
+                "}," +
+                "\"parameters\": [" +
+                "{" +
+                "\"id\": \"11323\"," +
+                " \"valuesIds\": [" +
+                "\"11323_1\"" +
+                "]," +
+                "\"values\": []," +
+                "\"rangeValue\": null" +
+                "}," +
+                "{" +
+                "\"id\": \"128188\"," +
+                "\"valuesIds\": [" +
+                "\"128188_1\"" +
+                "]," +
+                "\"values\": []," +
+                "\"rangeValue\": null" +
+                "}," +
+                "]," +
+                "\"ean\": \"6901443187416\"," +
+                "\"description\": {" +
+                "\"sections\": [" +
+                "{" +
+                "\"items\": [" +
+                "{" +
+                "\"type\": \"TEXT\"," +
+                "\"content\": \"<p>Tekstowy opis sprzyngła</p>\"" +
+                "}," +
+                "{" +
+                "\"type\": \"IMAGE\"," +
+                "\"url\": \"https://e.allegroimg.com/original/01fd60/4ea8d18e4275b0878b7f0562067e\"" +
+                "}" +
+                "]" +
+                "}," +
+                "{" +
+                "\"items\": [" +
+                "{" +
+                "\"type\": \"TEXT\"," +
+                "\"content\": \"<p>Tekstowy opis sprzyngła</p>\"" +
+                "}" +
+                "]" +
+                "}" +
+                "]" +
+                "}," +
+                "\"images\": [" +
+                "{" +
+                "\"url\": \"https://e.allegroimg.com/original/01fd60/4ea8d18e4275b0878b7f0562067e\"" +
+                "}," +
+                "{" +
+                "\"url\": \"https://e.allegroimg.com/original/018474/c62b54a74120a7983b09d0fa4a4e\"" +
+                "}" +
+                "]," +
+                "\"compatibilityList\" : {   " +
+                "\"items\" : [" +
+                "{\"text\" : \"Skoda FABIA II (542) 1.2 TDI 75 KM / 55 KW 1199 ccm\"}," +
+                "{\"text\" : \"BMW 3 (E46) 330 d 204 KM / 150 kW 2993 ccm\"}," +
+                "{\"text\" : \"BMW 3 (E46) 330 i 231 KM / 170 kW 2979 ccm\"}," +
+                "{\"text\" : \"BMW 3 (E46) 330 xi 231 KM / 170 kW 2979 ccm\"}," +
+                "]" +
+                "}," +
+                "\"sellingMode\": {                      " +
+                "\"format\": \"BUY_NOW\"," +
+                "\"price\": {" +
+                "\"amount\": \"99\"," +
+                "\"currency\": \"PLN\"" +
+                "}," +
+                "\"startingPrice\": null," +
+                "\"minimalPrice\": null" +
+                "}," +
+                "\"stock\": {" +
+                "\"available\": 1000," +
+                "\"unit\": \"UNIT\"" +
+                "}," +
+                "\"publication\": {" +
+                "\"duration\": null," +
+                "\"status\": \"ACTIVE\"," +
+                "\"startingAt\": null," +
+                "\"endingAt\": null" +
+                "}," +
+                "\"delivery\": {" +
+                "\"shippingRates\": {" +
+                "\"id\": \"b25e1a2e-3f2d-4206-97de-234a9dbf91bf\"" +
+                "}," +
+                "\"handlingTime\": \"PT24H\"," +
+                "\"additionalInfo\": \"Dodatkowe informacje o dostawie\"," +
+                "\"shipmentDate\":\"2018-04-01T08:00:00Z\"" +
+                "}," +
+                "\"payments\": {" +
+                "\"invoice\": \"VAT\"" +
+                "}," +
+                "\"afterSalesServices\": {" +
+                "\"impliedWarranty\": {" +
+                "\"id\": \"c2683ac1-b36b-42a1-b0f5-b45bdaf55928\"" +
+                "}," +
+                "\"returnPolicy\": {" +
+                "\"id\": \"eb7c8407-808c-4078-9250-9da488560634\"" +
+                "}," +
+                "\"warranty\": {" +
+                "\"id\": \"0dd88048-8163-4eba-9c12-768551bf407d\"" +
+                "}" +
+                "}," +
+                "\"additionalServices\": null," +
+                "\"sizeTable\": null," +
+                "\"promotion\": {" +
+                "\"emphasized\": false," +
+                "\"bold\": false," +
+                "\"highlight\": false," +
+                "\"departmentPage\": false," +
+                "\"emphasizedHighlightBoldPackage\": false" +
+                "}," +
+                "\"location\": {" +
+                "\"countryCode\": \"PL\"," +
+                "\"province\": \"MAZOWIECKIE\"," +
+                "\"city\": \"Warszawa\"," +
+                "\"postCode\": \"02-180\"" +
+                "}," +
+                "\"external\": {" +
+                "\"id\":\""+ProductId+"\" -- ID produktu w sklepie" +
+                "}," +
+                "\"contact\": null," +
+                "\"validation\": {" +
+                "\"errors\": []," +
+                "\"validatedAt\": \"2018-04-06T08:29:37.461Z\"" +
+                "}," +
+                "\"createdAt\": \""+CreatedAt+"\"," +
+                "\"updatedAt\": \""+CreatedAt+"\"" +
+                "}";
+
+            List<string> Errors = new List<string>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "PUT";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(data);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = readStream.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                
+                var errors = x.validation.errors;
+                foreach (var error in errors)
+                {
+                    Errors.Add(error.message);
+                }
+            }
+
+            return Json(String.Join(", ", Errors.ToArray()));
+        }
+
+        public void PostDraftAuction(string title, string category)
         {
             title = "Tytuł oferty";
+            category = "50884";
             string data = "" +
                 "{" +
                 "\"name\": \""+title+"\"," +
                 "\"category\": {" +
-                "\"id\": \"50884\"" +
+                "\"id\": \""+category+"\"" +
                 "}" +
                 "}";
-            string response = "";
-            string Auction_id = "";
-            string ValidatedAt = "";
-            string CreatedAt = "";
-            string UpdatedAt = "";
-            string Errors = "";
+
+            List<string> OfferResponse = new List<string>();
+            List<string> Errors = new List<string>(); // errors handler
 
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
@@ -593,18 +761,21 @@ namespace Clutchlit.Controllers
             {
                 var resource = readStream.ReadToEnd();
                 dynamic x = JsonConvert.DeserializeObject(resource);
-                Auction_id = x.id;
-                ValidatedAt = x.validatedAt;
-                CreatedAt = x.createdAt;
-                UpdatedAt = x.updatedAt;
+                OfferResponse.Add(x.id);
+                OfferResponse.Add(x.validatedAt);
+                OfferResponse.Add(x.createdAt);
+                OfferResponse.Add(x.updatedAt);
 
                 var errors = x.validation.errors;
                 foreach (var error in errors)
                 {
-                    Errors += error + " \n ";
+                    Errors.Add(error.message);
                 }
             }
-            return Json(Errors + " \n " + Auction_id );
+            var errors_response = String.Join(", ", Errors.ToArray());
+            this.PostAuction(OfferResponse.ElementAt(0), title, category, OfferResponse.ElementAt(2)); // wystawiamy aukcję z draft'a;
+            
+            //return errors_response + " \n " + OfferResponse.First();
         }
     }
 }
