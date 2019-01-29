@@ -720,7 +720,7 @@ namespace Clutchlit.Controllers
                 var errors = x.validation.errors;
                 foreach (var error in errors)
                 {
-                    Errors.Add(error.message);
+                    Errors.Add(Convert.ToString(error.message));
                 }
             }
 
@@ -761,15 +761,15 @@ namespace Clutchlit.Controllers
             {
                 var resource = readStream.ReadToEnd();
                 dynamic x = JsonConvert.DeserializeObject(resource);
-                OfferResponse.Add(x.id);
-                OfferResponse.Add(x.validatedAt);
-                OfferResponse.Add(x.createdAt);
-                OfferResponse.Add(x.updatedAt);
+                OfferResponse.Add(Convert.ToString(x.id));
+                OfferResponse.Add(Convert.ToString(x.validatedAt));
+                OfferResponse.Add(Convert.ToString(x.createdAt));
+                OfferResponse.Add(Convert.ToString(x.updatedAt));
 
                 var errors = x.validation.errors;
                 foreach (var error in errors)
                 {
-                    Errors.Add(error.message);
+                    Errors.Add(Convert.ToString(error.message));
                 }
             }
             var errors_response = String.Join(", ", Errors.ToArray());
