@@ -115,7 +115,7 @@ using Clutchlit.Models;
             WriteLiteral("\r\n                        </td>\r\n                        <td style=\"text-align:right;\">\r\n                            ");
             EndContext();
             BeginContext(1076, 87, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3267039576c345f18546b97882054f42", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "92fbb964c1cc4aabbcd431307eb516e4", async() => {
                 BeginContext(1153, 6, true);
                 WriteLiteral("Edytuj");
                 EndContext();
@@ -151,7 +151,7 @@ using Clutchlit.Models;
             WriteLiteral(" |\r\n                            ");
             EndContext();
             BeginContext(1195, 96, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "16abf73816f74195ac138c68375858fe", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "91ab4a280e584c4db62357b8d9231f29", async() => {
                 BeginContext(1278, 9, true);
                 WriteLiteral("Szczegóły");
                 EndContext();
@@ -187,7 +187,7 @@ using Clutchlit.Models;
             WriteLiteral(" |\r\n                            ");
             EndContext();
             BeginContext(1323, 78, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a54f5432f8a3438ba9d67c6a5aceaa50", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "94bd1bbd06c4440a86bace1de71f5cc5", async() => {
                 BeginContext(1393, 4, true);
                 WriteLiteral("Usuń");
                 EndContext();

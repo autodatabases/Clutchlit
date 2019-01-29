@@ -87,7 +87,7 @@ using Clutchlit.Models;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(397, 69, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3758d7d19d33427e879790278cfdf06c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0a03f7bc69444a5b93e56259ee8c105e", async() => {
                 BeginContext(456, 6, true);
                 WriteLiteral("Edytuj");
                 EndContext();
@@ -116,7 +116,7 @@ using Clutchlit.Models;
             WriteLiteral(" |\r\n    ");
             EndContext();
             BeginContext(474, 74, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1b64f1bfe48a4515b1df0a2dba1d4483", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "772cb1dd6bd4448fa3c0dd0e432a2b2d", async() => {
                 BeginContext(531, 13, true);
                 WriteLiteral("Wróć do listy");
                 EndContext();

@@ -738,12 +738,13 @@
                 headers: {
                     Accept: "application/vnd.allegro.public.v1+json",
                     "Content-Type": "application/vnd.allegro.public.v1+json",
-                    "Authorization": "Bearer "
+                    "Authorization": "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDg3OTk4OTUsInVzZXJfbmFtZSI6IjQ1NTgyMzE4IiwianRpIjoiNDE0ZDEzMGItNDM2Ni00ZTI1LWFiMjctNDU5ZDQxYjAxM2I2IiwiY2xpZW50X2lkIjoiNGZlMGU1ZTcxMTRjNDE1ZmI3ZjY5Y2JmZDFkYWFiMTYiLCJzY29wZSI6WyJhbGxlZ3JvX2FwaSJdfQ.gva7S5VIMxhDu2d6bGIJJ7h8cSIti-kzlSkLonyTJArRbMfzfMDng0DCdwConStKnCYnnnzusYXWZ35fjBhJtKTSGRuZQxfmbqRfOE4ua4HPrGvdZXVkPfFL4iMP37h-3l0vXktjWtEAcH1xYaB8GNd14mw1kpCbODpA1gP5OKfMpq_6o-TpUwrQK-tWp3lMPHI6UbHNIhvoscy6mQOQMCktrPrylM6w-GBNWfS7KtqwfnnAvH5puFvyD4Zd0gDiEqjxES13aNz7rwdqrqzSNhZEg5K--htcllpdFJPp1RjsU2F_ZtMkLQo4Qzi5kvc-BShLGtt54ZiVCw4SVPhKtA"
                 },
                 type: "POST",
                 data: "",
                 url: "https://api.allegro.pl/sale/offers/7809337738/",
                 success: function (msg) {
+                    console.log(msg);
                     alert(msg);
                 },
                 error: function (msg) {
