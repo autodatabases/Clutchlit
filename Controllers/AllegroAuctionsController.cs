@@ -610,11 +610,7 @@ namespace Clutchlit.Controllers
             //auction.id = AuctionId;
             auction.name = title;
             auction.category.id = category;
-            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
-            auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
-            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
-            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
-            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
+            
 
 
             auction.ean = "4343243241231432212";
