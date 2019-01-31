@@ -570,11 +570,50 @@ namespace Clutchlit.Controllers
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt)
         {
             
+            
+
+
+            List<string> Errors = new List<string>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+AuctionId+"");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "PUT";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(outprint);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = readStream.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                
+                var errors = x.validation.errors;
+                foreach (var error in errors)
+                {
+                    Errors.Add(Convert.ToString(error.message));
+                }
+            }
+
+            return Json(String.Join(", ", Errors.ToArray()));
+        }
+
+        public IActionResult PostDraftAuction(string title, string category)
+        {
+            title = "Tytuł oferty";
+            category = "50884";
+            
             var auction = new AuctionToPost();
-            auction.id = AuctionId;
-            auction.name = Title;
-            auction.category.id = Category;
-            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1"}));
+            //auction.id = AuctionId;
+            auction.name = title;
+            auction.category.id = category;
+            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
             auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
             auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
@@ -630,7 +669,7 @@ namespace Clutchlit.Controllers
             auction.contact = null;
 
             auction.validation.validatedAt = "2018-04-01T08:00:00Z";
-            auction.createdAt = CreatedAt;
+            auction.createdAt = "";
             auction.updatedAt = "2018-04-01T08:00:00Z";
 
             var section = new Section();
@@ -640,50 +679,6 @@ namespace Clutchlit.Controllers
             auction.description.sections.Add(section);
 
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
-
-
-            List<string> Errors = new List<string>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+AuctionId+"");
-            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Method = "PUT";
-            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
-
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                streamWriter.Write(outprint);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
-            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var resource = readStream.ReadToEnd();
-                dynamic x = JsonConvert.DeserializeObject(resource);
-                
-                var errors = x.validation.errors;
-                foreach (var error in errors)
-                {
-                    Errors.Add(Convert.ToString(error.message));
-                }
-            }
-
-            return Json(String.Join(", ", Errors.ToArray()));
-        }
-
-        public void PostDraftAuction(string title, string category)
-        {
-            title = "Tytuł oferty";
-            category = "50884";
-            string data = "" +
-                "{" +
-                "\"name\": \"" + title + "\"," +
-                "\"category\": {" +
-                "\"id\": \"" + category + "\"" +
-                "}" +
-                "}";
 
             List<string> OfferResponse = new List<string>();
             List<string> Errors = new List<string>(); // errors handler
@@ -697,7 +692,7 @@ namespace Clutchlit.Controllers
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                streamWriter.Write(data);
+                streamWriter.Write(outprint);
                 streamWriter.Flush();
                 streamWriter.Close();
             }
@@ -719,9 +714,9 @@ namespace Clutchlit.Controllers
                 }
             }
             var errors_response = String.Join(", ", Errors.ToArray());
-            PostAuction(OfferResponse.ElementAt(0), title, category, OfferResponse.ElementAt(2)); // wystawiamy aukcję z draft'a;
+            //PostAuction(OfferResponse.ElementAt(0), title, category, OfferResponse.ElementAt(2)); // wystawiamy aukcję z draft'a;
             
-            //return Json(errors_response + " \n " + OfferResponse.First());
+            return Json(errors_response + " \n " + OfferResponse.First());
         }
     }
 }
