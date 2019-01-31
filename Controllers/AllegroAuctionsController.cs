@@ -663,15 +663,15 @@ namespace Clutchlit.Controllers
             return Json(String.Join(", ", Errors.ToArray()));
         }
 
-        public void PostDraftAuction(string title, string category)
+        public IActionResult PostDraftAuction(string title, string category)
         {
             title = "Tytuł oferty";
             category = "50884";
             string data = "" +
                 "{" +
-                "\"name\": \""+title+"\"," +
+                "\"name\": \"" + title + "\"," +
                 "\"category\": {" +
-                "\"id\": \""+category+"\"" +
+                "\"id\": \"" + category + "\"" +
                 "}" +
                 "}";
 
@@ -709,9 +709,9 @@ namespace Clutchlit.Controllers
                 }
             }
             var errors_response = String.Join(", ", Errors.ToArray());
-            this.PostAuction(OfferResponse.ElementAt(0), title, category, OfferResponse.ElementAt(2)); // wystawiamy aukcję z draft'a;
+            //this.PostAuction(OfferResponse.ElementAt(0), title, category, OfferResponse.ElementAt(2)); // wystawiamy aukcję z draft'a;
             
-            //return errors_response + " \n " + OfferResponse.First();
+            return Json(errors_response + " \n " + OfferResponse.First());
         }
     }
 }
