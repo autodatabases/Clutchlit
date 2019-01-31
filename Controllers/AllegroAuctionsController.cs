@@ -564,14 +564,72 @@ namespace Clutchlit.Controllers
 
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt)
         {
-            string ProductId = "SP100";
-            string data = "" +
-                "{" +
-                "\"name\": \"" + Title + "\"," +
-                "\"category\": {" +
-                "\"id\": \"" + Category + "\"" +
-                "}" +
-                "}";
+            string[] values = { };
+            string[] valuesIds = { "11323_1" };
+            var auction = new AuctionToPost();
+            auction.id = AuctionId;
+            auction.name = Title;
+            auction.category.id = Category;
+            auction.parameters.Add(new Parameters("11323", values, valuesIds));
+            auction.ean = "434324324123142";
+            // dodać description
+            auction.images.Add(new Images("http://ssdsdsd.pl"));
+            auction.images.Add(new Images("http://ssdsdsd.pl"));
+            auction.FillListCompatible("Alfa Romeo 159");
+            auction.FillListCompatible("Alfa Romeo 159 2");
+
+            auction.sellingMode.format = "BUY_NOW";
+            auction.sellingMode.price.amount = "133";
+            auction.sellingMode.price.currency = "PLN";
+            auction.sellingMode.minimalPrice = null;
+            auction.sellingMode.startingPrice = null;
+
+            auction.stock.available = 4;
+            auction.stock.unit = "UNIT";
+
+            auction.publication.duration = null;
+            auction.publication.status = "INACTIVE";
+            auction.publication.startingAt = null;
+            auction.publication.endingAt = null;
+
+            auction.delivery.shippingRates.id = "dsdsd";
+            auction.delivery.handlingTime = "PT23H";
+            auction.delivery.additionalInfo = "Dodatkowe informacje";
+            auction.delivery.shipmentDate = "2018-04-01T08:00:00Z";
+
+            auction.payments.invoice = "VAT";
+
+            auction.afterSalesServices.impliedWarranty.id = "dsadasdsad";
+            auction.afterSalesServices.returnPolicy.id = "dsddsa";
+            auction.afterSalesServices.warranty.id = "fdfdsvcxv";
+
+            auction.additionalServices = null;
+            auction.sizeTable = null;
+            auction.promotion.emphasized = false;
+            auction.promotion.bold = false;
+            auction.promotion.highlight = false;
+            auction.promotion.emphasizedHighlightBoldPackage = false;
+            auction.promotion.departmentPage = false;
+
+            auction.location.countryCode = "PL";
+            auction.location.province = "MAZOWIECKIE";
+            auction.location.city = "Warszawa";
+            auction.location.postCode = "00-132";
+
+            auction.external.id = "SP24-1231";
+            auction.contact = null;
+
+            auction.validation.validatedAt = "2018-04-01T08:00:00Z";
+            auction.createdAt = CreatedAt;
+            auction.updatedAt = "2018-04-01T08:00:00Z";
+
+            var section = new Section();
+            section.items.Add(new Item("TEXT", "dsadada"));
+            section.items.Add(new Item("TEXT", "<p>Tekst</p>"));
+
+            auction.description.sections.Add(section);
+
+            string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
 
             List<string> Errors = new List<string>();
@@ -584,7 +642,7 @@ namespace Clutchlit.Controllers
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                streamWriter.Write(data);
+                streamWriter.Write(outprint);
                 streamWriter.Flush();
                 streamWriter.Close();
             }
