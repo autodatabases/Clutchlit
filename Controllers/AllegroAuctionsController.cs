@@ -520,7 +520,7 @@ namespace Clutchlit.Controllers
                             httpWebRequest.ContentType = "image/jpeg";
                             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
                             httpWebRequest.Method = "POST";
-                            httpWebRequest.Headers.Add("Accept-language","pl-PL");
+                            httpWebRequest.Headers.Add("Accept-language", "pl-PL");
                             httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
 
                             Stream requestStream = httpWebRequest.GetRequestStream();
@@ -560,17 +560,27 @@ namespace Clutchlit.Controllers
             ViewData["MainCategories"] = GetCategory();
             return View();
         }
+        [HttpGet("AllegroAuctions/GetValidationData/{id}")]
+        public IActionResult GetValidationData(string id)
+        {
+           
+            return Json(id);
 
-
+        }
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt)
         {
-            string[] values = { };
-            string[] valuesIds = { "11323_1" };
+            
             var auction = new AuctionToPost();
             auction.id = AuctionId;
             auction.name = Title;
             auction.category.id = Category;
-            auction.parameters.Add(new Parameters("11323", values, valuesIds));
+            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1"}));
+            auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
+            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
+            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
+            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
+
+
             auction.ean = "434324324123142";
             // dodać description
             auction.images.Add(new Images("http://ssdsdsd.pl"));
@@ -592,10 +602,10 @@ namespace Clutchlit.Controllers
             auction.publication.startingAt = null;
             auction.publication.endingAt = null;
 
-            auction.delivery.shippingRates.id = "dsdsd";
-            auction.delivery.handlingTime = "PT23H";
+            auction.delivery.shippingRates.id = "b25e1a2e-3f2d-4206-97de-234a9dbf91bf";
+            auction.delivery.handlingTime = "PT168H";
             auction.delivery.additionalInfo = "Dodatkowe informacje";
-            auction.delivery.shipmentDate = "2018-04-01T08:00:00Z";
+            auction.delivery.shipmentDate = "2019-02-01T08:00:00Z";
 
             auction.payments.invoice = "VAT";
 
@@ -624,7 +634,7 @@ namespace Clutchlit.Controllers
             auction.updatedAt = "2018-04-01T08:00:00Z";
 
             var section = new Section();
-            section.items.Add(new Item("TEXT", "dsadada"));
+            section.items.Add(new Item("TEXT", "<p>Opis przedmiotu</p>"));
             section.items.Add(new Item("TEXT", "<p>Tekst</p>"));
 
             auction.description.sections.Add(section);
