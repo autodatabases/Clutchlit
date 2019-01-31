@@ -603,7 +603,7 @@ namespace Clutchlit.Controllers
 
         public IActionResult PostDraftAuction(string title, string category)
         {
-            title = "Tytuł oferty";
+            title = "Tytuł oferty 223";
             category = "50884";
             
             var auction = new AuctionToPost();
@@ -617,7 +617,7 @@ namespace Clutchlit.Controllers
             auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
 
 
-            auction.ean = "434324324123142";
+            auction.ean = "4343243241231432212";
             // dodać description
             auction.images.Add(new Images("http://ssdsdsd.pl"));
             auction.images.Add(new Images("http://ssdsdsd.pl"));
@@ -625,7 +625,7 @@ namespace Clutchlit.Controllers
             auction.FillListCompatible("Alfa Romeo 159 2");
 
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = "133";
+            auction.sellingMode.price.amount = "1323";
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
@@ -645,9 +645,9 @@ namespace Clutchlit.Controllers
 
             auction.payments.invoice = "VAT";
 
-            auction.afterSalesServices.impliedWarranty.id = "dsadasdsad";
-            auction.afterSalesServices.returnPolicy.id = "dsddsa";
-            auction.afterSalesServices.warranty.id = "fdfdsvcxv";
+            auction.afterSalesServices.impliedWarranty.id = "c2683ac1-b36b-42a1-b0f5-b45bdaf55928";
+            auction.afterSalesServices.returnPolicy.id = "eb7c8407-808c-4078-9250-9da488560634";
+            auction.afterSalesServices.warranty.id = "0dd88048-8163-4eba-9c12-768551bf407d";
 
             auction.additionalServices = null;
             auction.sizeTable = null;
@@ -662,12 +662,12 @@ namespace Clutchlit.Controllers
             auction.location.city = "Warszawa";
             auction.location.postCode = "00-132";
 
-            auction.external.id = "SP24-1231";
+            auction.external.id = "SP24-12321";
             auction.contact = null;
 
-            auction.validation.validatedAt = "2018-04-01T08:00:00Z";
+            auction.validation.validatedAt = "";
             auction.createdAt = "";
-            auction.updatedAt = "2018-04-01T08:00:00Z";
+            auction.updatedAt = "";
 
             var section = new Section();
             section.items.Add(new Item("TEXT", "<p>Opis przedmiotu</p>"));
