@@ -570,9 +570,6 @@ namespace Clutchlit.Controllers
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt)
         {
             
-            
-
-
             List<string> Errors = new List<string>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+AuctionId+"");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
@@ -583,7 +580,7 @@ namespace Clutchlit.Controllers
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                streamWriter.Write(outprint);
+                streamWriter.Write("s");
                 streamWriter.Flush();
                 streamWriter.Close();
             }
