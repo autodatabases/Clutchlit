@@ -611,11 +611,9 @@ namespace Clutchlit.Controllers
             auction.name = title;
             auction.category.id = category;
             
-
-
             auction.ean = "4343243241231432212";
             // dodać description
-            auction.images.Add(new Images("http://ssdsdsd.pl"));
+           /* auction.images.Add(new Images("http://ssdsdsd.pl"));
             auction.images.Add(new Images("http://ssdsdsd.pl"));
             auction.FillListCompatible("Alfa Romeo 159");
             auction.FillListCompatible("Alfa Romeo 159 2");
@@ -670,7 +668,7 @@ namespace Clutchlit.Controllers
             section.items.Add(new Item("TEXT", "<p>Tekst</p>"));
 
             auction.description.sections.Add(section);
-
+            */
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
             List<string> OfferResponse = new List<string>();
