@@ -568,7 +568,7 @@ namespace Clutchlit.Controllers
 
         }
         // DEMO 
-        public IActionResult PostAuction()
+        public IActionResult PostAuctionDemo()
         {
             var auction = new AuctionToPost();
             auction.id = "7815608101";
