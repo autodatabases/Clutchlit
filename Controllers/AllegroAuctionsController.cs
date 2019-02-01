@@ -629,9 +629,9 @@ namespace Clutchlit.Controllers
             auction.external.id = "SP24-121";
             auction.contact = null;
 
-            auction.validation.validatedAt = ValidatedAt;
-            auction.createdAt = CreatedAt;
-            auction.updatedAt = UpdatedAt;
+            auction.validation.validatedAt = null;
+            auction.createdAt = null;
+            auction.updatedAt = null;
 
             var section = new Section();
             section.items.Add(new Item("TEXT", "<p>Opis przedmiotu</p>"));
