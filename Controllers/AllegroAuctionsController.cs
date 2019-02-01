@@ -567,113 +567,7 @@ namespace Clutchlit.Controllers
             return Json(id);
 
         }
-        // DEMO 
-        public IActionResult PostAuctionDemo()
-        {
-            var auction = new AuctionToPost();
-            auction.id = "7815608101";
-            auction.name = "Testowa aukcja";
-            auction.category.id = "50884";
-            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
-            auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
-            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
-            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
-            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
 
-
-            auction.ean = "4343243241231432212";
-            // dodać description
-            auction.images.Add(new Images("https://a.allegroimg.com/original/11494b/f8ab199f475e985d22d060fb2d9d"));
-            auction.images.Add(new Images("https://a.allegroimg.com/original/115c5e/8e34c34045f888f804695e093403"));
-            auction.FillListCompatible("Alfa Romeo 159");
-            auction.FillListCompatible("Alfa Romeo 159 2");
-
-            auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = "1323";
-            auction.sellingMode.price.currency = "PLN";
-            auction.sellingMode.minimalPrice = null;
-            auction.sellingMode.startingPrice = null;
-
-            auction.stock.available = 4;
-            auction.stock.unit = "UNIT";
-
-            auction.publication.duration = null;
-            auction.publication.status = "INACTIVE";
-            auction.publication.startingAt = null;
-            auction.publication.endingAt = null;
-
-            auction.delivery.shippingRates.id = "b25e1a2e-3f2d-4206-97de-234a9dbf91bf";
-            auction.delivery.handlingTime = "PT24H";
-            auction.delivery.additionalInfo = "Dodatkowe informacje";
-            auction.delivery.shipmentDate = null;
-
-            auction.payments.invoice = "VAT";
-
-            auction.afterSalesServices.impliedWarranty.id = "c2683ac1-b36b-42a1-b0f5-b45bdaf55928";
-            auction.afterSalesServices.returnPolicy.id = "eb7c8407-808c-4078-9250-9da488560634";
-            auction.afterSalesServices.warranty.id = "0dd88048-8163-4eba-9c12-768551bf407d";
-
-            auction.additionalServices = null;
-            auction.sizeTable = null;
-            auction.promotion.emphasized = false;
-            auction.promotion.bold = false;
-            auction.promotion.highlight = false;
-            auction.promotion.emphasizedHighlightBoldPackage = false;
-            auction.promotion.departmentPage = false;
-
-            auction.location.countryCode = "PL";
-            auction.location.province = "MAZOWIECKIE";
-            auction.location.city = "Warszawa";
-            auction.location.postCode = "00-132";
-
-            auction.external.id = "SP24-123s21";
-            auction.contact = null;
-
-            auction.validation.validatedAt = "2019-02-01T09:07:22.419Z";
-            auction.createdAt = "2019-02-01T09:07:22Z";
-            auction.updatedAt = "2019-02-01T09:07:22.421Z";
-
-            var section = new Section();
-            section.items.Add(new Item("TEXT", "<p>Opis przedmiotu</p>"));
-            section.items.Add(new Item("TEXT", "<p>Tekst</p>"));
-
-            auction.description.sections.Add(section);
-
-            string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
-
-            // ------
-
-            List<string> Errors = new List<string>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/7815608101");
-            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Method = "PUT";
-            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
-
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                streamWriter.Write(outprint);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
-            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var resource = readStream.ReadToEnd();
-                dynamic x = JsonConvert.DeserializeObject(resource);
-
-                var errors = x.validation.errors;
-                foreach (var error in errors)
-                {
-                    Errors.Add(Convert.ToString(error.message));
-                }
-            }
-
-            return Json(String.Join(", ", Errors.ToArray()));
-        }
-        // DEMO
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
             var auction = new AuctionToPost();
@@ -687,7 +581,7 @@ namespace Clutchlit.Controllers
             auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
 
 
-            auction.ean = "600301EN";
+            auction.ean = "6901443187416";
             // dodać description
             auction.images.Add(new Images("https://a.allegroimg.com/original/11494b/f8ab199f475e985d22d060fb2d9d"));
             auction.images.Add(new Images("https://a.allegroimg.com/original/115c5e/8e34c34045f888f804695e093403"));
@@ -741,7 +635,6 @@ namespace Clutchlit.Controllers
 
             var section = new Section();
             section.items.Add(new Item("TEXT", "<p>Opis przedmiotu</p>"));
-            section.items.Add(new Item("TEXT", "<p>Tekst</p>"));
 
             auction.description.sections.Add(section);
 
