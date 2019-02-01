@@ -602,9 +602,9 @@ namespace Clutchlit.Controllers
             auction.publication.endingAt = null;
 
             auction.delivery.shippingRates.id = "b25e1a2e-3f2d-4206-97de-234a9dbf91bf";
-            auction.delivery.handlingTime = "PT168H";
+            auction.delivery.handlingTime = "PT24H";
             auction.delivery.additionalInfo = "Dodatkowe informacje";
-            auction.delivery.shipmentDate = "2019-02-01T10:00:00Z";
+            auction.delivery.shipmentDate = null;
 
             auction.payments.invoice = "VAT";
 
@@ -628,9 +628,9 @@ namespace Clutchlit.Controllers
             auction.external.id = "SP24-123s21";
             auction.contact = null;
 
-            auction.validation.validatedAt = "";
+            auction.validation.validatedAt = CreatedAt;
             auction.createdAt = CreatedAt;
-            auction.updatedAt = "";
+            auction.updatedAt = CreatedAt;
 
             var section = new Section();
             section.items.Add(new Item("TEXT", "<p>Opis przedmiotu</p>"));
