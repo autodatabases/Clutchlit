@@ -604,7 +604,7 @@ namespace Clutchlit.Controllers
             auction.delivery.shippingRates.id = "b25e1a2e-3f2d-4206-97de-234a9dbf91bf";
             auction.delivery.handlingTime = "PT168H";
             auction.delivery.additionalInfo = "Dodatkowe informacje";
-            auction.delivery.shipmentDate = "2019-02-01T08:00:00Z";
+            auction.delivery.shipmentDate = "2019-02-01T10:00:00Z";
 
             auction.payments.invoice = "VAT";
 
@@ -625,11 +625,11 @@ namespace Clutchlit.Controllers
             auction.location.city = "Warszawa";
             auction.location.postCode = "00-132";
 
-            auction.external.id = "SP24-12321";
+            auction.external.id = "SP24-123s21";
             auction.contact = null;
 
             auction.validation.validatedAt = "";
-            auction.createdAt = "";
+            auction.createdAt = CreatedAt;
             auction.updatedAt = "";
 
             var section = new Section();
