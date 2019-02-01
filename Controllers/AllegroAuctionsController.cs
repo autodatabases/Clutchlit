@@ -673,7 +673,7 @@ namespace Clutchlit.Controllers
             return Json(String.Join(", ", Errors.ToArray()));
         }
 
-        public void PostDraftAuction(string title, string category)
+        public IActionResult PostDraftAuction(string title, string category)
         {
             title = "Tytuł oferty 223";
             category = "50884";
