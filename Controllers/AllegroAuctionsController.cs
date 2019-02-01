@@ -569,52 +569,21 @@ namespace Clutchlit.Controllers
         }
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt)
         {
-            
-            List<string> Errors = new List<string>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+AuctionId+"");
-            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Method = "PUT";
-            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
-
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                streamWriter.Write("s");
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
-            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var resource = readStream.ReadToEnd();
-                dynamic x = JsonConvert.DeserializeObject(resource);
-                
-                var errors = x.validation.errors;
-                foreach (var error in errors)
-                {
-                    Errors.Add(Convert.ToString(error.message));
-                }
-            }
-
-            return Json(String.Join(", ", Errors.ToArray()));
-        }
-
-        public IActionResult PostDraftAuction(string title, string category)
-        {
-            title = "Tytuł oferty 223";
-            category = "50884";
-            
             var auction = new AuctionToPost();
             //auction.id = AuctionId;
-            auction.name = title;
-            auction.category.id = category;
-            
+            auction.name = Title;
+            auction.category.id = Category;
+            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
+            auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
+            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
+            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
+            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
+
+
             auction.ean = "4343243241231432212";
             // dodać description
-           /* auction.images.Add(new Images("http://ssdsdsd.pl"));
-            auction.images.Add(new Images("http://ssdsdsd.pl"));
+            auction.images.Add(new Images("https://a.allegroimg.com/original/11494b/f8ab199f475e985d22d060fb2d9d"));
+            auction.images.Add(new Images("https://a.allegroimg.com/original/115c5e/8e34c34045f888f804695e093403"));
             auction.FillListCompatible("Alfa Romeo 159");
             auction.FillListCompatible("Alfa Romeo 159 2");
 
@@ -668,8 +637,53 @@ namespace Clutchlit.Controllers
             section.items.Add(new Item("TEXT", "<p>Tekst</p>"));
 
             auction.description.sections.Add(section);
-            */
+
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
+
+            // ------
+
+            List<string> Errors = new List<string>();
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+AuctionId+"");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "PUT";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(outprint);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = readStream.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                
+                var errors = x.validation.errors;
+                foreach (var error in errors)
+                {
+                    Errors.Add(Convert.ToString(error.message));
+                }
+            }
+
+            return Json(String.Join(", ", Errors.ToArray()));
+        }
+
+        public IActionResult PostDraftAuction(string title, string category)
+        {
+            title = "Tytuł oferty 223";
+            category = "50884";
+
+            string outprint = "{" +
+                "\"name\": \"Oferta testowa\"," +
+                "\"category\": " +
+                "{\"id\": \"50884\"" +
+                "}" +
+                "}"; 
 
             List<string> OfferResponse = new List<string>();
             List<string> Errors = new List<string>(); // errors handler
