@@ -674,7 +674,7 @@ namespace Clutchlit.Controllers
             return Json(String.Join(", ", Errors.ToArray()));
         }
         // DEMO
-        public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt)
+        public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
             var auction = new AuctionToPost();
             auction.id = AuctionId;
@@ -687,7 +687,7 @@ namespace Clutchlit.Controllers
             auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
 
 
-            auction.ean = "4343243241231432212";
+            auction.ean = "600301EN";
             // dodać description
             auction.images.Add(new Images("https://a.allegroimg.com/original/11494b/f8ab199f475e985d22d060fb2d9d"));
             auction.images.Add(new Images("https://a.allegroimg.com/original/115c5e/8e34c34045f888f804695e093403"));
@@ -695,7 +695,7 @@ namespace Clutchlit.Controllers
             auction.FillListCompatible("Alfa Romeo 159 2");
 
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = "1323";
+            auction.sellingMode.price.amount = "123";
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
@@ -732,12 +732,12 @@ namespace Clutchlit.Controllers
             auction.location.city = "Warszawa";
             auction.location.postCode = "00-132";
 
-            auction.external.id = "SP24-123s21";
+            auction.external.id = "SP24-121";
             auction.contact = null;
 
-            auction.validation.validatedAt = CreatedAt;
+            auction.validation.validatedAt = ValidatedAt;
             auction.createdAt = CreatedAt;
-            auction.updatedAt = CreatedAt;
+            auction.updatedAt = UpdatedAt;
 
             var section = new Section();
             section.items.Add(new Item("TEXT", "<p>Opis przedmiotu</p>"));
@@ -818,7 +818,7 @@ namespace Clutchlit.Controllers
                 OfferResponse.Add(Convert.ToString(x.validatedAt));
                 OfferResponse.Add(Convert.ToString(x.createdAt));
                 OfferResponse.Add(Convert.ToString(x.updatedAt));
-
+                OfferResponse.Add(Convert.ToString(x.validation.validatedAt));
                 var errors = x.validation.errors;
                 foreach (var error in errors)
                 {
@@ -826,7 +826,7 @@ namespace Clutchlit.Controllers
                 }
             }
             var errors_response = String.Join(", ", Errors.ToArray());
-            PostAuction(OfferResponse.ElementAt(0), title, category, OfferResponse.ElementAt(2)); // wystawiamy aukcję z draft'a;
+            PostAuction(OfferResponse.ElementAt(0), title, category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
             
             //return Json(errors_response + " \n " + OfferResponse.First());
         }
