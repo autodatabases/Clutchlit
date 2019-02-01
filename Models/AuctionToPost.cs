@@ -63,7 +63,7 @@ namespace Clutchlit.Models
         public Delivery delivery = new Delivery();
         public string ean { get; set; }
         public JustId external = new JustId();
-        //public string id { get; set; }
+        public string id { get; set; }
         public List<Images> images = new List<Images>();
         public Location location = new Location();
         public string name { get; set; }

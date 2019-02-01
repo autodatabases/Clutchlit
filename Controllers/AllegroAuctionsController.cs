@@ -570,7 +570,7 @@ namespace Clutchlit.Controllers
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt)
         {
             var auction = new AuctionToPost();
-            //auction.id = AuctionId;
+            auction.id = AuctionId;
             auction.name = Title;
             auction.category.id = Category;
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
