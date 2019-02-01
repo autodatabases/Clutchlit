@@ -581,12 +581,12 @@ namespace Clutchlit.Controllers
             auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
 
 
-            auction.ean = "6901443187416";
+            auction.ean = null;
             // dodać description
             auction.images.Add(new Images("https://a.allegroimg.com/original/11494b/f8ab199f475e985d22d060fb2d9d"));
             auction.images.Add(new Images("https://a.allegroimg.com/original/115c5e/8e34c34045f888f804695e093403"));
             auction.FillListCompatible("Alfa Romeo 159");
-            auction.FillListCompatible("Alfa Romeo 159 2");
+            auction.FillListCompatible("Alfa Romeo 159 1.9JTDM");
 
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = "123";
