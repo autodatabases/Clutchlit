@@ -662,7 +662,7 @@ namespace Clutchlit.Controllers
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
 
-            auction.stock.available = 4;
+            auction.stock.available = 1000;
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
@@ -748,10 +748,10 @@ namespace Clutchlit.Controllers
         public void PostDraftAuction(string id)
         {
             var auction_id = Convert.ToInt32(id);
-
+            var auction = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
             // dodać aktualizacje id aukcji allegro do bazy 
-            var FirstTitle = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single().Category;
-            var Title = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single().AuctionTitle;
+            var FirstTitle = auction.Category;
+            var Title = auction.AuctionTitle;
 
             var ConcatTitle = FirstTitle + "" + Title; 
             var Category = "50884";
@@ -797,6 +797,10 @@ namespace Clutchlit.Controllers
                 }
             }
             var errors_response = String.Join(", ", Errors.ToArray());
+
+            auction.AllegroId = OfferResponse.ElementAt(0);
+            _context.SaveChanges();
+
             PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
            
 
