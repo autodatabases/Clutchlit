@@ -662,6 +662,8 @@ namespace Clutchlit.Controllers
 
             // wystawiamy aukcje
 
+            return Json(TitleToPost + ":" + price.ToString());
+            /*
             var auction = new AuctionToPost();
             auction.id = AuctionAllegroId.ToString();
             auction.name = TitleToPost;
@@ -768,6 +770,7 @@ namespace Clutchlit.Controllers
                 Response.StatusCode = 500;
 
             return Json(String.Join(", ", Errors.ToArray()));
+            */
             
         }
 
