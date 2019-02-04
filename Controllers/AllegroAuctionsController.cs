@@ -26,7 +26,7 @@ namespace Clutchlit.Controllers
         private static string AccessToken = "";
         private IHostingEnvironment hostingEnv;
         private readonly ApplicationDbContext _context;
-
+        private readonly MysqlContext _contextShop;
         HttpClient client = new HttpClient();
 
         public List<Auction> list = new List<Auction>();
@@ -36,9 +36,10 @@ namespace Clutchlit.Controllers
             return View();
         }
 
-        public AllegroAuctionsController(IHostingEnvironment env, ApplicationDbContext context)
+        public AllegroAuctionsController(IHostingEnvironment env, ApplicationDbContext context, MysqlContext contextShop)
         {
             _context = context;
+            _contextShop = contextShop;
             client.BaseAddress = new Uri("https://api.allegro.pl/");
             client.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
@@ -634,11 +635,36 @@ namespace Clutchlit.Controllers
         // Massive action
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
+            var productGeneral = _context.Products.Where(p => p.Id == Convert.ToInt32(AuctionId)).SingleOrDefault();
+            var Manufacturer = _context.Manufacturers.Where(m => m.Tecdoc_id == productGeneral.Manufacturer_id).SingleOrDefault();
+            var auctionData = _context.AllegroAuction.Where(a => a.AuctionId == Convert.ToInt32(AuctionId)).SingleOrDefault();
+            
             // tu będziemy pobierać dane dot. danego produktu do aukcji
+
+            // price
+            var productData = _contextShop.Products_prices_sp24.Where(p => p.Id_product == auctionData.ProductId).SingleOrDefault();
+            var price = Math.Round(Convert.ToDouble(productData.Price) * 1.23, 0);
+
+            // price
+
+            // title
+            var title_1 = auctionData.AuctionTitle.ToUpper();
+            var title_2 = auctionData.Category.ToUpper();
+            var title_3 = Manufacturer.Name.ToUpper();
+            string TitleToPost = "";
+            if ((title_1 + " " + title_2 + " " + title_3).Length <= 50)
+                TitleToPost = title_2 + "" + title_3 + " " + title_1; 
+            else
+                TitleToPost = title_2 + " " + title_1;
+            // title
+
+            // wystawiamy aukcje
+
             var auction = new AuctionToPost();
             auction.id = AuctionId;
-            auction.name = Title;
+            auction.name = TitleToPost;
             auction.category.id = Category;
+
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
             auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
@@ -648,18 +674,18 @@ namespace Clutchlit.Controllers
 
             auction.ean = null;
             // dodać description
-            auction.images.Add(new Images("https://a.allegroimg.com/original/11494b/f8ab199f475e985d22d060fb2d9d"));
-            auction.images.Add(new Images("https://a.allegroimg.com/original/115c5e/8e34c34045f888f804695e093403"));
+            auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
+            auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
             auction.FillListCompatible("Alfa Romeo 159");
             auction.FillListCompatible("Alfa Romeo 159 1.9JTDM");
 
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = "123";
+            auction.sellingMode.price.amount = price.ToString();
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
 
-            auction.stock.available = 4;
+            auction.stock.available = 1000;
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
@@ -689,9 +715,9 @@ namespace Clutchlit.Controllers
             auction.location.countryCode = "PL";
             auction.location.province = "MAZOWIECKIE";
             auction.location.city = "Warszawa";
-            auction.location.postCode = "00-132";
+            auction.location.postCode = "02-180";
 
-            auction.external.id = "SP24-121";
+            auction.external.id = productData.Id_product.ToString();
             auction.contact = null;
 
             auction.validation.validatedAt = null;
@@ -734,6 +760,10 @@ namespace Clutchlit.Controllers
                     Errors.Add(Convert.ToString(error.message));
                 }
             }
+            if (Errors == null)
+                Response.StatusCode = 200;
+            else
+                Response.StatusCode = 500;
 
             return Json(String.Join(", ", Errors.ToArray()));
         }
@@ -741,14 +771,12 @@ namespace Clutchlit.Controllers
         public void PostDraftAuction(string id)
         {
             var auction_id = Convert.ToInt32(id);
-
+            var Title = "Temp";
             // dodać aktualizacje id aukcji allegro do bazy 
-            var FirstTitle = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single().Category;
-            var Title = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single().AuctionTitle;
             var Category = "50884";
 
             string outprint = "{" +
-                "\"name\": \"" + Title + "\"," +
+                "\"name\": \"Temporary auction\"," +
                 "\"category\": " +
                 "{\"id\": \"" + Category + "\"" +
                 "}" +
@@ -789,7 +817,7 @@ namespace Clutchlit.Controllers
             }
             var errors_response = String.Join(", ", Errors.ToArray());
             PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
-
+           
 
             //return Json(errors_response + " \n " + OfferResponse.First());
         }
