@@ -635,8 +635,8 @@ namespace Clutchlit.Controllers
         // Massive action
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
-            var auctionData = _context.AllegroAuction.Where(a => a.AuctionId == Convert.ToInt32(AuctionId)).SingleOrDefault();
-            var productGeneral = _context.Products.Where(p => p.Id == Convert.ToInt32(auctionData.ProductId)).SingleOrDefault();
+            var auctionData = _context.AllegroAuction.Where(a => a.AuctionId == AuctionId).SingleOrDefault();
+            var productGeneral = _context.Products.Where(p => p.Id == auctionData.ProductId).SingleOrDefault();
             var Manufacturer = _context.Manufacturers.Where(m => m.Tecdoc_id == productGeneral.Manufacturer_id).SingleOrDefault();
            
             
