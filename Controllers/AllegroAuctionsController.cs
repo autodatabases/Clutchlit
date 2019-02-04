@@ -659,7 +659,7 @@ namespace Clutchlit.Controllers
             
             var auction = new AuctionToPost();
             auction.id = AuctionAllegroId;
-            auction.name = title_1;
+            auction.name = "Tytul aukcji";
             auction.category.id = Category;
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
