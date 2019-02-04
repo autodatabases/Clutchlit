@@ -633,9 +633,9 @@ namespace Clutchlit.Controllers
         }
 
         // Massive action
-        public IActionResult PostAuction(string AuctionAllegroId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt, string AuctionId)
+        public IActionResult PostAuction(string AuctionAllegroId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt, Int64 AuctionId)
         {
-            var auctionData = _context.AllegroAuction.Where(a => a.AuctionId == Convert.ToInt64(AuctionId)).SingleOrDefault();
+            var auctionData = _context.AllegroAuction.Where(a => a.AuctionId == AuctionId).SingleOrDefault();
             
             var productGeneral = _context.Products.Where(p => p.Id == auctionData.ProductId).SingleOrDefault();
             var Manufacturer = _context.Manufacturers.Where(m => m.Tecdoc_id == productGeneral.Manufacturer_id).SingleOrDefault();
@@ -773,7 +773,7 @@ namespace Clutchlit.Controllers
 
         public void PostDraftAuction(string id)
         {
-            var auction_id = Convert.ToInt32(id);
+            var auction_id = Convert.ToInt64(id);
             var Title = "Temp";
             // dodać aktualizacje id aukcji allegro do bazy 
             var Category = "50884";
