@@ -77,12 +77,12 @@ using Clutchlit.Models;
             WriteLiteral("<div class=\"box\">\r\n    <div class=\"box-header with-border\">\r\n        <h3 class=\"box-title\">Wszystkie zamówienia ze sklepów</h3>\r\n\r\n    </div>\r\n    <div class=\"box-body \">\r\n        <div style=\"float:left; width:100%; margin-bottom:20px; \">\r\n            ");
             EndContext();
             BeginContext(464, 2137, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a1c34f1a4b4c4ecf96ce709cee2afd77", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "22723470fffb413cbddb918d9d74d2b6", async() => {
                 BeginContext(484, 255, true);
                 WriteLiteral("\r\n                <div class=\"col-lg-2\">\r\n                    <label for=\"shop\">\r\n                        Sklep\r\n                    </label>\r\n                    <select name=\"shop\" id=\"Orders_shop\" class=\"form-control select2\">\r\n                        ");
                 EndContext();
                 BeginContext(739, 36, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7257ea22f7f44a61848f35d582f61037", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "946fee986c394db583b62dd3a5ce4f9d", async() => {
                     BeginContext(757, 9, true);
                     WriteLiteral("Wszystkie");
                     EndContext();
@@ -104,7 +104,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(801, 42, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "60396ef79e3c4fde81a9f91442f85351", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "53ea76056ee94457b8a6677561128005", async() => {
                     BeginContext(819, 15, true);
                     WriteLiteral("Sprzeglo.com.pl");
                     EndContext();
@@ -126,7 +126,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(869, 40, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6f2023eb7b844108a3a803769e46c7ae", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "58cdf8f6465e40d78a414cd0a0a028a0", async() => {
                     BeginContext(887, 13, true);
                     WriteLiteral("Sprzegla24.pl");
                     EndContext();
@@ -154,7 +154,7 @@ using Clutchlit.Models;
                         ");
                 EndContext();
                 BeginContext(1188, 36, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9d3adc26e02b4d34b5a61a37b8e5696b", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d4a6ab0e9cad40299c11ebf6c4254b72", async() => {
                     BeginContext(1206, 9, true);
                     WriteLiteral("Wszystkie");
                     EndContext();
@@ -176,7 +176,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1250, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8ae5819961c24baaaaaf23da695c6133", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e7d15c730cd1499080e4fc00a50b3bb8", async() => {
                     BeginContext(1277, 10, true);
                     WriteLiteral("Przelewy24");
                     EndContext();
@@ -198,7 +198,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1322, 58, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cf588d39129b46cdb691eca045ec4c82", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "744080f0f61d4e5b8c9b0d76625e1e14", async() => {
                     BeginContext(1353, 18, true);
                     WriteLiteral("Płatność u kuriera");
                     EndContext();
@@ -220,7 +220,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1406, 50, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f991e15331bb4588b6e845ca819776f0", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "80f04affd9294868a3a1e74d3a089eb2", async() => {
                     BeginContext(1431, 16, true);
                     WriteLiteral("Przelew na konto");
                     EndContext();
@@ -242,7 +242,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1482, 48, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "05f58e86fa8b4079926ce670e4a4fe58", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7b89867950184df7a6cf338a45c4d6ad", async() => {
                     BeginContext(1505, 16, true);
                     WriteLiteral("Płatność gotówką");
                     EndContext();
@@ -270,7 +270,7 @@ using Clutchlit.Models;
                         ");
                 EndContext();
                 BeginContext(1799, 36, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aac41ca3f8f34d5ea69a6c3fd16b31d7", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8ce00142f37e44608390ec63014ebeba", async() => {
                     BeginContext(1817, 9, true);
                     WriteLiteral("Wszystkie");
                     EndContext();
@@ -292,7 +292,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1861, 45, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d5a2a2c840694b89bef059d0e5d4defc", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "862a9092d52342b596512ed644e9c4d4", async() => {
                     BeginContext(1879, 18, true);
                     WriteLiteral("Zamówienie wysłane");
                     EndContext();
@@ -314,7 +314,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1932, 51, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c147b01e7800482f9844c8de5f06b848", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "30f908fa8cf5443b9efa86a8afe9f3a0", async() => {
                     BeginContext(1951, 23, true);
                     WriteLiteral("Zamówienie w realizacji");
                     EndContext();
@@ -336,7 +336,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2009, 51, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aa2a9a8240ec47fa90017925cc3c2b90", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b299c13e51c9480592b30a5cf1f006c5", async() => {
                     BeginContext(2028, 23, true);
                     WriteLiteral("Oczekiwanie na płatność");
                     EndContext();
@@ -358,7 +358,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2086, 58, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1f7dad165f35434486462e84f61b43d5", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "48c0939acf30431298779b8187a04933", async() => {
                     BeginContext(2105, 30, true);
                     WriteLiteral("Wymagana dodatkowa weryfikacja");
                     EndContext();
@@ -380,7 +380,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2170, 39, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "31bf502f46dd455b8d3f9979115a8ecb", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3e4d4ec2791a42e7b8b4ca68b7be96c7", async() => {
                     BeginContext(2188, 12, true);
                     WriteLiteral("Zrealizowane");
                     EndContext();
@@ -402,7 +402,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2235, 36, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0e45fd489dff47d18c722ad8e58fc302", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a4b2e9fc19364454ae4cb4972795731c", async() => {
                     BeginContext(2253, 9, true);
                     WriteLiteral("Anulowane");
                     EndContext();

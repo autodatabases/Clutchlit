@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "Masowe działania | Aukcje | Dział allegro";
+    ViewData["Title_1"] = "Masowe działania";
+    ViewData["Title_2"] = "Allegro";
+}
+
+<a id="create_selected" class="btn bg-orange">Wystaw zaznaczone</a>
+<div class="box">
+    <div class="images-loader" style="background:url(/images/Pacman-0.7s-91px.svg) center center no-repeat; display:none; background-color:rgba(0, 00, 0, .5); position:absolute; width:100%; z-index:1; height:100%;"></div>
+
+    <div class="box-header with-border">
+        <h3 class="box-title">Wystaw nową aukcję</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Zwiń">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Zamknij">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body ">
+
+
+        <table id="massiveAction" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Id</th>
+                    <th>Allegro ID</th>
+                    <th>Produkt ID</th>
+                    <th>Tytuł aukcji</th>
+                    <th>Kategoria</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th>Id</th>
+                    <th>Allegro ID</th>
+                    <th>Produkt ID</th>
+                    <th>Tytuł aukcji</th>
+                    <th>Kategoria</th>
+                    <th>Status</th>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>
+
