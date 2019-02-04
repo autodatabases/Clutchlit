@@ -633,9 +633,9 @@ namespace Clutchlit.Controllers
         }
 
         // Massive action
-        public IActionResult PostAuction(Int32 AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
+        public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
-            var auctionData = _context.AllegroAuction.Where(a => a.AuctionId == AuctionId).SingleOrDefault();
+            var auctionData = _context.AllegroAuction.Where(a => a.AuctionId == Convert.ToInt32(AuctionId)).SingleOrDefault();
             var productGeneral = _context.Products.Where(p => p.Id == auctionData.ProductId).SingleOrDefault();
             var Manufacturer = _context.Manufacturers.Where(m => m.Tecdoc_id == productGeneral.Manufacturer_id).SingleOrDefault();
            
@@ -662,7 +662,7 @@ namespace Clutchlit.Controllers
             // wystawiamy aukcje
 
             var auction = new AuctionToPost();
-            auction.id = AuctionId;
+            auction.id = AuctionId.ToString();
             auction.name = TitleToPost;
             auction.category.id = Category;
 
@@ -805,7 +805,7 @@ namespace Clutchlit.Controllers
             {
                 var resource = readStream.ReadToEnd();
                 dynamic x = JsonConvert.DeserializeObject(resource);
-                OfferResponse.Add(Convert.ToInt32(x.id));
+                OfferResponse.Add(Convert.ToString(x.id));
                 OfferResponse.Add(Convert.ToString(x.validatedAt));
                 OfferResponse.Add(Convert.ToString(x.createdAt));
                 OfferResponse.Add(Convert.ToString(x.updatedAt));
