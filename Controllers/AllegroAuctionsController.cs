@@ -633,13 +633,10 @@ namespace Clutchlit.Controllers
         }
 
         // Massive action
-        public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
+        public IActionResult PostAuction(string AuctionAllegroId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt, string AuctionId)
         {
             var auctionData = _context.AllegroAuction.Where(a => a.AuctionId == Convert.ToInt64(AuctionId)).SingleOrDefault();
-
-            return Json(auctionData.AuctionTitle+ ": "+auctionData.ProductId );
-
-            /*
+            
             var productGeneral = _context.Products.Where(p => p.Id == auctionData.ProductId).SingleOrDefault();
             var Manufacturer = _context.Manufacturers.Where(m => m.Tecdoc_id == productGeneral.Manufacturer_id).SingleOrDefault();
            
@@ -771,7 +768,7 @@ namespace Clutchlit.Controllers
                 Response.StatusCode = 500;
 
             return Json(String.Join(", ", Errors.ToArray()));
-            */
+            
         }
 
         public void PostDraftAuction(string id)
@@ -822,7 +819,7 @@ namespace Clutchlit.Controllers
                 }
             }
             var errors_response = String.Join(", ", Errors.ToArray());
-            PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
+            PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4), auction_id); // wystawiamy aukcję z draft'a;
            
 
             //return Json(errors_response + " \n " + OfferResponse.First());
