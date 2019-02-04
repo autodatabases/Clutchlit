@@ -636,6 +636,10 @@ namespace Clutchlit.Controllers
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
             var auctionData = _context.AllegroAuction.Where(a => a.AuctionId == Convert.ToInt64(AuctionId)).SingleOrDefault();
+
+            return Json(auctionData.AuctionTitle+ ": "+auctionData.ProductId );
+
+            /*
             var productGeneral = _context.Products.Where(p => p.Id == auctionData.ProductId).SingleOrDefault();
             var Manufacturer = _context.Manufacturers.Where(m => m.Tecdoc_id == productGeneral.Manufacturer_id).SingleOrDefault();
            
@@ -767,6 +771,7 @@ namespace Clutchlit.Controllers
                 Response.StatusCode = 500;
 
             return Json(String.Join(", ", Errors.ToArray()));
+            */
         }
 
         public void PostDraftAuction(string id)
