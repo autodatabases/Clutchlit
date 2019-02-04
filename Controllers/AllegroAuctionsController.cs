@@ -677,7 +677,7 @@ namespace Clutchlit.Controllers
             auction.FillListCompatible("Alfa Romeo 159 1.9JTDM");
 
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = price.ToString();
+            auction.sellingMode.price.amount = "1009";
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
