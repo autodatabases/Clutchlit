@@ -685,7 +685,7 @@ namespace Clutchlit.Controllers
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
-            auction.publication.status = "INACTIVE";
+            auction.publication.status = "ACTIVE";
             auction.publication.startingAt = null;
             auction.publication.endingAt = null;
 
