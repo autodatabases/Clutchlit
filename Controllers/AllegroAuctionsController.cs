@@ -654,7 +654,7 @@ namespace Clutchlit.Controllers
             var title_2 = auctionData.Category.ToUpper();
             var title_3 = Manufacturer.Name.ToUpper();
             string TitleToPost = "";
-            if ((title_1 + " " + title_2 + " " + title_3).Length <= 50)
+            if ((title_1 + " " + title_2 + " " + title_3).Length < 50)
                 TitleToPost = title_2 + "" + title_3 + " " + title_1; 
             else
                 TitleToPost = title_2 + " " + title_1;
@@ -662,10 +662,9 @@ namespace Clutchlit.Controllers
 
             // wystawiamy aukcje
 
-            return Json(TitleToPost + ":" + price.ToString());
-            /*
+            
             var auction = new AuctionToPost();
-            auction.id = AuctionAllegroId.ToString();
+            auction.id = AuctionAllegroId;
             auction.name = TitleToPost;
             auction.category.id = Category;
 
@@ -684,7 +683,7 @@ namespace Clutchlit.Controllers
             auction.FillListCompatible("Alfa Romeo 159 1.9JTDM");
 
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = price.ToString();
+            auction.sellingMode.price.amount = "199";
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
@@ -770,11 +769,10 @@ namespace Clutchlit.Controllers
                 Response.StatusCode = 500;
 
             return Json(String.Join(", ", Errors.ToArray()));
-            */
-            
+
         }
 
-        public void PostDraftAuction(string id)
+        public IActionResult PostDraftAuction(string id)
         {
             var auction_id = Convert.ToInt64(id);
             var Title = "Temp";
@@ -822,10 +820,10 @@ namespace Clutchlit.Controllers
                 }
             }
             var errors_response = String.Join(", ", Errors.ToArray());
-            PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4), auction_id); // wystawiamy aukcję z draft'a;
+            var err = PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4), auction_id); // wystawiamy aukcję z draft'a;
            
 
-            //return Json(errors_response + " \n " + OfferResponse.First());
+            return Json(errors_response + " \n " + err);
         }
     }
 }
