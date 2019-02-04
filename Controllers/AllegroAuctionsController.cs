@@ -756,7 +756,7 @@ namespace Clutchlit.Controllers
                 return Json("ERROR");
         }
       
-        public void PostDraftAuction(string id)
+        public IActionResult PostDraftAuction(string id)
         {
             var auction_id = Convert.ToInt32(id);
             var auction = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
