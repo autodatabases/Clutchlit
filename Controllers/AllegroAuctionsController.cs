@@ -737,23 +737,28 @@ namespace Clutchlit.Controllers
                 streamWriter.Flush();
                 streamWriter.Close();
             }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
-            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
+            try
             {
-                var resource = readStream.ReadToEnd();
-                dynamic x = JsonConvert.DeserializeObject(resource);
-
-                var errors = x.validation.errors;
-                foreach (var error in errors)
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
                 {
-                    Errors.Add(Convert.ToString(error.message));
+                    var resource = readStream.ReadToEnd();
+                    dynamic x = JsonConvert.DeserializeObject(resource);
+
+                    var errors = x.validation.errors;
+                    foreach (var error in errors)
+                    {
+                        Errors.Add(Convert.ToString(error.message));
+                    }
                 }
             }
-            if (Errors == null)
-                return Json("OK");
-            else
-                return Json("ERROR");
+            catch
+            {
+                Response.StatusCode = 410;
+            }
+            Response.StatusCode = 200;
+            return Json("OK");
+            
         }
       
         public IActionResult PostDraftAuction(string id)
@@ -812,13 +817,11 @@ namespace Clutchlit.Controllers
             auction.AllegroId = OfferResponse.ElementAt(0);
             _context.SaveChanges();
 
-            var result =  PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
-            string json_result = JsonConvert.SerializeObject(result);
-
+            var result =  PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a
             // pośrednie błędy poniżej
             // return Json(errors_response + " \n " + OfferResponse.First() + result);
 
-            return Json(json_result);
+            return Json(result.ToString());
         }
     }
 }
