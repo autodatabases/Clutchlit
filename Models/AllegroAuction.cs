@@ -12,7 +12,7 @@ namespace Clutchlit.Models
     {
         [Key]
         [Column("auction_id")]
-        public Int32 AuctionId { get; set; }
+        public Int64 AuctionId { get; set; }
         [Column("product_id")]
         public Int32 ProductId { get; set; }
         [Column("auction_category")]

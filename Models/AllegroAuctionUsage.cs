@@ -14,7 +14,7 @@ namespace Clutchlit.Models
         [Column("id")]
         public int Id { get; set; }
         [Column("auction_id")]
-        public int AuctionId { get; set; }
+        public Int64 AuctionId { get; set; }
         [Column("auction_name")]
         public string AuctionTitle { get; set; }
         [Column("passanger_car_id")]
