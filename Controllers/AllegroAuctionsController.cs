@@ -641,10 +641,16 @@ namespace Clutchlit.Controllers
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var manufacturer = _context.Manufacturers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
 
+            string TitlePost = "";
+            if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Name).Length <= 49)
+                TitlePost = auctionData.Category + " " + manufacturer.Name + " " + auctionData.AuctionTitle;
+            else
+                TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
+
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             auction.id = AuctionId;
-            auction.name = Title;
+            auction.name = TitlePost;
             auction.category.id = Category;
 
 
