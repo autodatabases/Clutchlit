@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Clutchlit.Data;
 using Clutchlit.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +25,7 @@ namespace Clutchlit.Controllers
         private static string SellerId = "sprzeglo-com-pl";
         private static string AccessToken = "";
         private IHostingEnvironment hostingEnv;
+        private readonly ApplicationDbContext _context;
 
         HttpClient client = new HttpClient();
 
@@ -34,8 +36,9 @@ namespace Clutchlit.Controllers
             return View();
         }
 
-        public AllegroAuctionsController(IHostingEnvironment env)
+        public AllegroAuctionsController(IHostingEnvironment env, ApplicationDbContext context)
         {
+            _context = context;
             client.BaseAddress = new Uri("https://api.allegro.pl/");
             client.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
@@ -563,13 +566,75 @@ namespace Clutchlit.Controllers
         [HttpGet("AllegroAuctions/GetValidationData/{id}")]
         public IActionResult GetValidationData(string id)
         {
-           
+
             return Json(id);
 
         }
+        [HttpGet("[controller]/[action]/")]
+        public IActionResult MassiveAction()
+        {
+            return View();
+        }
+        [Produces("application/json")]
+        public IActionResult GetAllegroAuctionsList()
+        {
+            var auctionsList = _context.AllegroAuction;
+            var List = Enumerable.Empty<AllegroAuction>().AsQueryable();
+            List = (from auctions in auctionsList
+                    select new AllegroAuction()
+                    {
+                        AuctionId = auctions.AuctionId,
+                        AllegroId = auctions.AllegroId,
+                        ProductId = auctions.ProductId,
+                        AuctionTitle = auctions.AuctionTitle,
+                        Category = auctions.Category,
+                        Status = auctions.Status
+                    });
 
+            var count = List.Count();
+
+            var concat = List;
+            // porządkujemy liste
+            var concat_sorted = concat.OrderByDescending(o => o.AuctionId);
+
+
+            var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 10;
+
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+
+            int recordsTotal = 0;
+            IQueryable<AllegroAuction> result = null;
+            result = concat_sorted.AsQueryable();
+            var customerData = result;
+            //Sorting  
+
+            //Search  
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                customerData = customerData.Where(m => m.AuctionTitle.ToUpper().Contains(searchValue.ToUpper()));
+            }
+            //Paging   
+            recordsTotal = customerData.Count();
+            //Paging   
+            var data = customerData.Skip(skip).Take(pageSize).ToList();
+            //Returning Json Data  
+            Response.StatusCode = 200;
+            return new JsonResult(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+
+        }
+
+        // Massive action
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
+            // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             auction.id = AuctionId;
             auction.name = Title;
@@ -643,7 +708,7 @@ namespace Clutchlit.Controllers
             // ------
 
             List<string> Errors = new List<string>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+AuctionId+"");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + AuctionId + "");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "PUT";
@@ -662,7 +727,7 @@ namespace Clutchlit.Controllers
             {
                 var resource = readStream.ReadToEnd();
                 dynamic x = JsonConvert.DeserializeObject(resource);
-                
+
                 var errors = x.validation.errors;
                 foreach (var error in errors)
                 {
@@ -675,16 +740,17 @@ namespace Clutchlit.Controllers
 
         public void PostDraftAuction(string title, string category)
         {
-            title = "Tytuł oferty 223";
-            category = "50884";
+            // dodać aktualizacje id aukcji allegro do bazy 
+            var Title = title;
+            var Category = category;
 
             string outprint = "{" +
-                "\"name\": \"Oferta testowa\"," +
+                "\"name\": \"" + Title + "\"," +
                 "\"category\": " +
-                "{\"id\": \"50884\"" +
+                "{\"id\": \"" + Category + "\"" +
                 "}" +
-                "}"; 
-
+                "}";
+              
             List<string> OfferResponse = new List<string>();
             List<string> Errors = new List<string>(); // errors handler
 
@@ -720,8 +786,8 @@ namespace Clutchlit.Controllers
             }
             var errors_response = String.Join(", ", Errors.ToArray());
             PostAuction(OfferResponse.ElementAt(0), title, category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
-            
-            
+
+
             //return Json(errors_response + " \n " + OfferResponse.First());
         }
     }

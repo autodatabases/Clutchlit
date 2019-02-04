@@ -26,6 +26,10 @@ namespace Clutchlit.Data
         public DbSet<DistributorWarehouse> Warehouses { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<PcAttributes> PcAttributes { get; set; }
+        public DbSet<AllegroAuction> AllegroAuction { get; set; }
+        public DbSet<AllegroAuctionUsage> AllegroAuctionUsage { get; set; }
+         
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql("Host=185.243.55.195;Database=trimfit_clutchlit;Username=clutchlit;Password=Bazacl8!");

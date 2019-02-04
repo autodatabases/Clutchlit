@@ -21,6 +21,10 @@ namespace Clutchlit.Models
         public string AuctionTitle { get; set; }
         [Column("auction_model_id")]
         public int ModelId { get; set; }
+        [Column("auction_allegro_id")] 
+        public string AllegroId { get; set; }
+        [Column("auction_allegro_status")]
+        public Boolean Status { get; set; }
 
     }
 }
