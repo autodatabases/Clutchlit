@@ -813,9 +813,12 @@ namespace Clutchlit.Controllers
             _context.SaveChanges();
 
             var result =  PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
-           
+            string json_result = JsonConvert.SerializeObject(result);
 
-            return Json(errors_response + " \n " + OfferResponse.First() + result);
+            // pośrednie błędy poniżej
+            // return Json(errors_response + " \n " + OfferResponse.First() + result);
+
+            return Json(json_result);
         }
     }
 }
