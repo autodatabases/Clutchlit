@@ -714,7 +714,7 @@ namespace Clutchlit.Controllers
             auction.location.city = "Warszawa";
             auction.location.postCode = "02-180";
 
-            auction.external.id = productData.Id_product.ToString();
+            auction.external.id = "1Sp-1";
             auction.contact = null;
 
             auction.validation.validatedAt = null;
