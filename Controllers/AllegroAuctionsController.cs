@@ -639,14 +639,15 @@ namespace Clutchlit.Controllers
             var auctionData = _context.AllegroAuction.Where(m => m.AllegroId == AuctionId).Single();
 
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
-            var manufacturer = _context.Manufacturers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
+            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id== product.Manufacturer_id).Single();
 
             string TitlePost = "";
-            if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Name).Length <= 49)
-                TitlePost = auctionData.Category + " " + manufacturer.Name + " " + auctionData.AuctionTitle;
+            if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
+                TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
             else
                 TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
 
+            string productId = "SP-" + product.Id.ToString();
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             auction.id = AuctionId;
@@ -706,7 +707,7 @@ namespace Clutchlit.Controllers
             auction.location.city = "Warszawa";
             auction.location.postCode = "00-132";
 
-            auction.external.id = "SP24-121";
+            auction.external.id = productId;
             auction.contact = null;
 
             auction.validation.validatedAt = null;
