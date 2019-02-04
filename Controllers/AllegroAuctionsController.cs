@@ -738,11 +738,14 @@ namespace Clutchlit.Controllers
             return Json(String.Join(", ", Errors.ToArray()));
         }
 
-        public void PostDraftAuction(string title, string category)
+        public void PostDraftAuction(string id)
         {
+            var auction_id = Convert.ToInt32(id);
+
             // dodać aktualizacje id aukcji allegro do bazy 
-            var Title = title;
-            var Category = category;
+            var FirstTitle = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single().Category;
+            var Title = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single().AuctionTitle;
+            var Category = "50884";
 
             string outprint = "{" +
                 "\"name\": \"" + Title + "\"," +
@@ -785,7 +788,7 @@ namespace Clutchlit.Controllers
                 }
             }
             var errors_response = String.Join(", ", Errors.ToArray());
-            PostAuction(OfferResponse.ElementAt(0), title, category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
+            PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
 
 
             //return Json(errors_response + " \n " + OfferResponse.First());
