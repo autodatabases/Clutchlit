@@ -651,13 +651,7 @@ namespace Clutchlit.Controllers
 
             // title
             var title_1 = auctionData.AuctionTitle.ToUpper();
-            var title_2 = auctionData.Category.ToUpper();
-            var title_3 = Manufacturer.Name.ToUpper();
-            string TitleToPost = "";
-            if ((title_1 + " " + title_2 + " " + title_3).Length < 50)
-                TitleToPost = title_2 + "" + title_3 + " " + title_1; 
-            else
-                TitleToPost = title_2 + " " + title_1;
+
             // title
 
             // wystawiamy aukcje
@@ -665,7 +659,7 @@ namespace Clutchlit.Controllers
             
             var auction = new AuctionToPost();
             auction.id = AuctionAllegroId;
-            auction.name = TitleToPost;
+            auction.name = title_1;
             auction.category.id = Category;
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
@@ -683,7 +677,7 @@ namespace Clutchlit.Controllers
             auction.FillListCompatible("Alfa Romeo 159 1.9JTDM");
 
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = "199";
+            auction.sellingMode.price.amount = price.ToString();
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
