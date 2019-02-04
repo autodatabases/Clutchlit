@@ -663,7 +663,7 @@ namespace Clutchlit.Controllers
             // wystawiamy aukcje
 
             var auction = new AuctionToPost();
-            auction.id = AuctionId.ToString();
+            auction.id = AuctionAllegroId.ToString();
             auction.name = TitleToPost;
             auction.category.id = Category;
 
