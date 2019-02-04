@@ -646,12 +646,12 @@ namespace Clutchlit.Controllers
                 TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
             else
                 TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
-
+            
             string productId = "SP-" + product.Id.ToString();
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             auction.id = AuctionId;
-            auction.name = TitlePost;
+            auction.name = TitlePost.ToUpper();
             auction.category.id = Category;
 
 
@@ -751,11 +751,9 @@ namespace Clutchlit.Controllers
                 }
             }
             if (Errors == null)
-                Response.StatusCode = 200;
+                return Json("OK");
             else
-                Response.StatusCode = 500;
-
-            return Json(String.Join(", ", Errors.ToArray()));
+                return Json("ERROR");
         }
       
         public void PostDraftAuction(string id)
@@ -814,10 +812,10 @@ namespace Clutchlit.Controllers
             auction.AllegroId = OfferResponse.ElementAt(0);
             _context.SaveChanges();
 
-            PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
+            var result =  PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
            
 
-            //return Json(errors_response + " \n " + OfferResponse.First());
+            return Json(errors_response + " \n " + OfferResponse.First() + result);
         }
     }
 }
