@@ -633,10 +633,10 @@ namespace Clutchlit.Controllers
         }
 
         // Massive action
-        public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt, Int32 auction_internal_id)
+        public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
-            var auction_id = Convert.ToInt32(AuctionId);
-            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
+            
+            var auctionData = _context.AllegroAuction.Where(m => m.AllegroId == AuctionId).Single();
 
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var manufacturer = _context.Manufacturers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
@@ -807,7 +807,7 @@ namespace Clutchlit.Controllers
             auction.AllegroId = OfferResponse.ElementAt(0);
             _context.SaveChanges();
 
-            PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4), auction_id); // wystawiamy aukcję z draft'a;
+            PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
            
 
             //return Json(errors_response + " \n " + OfferResponse.First());
