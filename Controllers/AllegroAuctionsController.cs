@@ -640,6 +640,7 @@ namespace Clutchlit.Controllers
 
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id== product.Manufacturer_id).Single();
+            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId);
 
             string TitlePost = "";
             if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
@@ -648,6 +649,8 @@ namespace Clutchlit.Controllers
                 TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
             
             string productId = "SP-" + product.Id.ToString();
+
+            string price = product.Gross_price.ToString();
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             auction.id = AuctionId;
@@ -666,11 +669,14 @@ namespace Clutchlit.Controllers
             // dodać description
             auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
             auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
-            auction.FillListCompatible("Alfa Romeo 159");
-            auction.FillListCompatible("Alfa Romeo 159 1.9JTDM");
 
+            foreach(var car in usage)
+            {
+                auction.FillListCompatible(_context.PassengerCars.Where(p => p.Ktype == car.PcId).Single().Fulldescription);
+            }
+           
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = "123";
+            auction.sellingMode.price.amount = price;
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
