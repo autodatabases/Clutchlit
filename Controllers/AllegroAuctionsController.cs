@@ -745,7 +745,7 @@ namespace Clutchlit.Controllers
                     var resource = readStream.ReadToEnd();
                     response = resource;
                     dynamic x = JsonConvert.DeserializeObject(resource);
-                    var location = x.location;
+                    var location = Convert.ToString(x.location);
                     var expiresAt = x.expiresAt;
                     fileLinks.Add(location);
                 }
