@@ -23,6 +23,7 @@ namespace Clutchlit.Controllers
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+
         public static List<string> busketList = new List<string>();
 
         public ProductsController(ApplicationDbContext context)

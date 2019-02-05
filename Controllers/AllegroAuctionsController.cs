@@ -583,7 +583,7 @@ namespace Clutchlit.Controllers
             var productsList = _context.Products;
             var List = Enumerable.Empty<AllegroAuction>().AsQueryable();
 
-
+            // tylko filtrowanie
             if (FlagCategory == "0" && FlagManufacturer == "ALL")
             {
                 List = (from auctions in auctionsList
@@ -645,7 +645,6 @@ namespace Clutchlit.Controllers
                 }
             }
            
-            
 
             var count = List.Count();
 
@@ -686,8 +685,33 @@ namespace Clutchlit.Controllers
             return new JsonResult(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
 
         }
-
+        // konwertujemy plik na postać binarną
+        private byte[] GetBinaryFile(string filename)
+        {
+            byte[] bytes;
+            using (FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                bytes = new byte[file.Length];
+                file.Read(bytes, 0, (int)file.Length);
+            }
+            return bytes;
+        }
         // Massive action
+        public IActionResult GetPhotoLink()
+        {
+            var photos = _context.AllegroPhotos.Where(p => p.ProductId == 42).Single(); // pobieramy kategorie do zdjęć.
+            string path = "";
+            string folderPath = hostingEnv.WebRootPath + "/images/6" + "/" + photos.CategoryId + "";
+            string[] fileArray = Directory.GetFiles(folderPath, "*.jpg", SearchOption.AllDirectories);
+
+            foreach (string fileName in fileArray)
+            {
+                string absPaht = Path.Combine(folderPath, fileName);
+                path = absPaht;
+            }
+
+            return Json(path);
+        }
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
             
@@ -696,8 +720,18 @@ namespace Clutchlit.Controllers
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id== product.Manufacturer_id).Single();
             var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
             string TitlePost = "";
+            string folderPath = hostingEnv.WebRootPath + "/images/"+manufacturer.Tecdoc_id.ToString()+"/"+photos.CategoryId+"";
+            string[] fileArray = Directory.GetFiles(folderPath, "*.jpg", SearchOption.AllDirectories);
+            
+            foreach(string fileName in fileArray)
+            {
+                string absPaht = Path.Combine(folderPath, fileName);
+            }
+
+
             if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
                 TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
             else
@@ -722,6 +756,14 @@ namespace Clutchlit.Controllers
 
             auction.ean = null;
             // dodać description
+
+            // PHOTOS
+           
+            foreach (string fileQ in fileArray)
+            {
+                
+            }  
+            // PHOTOS
             auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
             auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
