@@ -750,7 +750,7 @@ namespace Clutchlit.Controllers
                     fileLinks.Add(location);
                 }
             }
-            return Json(response);
+            return Json(String.Join(",",fileLinks.ToArray()));
         }
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
