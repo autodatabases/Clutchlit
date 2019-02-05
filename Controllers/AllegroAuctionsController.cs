@@ -848,7 +848,7 @@ namespace Clutchlit.Controllers
             
 
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = price;
+            auction.sellingMode.price.amount = "120";
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
@@ -857,7 +857,7 @@ namespace Clutchlit.Controllers
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
-            auction.publication.status = "ACTIVE";
+            auction.publication.status = "INACTIVE";
             auction.publication.startingAt = null;
             auction.publication.endingAt = null;
 
