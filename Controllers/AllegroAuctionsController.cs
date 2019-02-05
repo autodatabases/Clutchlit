@@ -701,7 +701,7 @@ namespace Clutchlit.Controllers
         {
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == 42).Single(); // pobieramy kategorie do zdjęć.
             string path = "";
-            string folderPath = hostingEnv.WebRootPath + "/images/6" + "/" + photos.CategoryId + "";
+            string folderPath = hostingEnv.WebRootPath + "/images/allegro/6" + "/" + photos.CategoryId + "";
             string[] fileArray = Directory.GetFiles(folderPath, "*.jpg", SearchOption.AllDirectories);
 
             foreach (string fileName in fileArray)
@@ -723,7 +723,7 @@ namespace Clutchlit.Controllers
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
             string TitlePost = "";
-            string folderPath = hostingEnv.WebRootPath + "/images/"+manufacturer.Tecdoc_id.ToString()+"/"+photos.CategoryId+"";
+            string folderPath = hostingEnv.WebRootPath + "/images/allegro/"+manufacturer.Tecdoc_id.ToString()+"/"+photos.CategoryId+"";
             string[] fileArray = Directory.GetFiles(folderPath, "*.jpg", SearchOption.AllDirectories);
             
             foreach(string fileName in fileArray)
