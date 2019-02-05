@@ -209,3 +209,4 @@ E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Distributors\
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Distributors\DistributorEdit.g.cshtml.cs
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\AllegroAuctions\AddAuction.g.cshtml.cs
 E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\AllegroAuctions\MassiveAction.g.cshtml.cs

@@ -1,4 +1,10 @@
-﻿$(document).ready(function () {
+﻿function CheckCategory() {
+    return $("#allegro_category").val();
+}
+function CheckManufacturer() {
+    return $("#allegro_manufacturer").val();
+}
+$(document).ready(function () {
 
     // massive action page
     var table = $('#massiveAction').DataTable({
@@ -12,7 +18,10 @@
             "type": "POST",
             "datatype": "json",
             "contentType": "application/x-www-form-urlencoded; charset=UTF-8",
-            "data": ""
+            "data": function (d) {
+                d.FlagCategory = CheckCategory();
+                d.FlagManufacturer = CheckManufacturer();
+            }
         },
         "columnDefs":
             [{
@@ -159,7 +168,12 @@
         });
     });
     // pobieramy parametry dla kategorii
-
+    // filtry
+    $("#submit_allegro_filters").on('click', function (event) {
+        event.preventDefault();
+        $("#massiveAction").DataTable().ajax.reload();
+    });
+    // filtry
     // wysyłamy zdjęcia na serwer
     $("#confirmPhotos").on('click', function (e) {
         e.preventDefault();

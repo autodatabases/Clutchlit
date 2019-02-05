@@ -110,7 +110,7 @@ using Clutchlit.Models;
                     ");
             EndContext();
             BeginContext(1153, 42, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a60509af21f148db9c339ef291135fd9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b9d906bf99dc40aa998f866ddc236ee4", async() => {
                 BeginContext(1171, 15, true);
                 WriteLiteral("Sprzeglo.com.pl");
                 EndContext();
@@ -132,7 +132,7 @@ using Clutchlit.Models;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(1217, 40, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "42b5892c7fe14d3883a730c2a09cfa59", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f4537b30556049f1b0352905aaa25bd9", async() => {
                 BeginContext(1235, 13, true);
                 WriteLiteral("Sprzegla24.pl");
                 EndContext();
@@ -163,7 +163,7 @@ using Clutchlit.Models;
                     ");
             EndContext();
             BeginContext(1621, 40, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f33192e6af7f4fdaa6c38c1828c8775a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7a38617e54424aa58c01b881dcf1e485", async() => {
                 BeginContext(1640, 12, true);
                 WriteLiteral("DPD pobranie");
                 EndContext();
@@ -185,7 +185,7 @@ using Clutchlit.Models;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(1683, 39, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2fe2b066557c4446852e4247e6d695bd", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "48169c9adff5464cab854b4dcbcc62ba", async() => {
                 BeginContext(1702, 11, true);
                 WriteLiteral("DPD przelew");
                 EndContext();
@@ -207,7 +207,7 @@ using Clutchlit.Models;
             WriteLiteral("\r\n                    ");
             EndContext();
             BeginContext(1744, 43, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dbd0cedf08f74d0b9d03a5d1086959cb", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c29a4ffd3ed34111b44f0aee421e741d", async() => {
                 BeginContext(1763, 15, true);
                 WriteLiteral("Odbiór osobisty");
                 EndContext();
@@ -414,7 +414,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
                 <select name=""deliveryCountry"" id=""deliveryCountry"" class=""form-control"" style="""">");
             EndContext();
             BeginContext(6166, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cfd30bacb792442fad3d0b1290aac370", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "df9ff81f038c44ca93bbceaa1a01829b", async() => {
                 BeginContext(6184, 7, true);
                 WriteLiteral("Austria");
                 EndContext();
@@ -433,7 +433,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6200, 33, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b0baf77005ec4f3db5cb14536c1acf15", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "36973e9b3a8b497e9ba523a2d6281bcc", async() => {
                 BeginContext(6218, 6, true);
                 WriteLiteral("Belgia");
                 EndContext();
@@ -452,7 +452,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6233, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "80d3bbc98ea747ea84b4c95929a29426", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8ff5039213164819b5a39446bf11c67d", async() => {
                 BeginContext(6253, 8, true);
                 WriteLiteral("Bułgaria");
                 EndContext();
@@ -471,7 +471,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6270, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b87279e81fab440bb4890b0fc12eaf9e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e0024b51a0f84b85a9b14aa1fadd7bca", async() => {
                 BeginContext(6289, 9, true);
                 WriteLiteral("Chorwacja");
                 EndContext();
@@ -490,7 +490,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6307, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9f2d6e591f3249faa78f96edb64f4a13", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "80631cb135e043b9b3ebd2d0ea16ffba", async() => {
                 BeginContext(6326, 6, true);
                 WriteLiteral("Czechy");
                 EndContext();
@@ -509,7 +509,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6341, 33, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "042e59b798fa46f886cdcf93e3591e70", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d8ce53254ceb4d28bffdfb1505bf319c", async() => {
                 BeginContext(6360, 5, true);
                 WriteLiteral("Dania");
                 EndContext();
@@ -528,7 +528,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6374, 35, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6086dc6cffe24c4585e2f4b67718a5bf", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fccde56f46b54d34ad5b4fd34f825e2b", async() => {
                 BeginContext(6393, 7, true);
                 WriteLiteral("Estonia");
                 EndContext();
@@ -547,7 +547,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6409, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1d9727abcf4f4f9ea055563e3f0b0b61", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c65caa857ff34cc0b638576b1c0e4720", async() => {
                 BeginContext(6427, 9, true);
                 WriteLiteral("Finlandia");
                 EndContext();
@@ -566,7 +566,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6445, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "86fac13984da4c8fa762171e57191758", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cccc3fbc03214b69b8f7f6e4dba8e10d", async() => {
                 BeginContext(6463, 7, true);
                 WriteLiteral("Francja");
                 EndContext();
@@ -585,7 +585,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6479, 33, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "00b799bf365a4c838449e529019f1a1c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c387f5d124ab479db93cd3f9a70c6304", async() => {
                 BeginContext(6497, 6, true);
                 WriteLiteral("Grecja");
                 EndContext();
@@ -604,7 +604,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6512, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e6402c6798bb4219960115c8b69ed90c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d7896eb1f37944b1965cf4a75c51b311", async() => {
                 BeginContext(6530, 9, true);
                 WriteLiteral("Hiszpania");
                 EndContext();
@@ -623,7 +623,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6548, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "522bc3e4c7df4eb4a720c00ea4d5fbdc", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "47da7ddac72646d99398de6f392cb8e7", async() => {
                 BeginContext(6567, 8, true);
                 WriteLiteral("Holandia");
                 EndContext();
@@ -642,7 +642,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6584, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1e897ea8fafc4c57bbcccb771cac5176", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4c2db20fafdf4f59a249e9cc585dfc6d", async() => {
                 BeginContext(6603, 8, true);
                 WriteLiteral("Irlandia");
                 EndContext();
@@ -661,7 +661,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6620, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "829abe819e9248fa91aac862ee99f048", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "775ce4ecb8af4bc989543ee3bb9fa508", async() => {
                 BeginContext(6640, 5, true);
                 WriteLiteral("Litwa");
                 EndContext();
@@ -680,7 +680,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6654, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ef497e2d287440d9bcc05d21f7e31b5e", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ecf20d7670e341adbb29e1807e46bf84", async() => {
                 BeginContext(6673, 10, true);
                 WriteLiteral("Luksemburg");
                 EndContext();
@@ -699,7 +699,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6692, 33, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "904d61241a674dd78455f3bda815d58b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6170a64704d64396bab306faf395cbfe", async() => {
                 BeginContext(6710, 6, true);
                 WriteLiteral("Niemcy");
                 EndContext();
@@ -718,7 +718,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6725, 54, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "39c4a683f75641f09c4e76f5de80be7b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ee1af9375afc4b6d9552fcb5f11c6409", async() => {
                 BeginContext(6764, 6, true);
                 WriteLiteral("Polska");
                 EndContext();
@@ -738,7 +738,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6779, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a62308a2c4c64f01b75ff659cbc51e14", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a502af7a545245e08053686a4d9ccfed", async() => {
                 BeginContext(6798, 10, true);
                 WriteLiteral("Portugalia");
                 EndContext();
@@ -757,7 +757,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6817, 35, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "30ad46f65dc44be1b710e0419467d837", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a6fdf092087d4bff923e007dc08e1a55", async() => {
                 BeginContext(6836, 7, true);
                 WriteLiteral("Rumunia");
                 EndContext();
@@ -776,7 +776,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6852, 35, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "000e5e0025ef4e76a6de728879aaef13", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e76241c5241f4ca4b1342c02e1f63745", async() => {
                 BeginContext(6871, 7, true);
                 WriteLiteral("Szwecja");
                 EndContext();
@@ -795,7 +795,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6887, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2a8bc55510574921b7527a54b349c297", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "68901a54cfa247b3b42b1a558284ffd5", async() => {
                 BeginContext(6906, 8, true);
                 WriteLiteral("Słowacja");
                 EndContext();
@@ -814,7 +814,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6923, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2b24315032ef4b88bc5ed3de81acb290", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cd09eb8175c04a90a09dcf771e227cd6", async() => {
                 BeginContext(6943, 8, true);
                 WriteLiteral("Słowenia");
                 EndContext();
@@ -833,7 +833,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6960, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6e13a4ba2a164e5c9f08d2e892d65aab", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cc542f1211d74bfbbdf63dae06a0ae21", async() => {
                 BeginContext(6980, 5, true);
                 WriteLiteral("Węgry");
                 EndContext();
@@ -852,7 +852,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(6994, 43, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "801ad34de2bf41d49bc82bc6a79e2ef2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dcee30af82724bbdbfe2bb92497ac749", async() => {
                 BeginContext(7013, 15, true);
                 WriteLiteral("Wielka Brytania");
                 EndContext();
@@ -871,7 +871,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(7037, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ab5f27e5c8a040efa5479871d3a0b225", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d69d31d3121a4926914c98cc6bebbd86", async() => {
                 BeginContext(7056, 6, true);
                 WriteLiteral("Włochy");
                 EndContext();
@@ -890,7 +890,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(7071, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4de2b340eb52492aa336af35ece8bedc", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6919449702e74f90bd6d1865bc9c7a49", async() => {
                 BeginContext(7091, 5, true);
                 WriteLiteral("Łotwa");
                 EndContext();
@@ -965,7 +965,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
                 <select name=""invoiceCountry"" id=""invoiceCountry"" class=""form-control"" style="""">");
             EndContext();
             BeginContext(9413, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "28a824b0104742c0a5cd662990174856", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "63fdb8403ecc4910bd5e1b70c4ffb517", async() => {
                 BeginContext(9431, 7, true);
                 WriteLiteral("Austria");
                 EndContext();
@@ -984,7 +984,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9447, 33, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2bf9e3f12eab424cbc80c30b78326efd", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cb957e8068ad44bb8fe6a2ab14e630d1", async() => {
                 BeginContext(9465, 6, true);
                 WriteLiteral("Belgia");
                 EndContext();
@@ -1003,7 +1003,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9480, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "08d0d7e3ab824dfbbf7297eb2fe4f1fd", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ba9eb2abc8084fe3a5956c39a1060276", async() => {
                 BeginContext(9500, 8, true);
                 WriteLiteral("Bułgaria");
                 EndContext();
@@ -1022,7 +1022,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9517, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b5d1b29bcd5546df9291ab2ee1f68f0c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f1310f53699b47b69b2853d399188171", async() => {
                 BeginContext(9536, 9, true);
                 WriteLiteral("Chorwacja");
                 EndContext();
@@ -1041,7 +1041,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9554, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4dac3d37a6da4ac9a5732ca752a30969", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "80c210b66cec4660abb37ad55ac3fe50", async() => {
                 BeginContext(9573, 6, true);
                 WriteLiteral("Czechy");
                 EndContext();
@@ -1060,7 +1060,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9588, 33, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5c19b4749c294092afe6b02b9494d3f0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f7966e08a4dc40d9a23dd41a292c31b0", async() => {
                 BeginContext(9607, 5, true);
                 WriteLiteral("Dania");
                 EndContext();
@@ -1079,7 +1079,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9621, 35, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1d26c01aac764e09b3619fae1865af2d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "44786ee236b747d2a658a29f3da1ba39", async() => {
                 BeginContext(9640, 7, true);
                 WriteLiteral("Estonia");
                 EndContext();
@@ -1098,7 +1098,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9656, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ac6fc6d7796f4c7d91821ff0deb4c0c9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dda2aeabfeb840f3a858562df840a80f", async() => {
                 BeginContext(9674, 9, true);
                 WriteLiteral("Finlandia");
                 EndContext();
@@ -1117,7 +1117,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9692, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "110ad3304b4e4581b31a0ba71553bb86", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2c5662ffc0054621acfcff6fb928a33e", async() => {
                 BeginContext(9710, 7, true);
                 WriteLiteral("Francja");
                 EndContext();
@@ -1136,7 +1136,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9726, 33, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "332ef0fbd1bc4b0697b73005aecdba66", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2a2f4d17d6ed466083d716645b8238c9", async() => {
                 BeginContext(9744, 6, true);
                 WriteLiteral("Grecja");
                 EndContext();
@@ -1155,7 +1155,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9759, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ecbb9a91bac642b0a3ce25ace4d6a3a8", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3221707c388746f295cd6de1e9d993d3", async() => {
                 BeginContext(9777, 9, true);
                 WriteLiteral("Hiszpania");
                 EndContext();
@@ -1174,7 +1174,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9795, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "86177743c3994b7689a5bad1e4593014", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "48e6249f4ae345bdba341f0b6974bfba", async() => {
                 BeginContext(9814, 8, true);
                 WriteLiteral("Holandia");
                 EndContext();
@@ -1193,7 +1193,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9831, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "390ed3a4e7c042a2aabdd18ddc6e5930", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f19a4388003d44448545166d8f95681f", async() => {
                 BeginContext(9850, 8, true);
                 WriteLiteral("Irlandia");
                 EndContext();
@@ -1212,7 +1212,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9867, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9f368170ee7742f5b2602c5114ede058", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1691bc93e469450ca8c239aef9d0cc33", async() => {
                 BeginContext(9887, 5, true);
                 WriteLiteral("Litwa");
                 EndContext();
@@ -1231,7 +1231,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9901, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8136ad358cd24283b716c17f8ec434c3", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ac1695d19b15402e81abafba36ba119c", async() => {
                 BeginContext(9920, 10, true);
                 WriteLiteral("Luksemburg");
                 EndContext();
@@ -1250,7 +1250,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9939, 33, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c67485289d3642ee9b5326a4caef533b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f1c16f60552f4019a618c8706a537ca7", async() => {
                 BeginContext(9957, 6, true);
                 WriteLiteral("Niemcy");
                 EndContext();
@@ -1269,7 +1269,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(9972, 54, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0f4ceef80c62451d9b0d208147af8bed", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "358c2f0e205048f9bf89e7d800b0591d", async() => {
                 BeginContext(10011, 6, true);
                 WriteLiteral("Polska");
                 EndContext();
@@ -1289,7 +1289,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(10026, 38, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d80680e040e643c488cedf9c438bdb5a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "154068299ba3493fbfa735745e6b1572", async() => {
                 BeginContext(10045, 10, true);
                 WriteLiteral("Portugalia");
                 EndContext();
@@ -1308,7 +1308,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(10064, 35, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "eca36690f82a4dffae0d3447593871e7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "26732bb27c8c4b7a91911815e57953b4", async() => {
                 BeginContext(10083, 7, true);
                 WriteLiteral("Rumunia");
                 EndContext();
@@ -1327,7 +1327,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(10099, 35, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "16d7ed7beba0498f8a423dbb55bdf207", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e5a0b69a3404478d97fc643865c7d6bd", async() => {
                 BeginContext(10118, 7, true);
                 WriteLiteral("Szwecja");
                 EndContext();
@@ -1346,7 +1346,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(10134, 36, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f14092ca1c8a424995508fab1fbd5f4f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4b12dee33fc04ee89165f65c48d02b36", async() => {
                 BeginContext(10153, 8, true);
                 WriteLiteral("Słowacja");
                 EndContext();
@@ -1365,7 +1365,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(10170, 37, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8c66a15dfc1c4c03963c9d6e08646b0c", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8922785c8f30438b8cf32ff26508a847", async() => {
                 BeginContext(10190, 8, true);
                 WriteLiteral("Słowenia");
                 EndContext();
@@ -1384,7 +1384,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(10207, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14446fdb94c2478ca074c35acbc31c4a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4ead4440340e47c28f4366a39dfa3131", async() => {
                 BeginContext(10227, 5, true);
                 WriteLiteral("Węgry");
                 EndContext();
@@ -1403,7 +1403,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(10241, 43, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b55fc51f682f45ffb6571a2667c148b2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "99fa0836d2714c539de772de38cb2ce8", async() => {
                 BeginContext(10260, 15, true);
                 WriteLiteral("Wielka Brytania");
                 EndContext();
@@ -1422,7 +1422,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(10284, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "476e298b244c4763810bdcacf6c61ac2", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "faf43e7ae027446e9307a5170e97bcab", async() => {
                 BeginContext(10303, 6, true);
                 WriteLiteral("Włochy");
                 EndContext();
@@ -1441,7 +1441,7 @@ WriteAttributeValue("", 3220, product.Id, 3220, 11, false);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             EndContext();
             BeginContext(10318, 34, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0eb3beb0279b4c64b569bc1ca212db2b", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "039a0649d7234778968596bef9025e78", async() => {
                 BeginContext(10338, 5, true);
                 WriteLiteral("Łotwa");
                 EndContext();

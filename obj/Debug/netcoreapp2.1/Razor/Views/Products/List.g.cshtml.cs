@@ -87,12 +87,12 @@ using Clutchlit.Models;
             WriteLiteral("            <span class=\"col-md-4\">\r\n                ");
             EndContext();
             BeginContext(1024, 212, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "665c89c67b3b4504ace69362a393fef0", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("select", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b8bd87e6b38643689f9190ece2ca4c5e", async() => {
                 BeginContext(1141, 22, true);
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(1163, 46, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f1f44aa0ec8e40b082b314d8cdef0af2", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0495ccf2fba040c1a01a7b0e7a1bccb9", async() => {
                     BeginContext(1189, 11, true);
                     WriteLiteral(" - Marka - ");
                     EndContext();
@@ -143,7 +143,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_SelectTagHelper.Items = (new SelectList(Mo
             WriteLiteral("\r\n            </span>\r\n            <span class=\"col-md-3\">\r\n                <select id=\"seriesA\" name=\"seriesA\" class=\"form-control select2\">\r\n                    ");
             EndContext();
             BeginContext(1399, 46, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ca6a36f2d1564592a5637c55f2da64b7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4cee8b9240fb41a3b2fa0d4da7768cd5", async() => {
                 BeginContext(1425, 11, true);
                 WriteLiteral(" - Model - ");
                 EndContext();
@@ -169,7 +169,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_SelectTagHelper.Items = (new SelectList(Mo
             WriteLiteral("\r\n                </select>\r\n            </span>\r\n            <span class=\"col-md-3\">\r\n                <select id=\"engines\" name=\"engines\" class=\"form-control select2\">\r\n                    ");
             EndContext();
             BeginContext(1635, 47, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b06dfd7c3a3c46f1a601147c2957d832", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c67606bb3b2e4475948be1ada97fdd05", async() => {
                 BeginContext(1661, 12, true);
                 WriteLiteral(" - Silnik - ");
                 EndContext();

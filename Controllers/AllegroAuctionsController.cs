@@ -576,21 +576,42 @@ namespace Clutchlit.Controllers
         {
             return View();
         }
-        [Produces("application/json")]
-        public IActionResult GetAllegroAuctionsList()
+        ///[Produces("application/json")]
+        public IActionResult GetAllegroAuctionsList(string FlagCategory, string FlagManufacturer)
         {
             var auctionsList = _context.AllegroAuction;
             var List = Enumerable.Empty<AllegroAuction>().AsQueryable();
-            List = (from auctions in auctionsList
-                    select new AllegroAuction()
-                    {
-                        AuctionId = auctions.AuctionId,
-                        AllegroId = auctions.AllegroId,
-                        ProductId = auctions.ProductId,
-                        AuctionTitle = auctions.AuctionTitle,
-                        Category = auctions.Category,
-                        Status = auctions.Status
-                    });
+
+            if (FlagCategory == "0" && FlagManufacturer == "ALL")
+            {
+                List = (from auctions in auctionsList
+                        select new AllegroAuction()
+                        {
+                            AuctionId = auctions.AuctionId,
+                            AllegroId = auctions.AllegroId,
+                            ProductId = auctions.ProductId,
+                            AuctionTitle = auctions.AuctionTitle,
+                            Category = auctions.Category,
+                            Status = auctions.Status
+                        });
+            }
+            else
+            {
+                if(FlagCategory == "0" && FlagManufacturer != "ALL")
+                {
+
+                }
+                else if(FlagCategory != "0" && FlagManufacturer == "ALL")
+                {
+
+                }
+                else if(FlagCategory != "0" && FlagManufacturer != "ALL")
+                {
+
+                }
+            }
+           
+            
 
             var count = List.Count();
 
