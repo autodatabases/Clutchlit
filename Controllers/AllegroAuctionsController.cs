@@ -713,6 +713,19 @@ namespace Clutchlit.Controllers
 
             return Json(path);
         }
+       // [HttpGet("controller/action/{id}")]
+        public IActionResult TestAuction(string AuctionId)
+        {
+            string FinalResponse = "";
+            var auctionData = _context.AllegroAuction.Where(m => m.AllegroId == AuctionId).Single();
+
+            var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
+            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
+            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
+
+            return Json(String.Join(",",auctionData));
+        }
         public IActionResult TestPhotoUp()
         {
             string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + "6" + "/" + "1607" + "";
@@ -764,7 +777,6 @@ namespace Clutchlit.Controllers
 
             string TitlePost = "";
 
-            /*
             string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "";
             DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
             FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
@@ -801,7 +813,7 @@ namespace Clutchlit.Controllers
 
             }
 
-            */
+
             if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
                 TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
             else
@@ -828,27 +840,22 @@ namespace Clutchlit.Controllers
             // dodać description
 
             // PHOTOS
-            /*
             foreach (string link in fileLinks)
             {
                 auction.images.Add(new Images(link));
             }
-            */
 
             // PHOTOS
-            auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
-            auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
+            //auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
+            //auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
-
-            
             foreach (var car in usage)
             {
                 auction.FillListCompatible(_context.PassengerCars.Where(p => p.Ktype == car.PcId).Single().Fulldescription);
             }
-            
 
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = "120";
+            auction.sellingMode.price.amount = price;
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
@@ -857,7 +864,7 @@ namespace Clutchlit.Controllers
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
-            auction.publication.status = "INACTIVE";
+            auction.publication.status = "ACTIVE";
             auction.publication.startingAt = null;
             auction.publication.endingAt = null;
 
