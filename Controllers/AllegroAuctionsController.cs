@@ -768,7 +768,7 @@ namespace Clutchlit.Controllers
             DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
             FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
             List<string> fileLinks = new List<string>();
-            string response = "";
+ 
 
             foreach (FileInfo fileName in Files)
             {
@@ -827,15 +827,18 @@ namespace Clutchlit.Controllers
             // dodać description
 
             // PHOTOS
-            
+            foreach (string link in fileLinks)
+            {
+                auction.images.Add(new Images(link));
+            }
 
             // PHOTOS
-            auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
-            auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
+            //auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
+            //auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
             foreach (var car in usage)
             {
-                auction.FillListCompatible(_context.PassengerCars.Where(p => p.Ktype == car.PcId).Single().SelectDesc);
+                auction.FillListCompatible(_context.PassengerCars.Where(p => p.Ktype == car.PcId).Single().Fulldescription);
             }
 
             auction.sellingMode.format = "BUY_NOW";
