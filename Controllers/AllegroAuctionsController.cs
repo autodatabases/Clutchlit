@@ -713,6 +713,46 @@ namespace Clutchlit.Controllers
 
             return Json(path);
         }
+        public IActionResult TestPhotoUp()
+        {
+            string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + "6" + "/" + "1607" + "";
+            string[] fileArray = Directory.GetFiles(folderPath, "*.jpg", SearchOption.AllDirectories);
+            List<string> fileLinks = new List<string>();
+            string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
+
+            foreach (string fileName in fileArray)
+            {
+                string pathToFile = Path.Combine(pathToApp, "images/allegro", "6", "1607", fileName);
+                
+
+                string data = "{\"url\": \"" + pathToFile + "\"}";
+
+                var httpWebRequestPhoto = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
+                httpWebRequestPhoto.ContentType = "application/vnd.allegro.public.v1+json";
+                httpWebRequestPhoto.Accept = "application/vnd.allegro.public.v1+json";
+                httpWebRequestPhoto.Method = "POST";
+                httpWebRequestPhoto.Headers.Add("Authorization", "Bearer " + Token + "");
+
+                using (var streamWriter = new StreamWriter(httpWebRequestPhoto.GetRequestStream()))
+                {
+                    streamWriter.Write(data);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
+                var httpResponse = (HttpWebResponse)httpWebRequestPhoto.GetResponse();
+                using (var readStream = new StreamReader(httpResponse.GetResponseStream(), Encoding.Default))
+                {
+                    var resource = readStream.ReadToEnd();
+                    response = resource;
+                    dynamic x = JsonConvert.DeserializeObject(resource);
+                    var location = x.location;
+                    var expiresAt = x.expiresAt;
+                    fileLinks.Add(location);
+                }
+
+            }
+            return Json(response);
+        }
         public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
 
