@@ -764,6 +764,7 @@ namespace Clutchlit.Controllers
 
             string TitlePost = "";
 
+            /*
             string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "";
             DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
             FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
@@ -800,7 +801,7 @@ namespace Clutchlit.Controllers
 
             }
 
-
+            */
             if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
                 TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
             else
