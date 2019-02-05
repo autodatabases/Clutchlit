@@ -580,7 +580,9 @@ namespace Clutchlit.Controllers
         public IActionResult GetAllegroAuctionsList(string FlagCategory, string FlagManufacturer)
         {
             var auctionsList = _context.AllegroAuction;
+            var productsList = _context.Products;
             var List = Enumerable.Empty<AllegroAuction>().AsQueryable();
+
 
             if (FlagCategory == "0" && FlagManufacturer == "ALL")
             {
@@ -599,15 +601,47 @@ namespace Clutchlit.Controllers
             {
                 if(FlagCategory == "0" && FlagManufacturer != "ALL")
                 {
-
+                    List = (from auctions in auctionsList
+                            join products in productsList on auctions.ProductId equals products.Id
+                            where products.Manufacturer_id == int.Parse(FlagManufacturer)
+                            select new AllegroAuction()
+                            {
+                                AuctionId = auctions.AuctionId,
+                                AllegroId = auctions.AllegroId,
+                                ProductId = auctions.ProductId,
+                                AuctionTitle = auctions.AuctionTitle,
+                                Category = auctions.Category,
+                                Status = auctions.Status
+                            });
                 }
                 else if(FlagCategory != "0" && FlagManufacturer == "ALL")
                 {
-
+                    List = (from auctions in auctionsList
+                            where auctions.Category == FlagCategory
+                            select new AllegroAuction()
+                            {
+                                AuctionId = auctions.AuctionId,
+                                AllegroId = auctions.AllegroId,
+                                ProductId = auctions.ProductId,
+                                AuctionTitle = auctions.AuctionTitle,
+                                Category = auctions.Category,
+                                Status = auctions.Status
+                            });
                 }
                 else if(FlagCategory != "0" && FlagManufacturer != "ALL")
                 {
-
+                    List = (from auctions in auctionsList
+                            join products in productsList on auctions.ProductId equals products.Id
+                            where products.Manufacturer_id == int.Parse(FlagManufacturer) && auctions.Category == FlagCategory
+                            select new AllegroAuction()
+                            {
+                                AuctionId = auctions.AuctionId,
+                                AllegroId = auctions.AllegroId,
+                                ProductId = auctions.ProductId,
+                                AuctionTitle = auctions.AuctionTitle,
+                                Category = auctions.Category,
+                                Status = auctions.Status
+                            });
                 }
             }
            
