@@ -716,14 +716,15 @@ namespace Clutchlit.Controllers
         public IActionResult TestPhotoUp()
         {
             string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + "6" + "/" + "1607" + "";
-            string[] fileArray = Directory.GetFiles(folderPath, "*.jpg", SearchOption.AllDirectories);
+            DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
             List<string> fileLinks = new List<string>();
             string response = "";
 
-            foreach (string fileName in fileArray)
+            foreach (FileInfo fileName in Files)
             {
-                string pathToFile = Path.Combine(pathToApp, "images/allegro", "6", "1607", fileName);
-                
+                string pathToFile = pathToApp + "images/allegro/" + "6/" + "1607/" + fileName.Name;
+
 
                 string data = "{\"url\": \"" + pathToFile + "\"}";
                 response += ";" + data;
@@ -767,15 +768,16 @@ namespace Clutchlit.Controllers
 
             string TitlePost = "";
 
-            string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId + "";
-            string[] fileArray = Directory.GetFiles(folderPath, "*.jpg", SearchOption.AllDirectories);
+            string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "";
+            DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
             List<string> fileLinks = new List<string>();
+            string response = "";
 
-            foreach (string fileName in fileArray)
+            foreach (FileInfo fileName in Files)
             {
-                string pathToFile = Path.Combine(pathToApp, "images/allegro", manufacturer.Tecdoc_id.ToString(), photos.CategoryId.ToString(), fileName);
-                string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
-
+                string pathToFile = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() +"/" + photos.CategoryId.ToString() +"/" + fileName.Name;
+               // string pathToFile = Path.Combine(pathToApp, "images/allegro", manufacturer.Tecdoc_id.ToString(), photos.CategoryId.ToString(), fileName);
                 string data = "{\"url\": \"" + pathToFile + "\"}";
 
                 var httpWebRequestPhoto = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
