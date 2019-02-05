@@ -752,9 +752,9 @@ namespace Clutchlit.Controllers
             }
             return Json(String.Join(",",fileLinks.ToArray()));
         }
-        public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
+        public string PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
         {
-
+            string FinalResponse = "";
             var auctionData = _context.AllegroAuction.Where(m => m.AllegroId == AuctionId).Single();
 
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
@@ -916,6 +916,7 @@ namespace Clutchlit.Controllers
                 using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     var resource = readStream.ReadToEnd();
+                    FinalResponse = resource;
                     dynamic x = JsonConvert.DeserializeObject(resource);
 
                     var errors = x.validation.errors;
@@ -930,8 +931,7 @@ namespace Clutchlit.Controllers
                 Response.StatusCode = 410;
             }
             Response.StatusCode = 200;
-            return Json("OK");
-
+            return FinalResponse;
         }
 
         public IActionResult PostDraftAuction(string id)
@@ -994,7 +994,7 @@ namespace Clutchlit.Controllers
             // pośrednie błędy poniżej
             // return Json(errors_response + " \n " + OfferResponse.First() + result);
 
-            return Json(result.ToString());
+            return Json(result);
         }
     }
 }
