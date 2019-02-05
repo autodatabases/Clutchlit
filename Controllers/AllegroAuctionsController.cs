@@ -718,7 +718,7 @@ namespace Clutchlit.Controllers
             string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + "6" + "/" + "1607" + "";
             string[] fileArray = Directory.GetFiles(folderPath, "*.jpg", SearchOption.AllDirectories);
             List<string> fileLinks = new List<string>();
-            string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
+            string response = "";
 
             foreach (string fileName in fileArray)
             {
@@ -726,7 +726,9 @@ namespace Clutchlit.Controllers
                 
 
                 string data = "{\"url\": \"" + pathToFile + "\"}";
+                response += ";" + data;
 
+                /*
                 var httpWebRequestPhoto = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
                 httpWebRequestPhoto.ContentType = "application/vnd.allegro.public.v1+json";
                 httpWebRequestPhoto.Accept = "application/vnd.allegro.public.v1+json";
@@ -748,7 +750,7 @@ namespace Clutchlit.Controllers
                     var location = x.location;
                     var expiresAt = x.expiresAt;
                     fileLinks.Add(location);
-                }
+                */
 
             }
             return Json(response);
