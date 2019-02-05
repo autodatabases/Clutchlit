@@ -85,7 +85,7 @@ using Clutchlit.Models;
             ");
             EndContext();
             BeginContext(1088, 4512, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a59181b4fbd443ce9f90890181490b86", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c9fc442f94344d32a2654f43dafc81c4", async() => {
                 BeginContext(1138, 372, true);
                 WriteLiteral(@"
 
@@ -118,7 +118,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                    </div>\r\n                    <div class=\"col-md-2\">\r\n                        <select name=\"category2\" id=\"category2\" class=\"form-control\">\r\n                            ");
                 EndContext();
                 BeginContext(2121, 40, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4e64847659ac43f7b347f5d3b23fb185", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ec5ff3fe7f884f92bb2245aed3c39c78", async() => {
                     BeginContext(2129, 23, true);
                     WriteLiteral("-- Wybierz kategorię --");
                     EndContext();
@@ -138,7 +138,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        </select>\r\n                    </div>\r\n                    <div class=\"col-md-2\">\r\n                        <select name=\"category3\" id=\"category3\" class=\"form-control\">\r\n                            ");
                 EndContext();
                 BeginContext(2385, 40, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "dde1da954e234f8587311ef348878d50", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f47167ce40a43d79c9b3d5fb1cc3ba7", async() => {
                     BeginContext(2393, 23, true);
                     WriteLiteral("-- Wybierz kategorię --");
                     EndContext();
@@ -158,7 +158,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        </select>\r\n                    </div>\r\n                    <div class=\"col-md-2\">\r\n                        <select name=\"category4\" id=\"category4\" class=\"form-control\">\r\n                            ");
                 EndContext();
                 BeginContext(2649, 40, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0252f79512b7409190b0b4768a1f48c2", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e87dfe26a9cd47f59a1ea2237b254442", async() => {
                     BeginContext(2657, 23, true);
                     WriteLiteral("-- Wybierz kategorię --");
                     EndContext();
@@ -178,7 +178,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        </select>\r\n                    </div>\r\n                    <div class=\"col-md-2\">\r\n                        <select name=\"category5\" id=\"category5\" class=\"form-control\">\r\n                            ");
                 EndContext();
                 BeginContext(2913, 40, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a1432770ca1b4da996825b8b82ff2ce2", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "48b12a0e9eec4a7783779b0a016f9ab5", async() => {
                     BeginContext(2921, 23, true);
                     WriteLiteral("-- Wybierz kategorię --");
                     EndContext();
