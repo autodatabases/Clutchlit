@@ -741,6 +741,11 @@ namespace Clutchlit.Controllers
 
             return Json(productId+""+price);
         }
+        [HttpGet("get/auction/{id}")]
+        public IActionResult GetAuction(string id)
+        {
+
+        }
         public IActionResult TestPhotoUp()
         {
             string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + "6" + "/" + "1607" + "";
@@ -786,7 +791,7 @@ namespace Clutchlit.Controllers
         public IActionResult PostAuctionA(string id)
         {
             string FinalResponse = "";
-            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == 394007).Single();
+            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == 472744).Single();
 
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
@@ -806,7 +811,7 @@ namespace Clutchlit.Controllers
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             auction.id = id.ToString();
-            auction.name = "dsdsd";
+            auction.name = "Tytuł przk aukcji";
             auction.category.id = "50884";
 
 
