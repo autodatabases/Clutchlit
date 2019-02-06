@@ -716,6 +716,7 @@ namespace Clutchlit.Controllers
        // [HttpGet("controller/action/{id}")]
         public IActionResult TestAuction(string AuctionId)
         {
+            AuctionId = "394007";
             string FinalResponse = "";
             var auctionData = _context.AllegroAuction.Where(m => m.AllegroId == AuctionId).Single();
 
