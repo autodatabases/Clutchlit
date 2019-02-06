@@ -782,8 +782,8 @@ namespace Clutchlit.Controllers
         }
 
         // TEST ===========
-
-        public IActionResult PostAuctionA()
+        [HttpGet("controller/action/{id}")]
+        public IActionResult PostAuctionA(string id)
         {
             string FinalResponse = "";
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == 394007).Single();
@@ -880,26 +880,26 @@ namespace Clutchlit.Controllers
 
             auction.description.sections.Add(section);
 
-            string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
+            var outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
             // ------
 
             List<string> Errors = new List<string>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/7825790732");
-            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Method = "PUT";
-            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+            var httpWebRequestC = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+id+"");
+            httpWebRequestC.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequestC.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequestC.Method = "PUT";
+            httpWebRequestC.Headers.Add("Authorization", "Bearer " + Token + "");
 
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            using (var streamWriter = new StreamWriter(httpWebRequestC.GetRequestStream()))
             {
                 streamWriter.Write(outprint);
                 streamWriter.Flush();
                 streamWriter.Close();
             }
 
-                var httpResponseA = (HttpWebResponse)httpWebRequest.GetResponse();
+                var httpResponseA = (HttpWebResponse)httpWebRequestC.GetResponse();
                 using (var readStream = new StreamReader(httpResponseA.GetResponseStream()))
                 {
                     var resource = readStream.ReadToEnd();
