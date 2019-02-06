@@ -747,7 +747,7 @@ namespace Clutchlit.Controllers
             string result = "";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+id+"");
             httpWebRequest.ContentType = "application/json";
-            httpWebRequest.Accept = "application/vnd.allegro.beta.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "GET";
             httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
 
