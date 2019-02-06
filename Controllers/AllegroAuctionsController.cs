@@ -713,7 +713,7 @@ namespace Clutchlit.Controllers
 
             return Json(path);
         }
-       // [HttpGet("controller/action/{id}")]
+        // [HttpGet("controller/action/{id}")]
         public IActionResult TestAuction(Int64 AuctionId)
         {
             var TitlePost = "";
@@ -726,7 +726,7 @@ namespace Clutchlit.Controllers
             var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
             string r = "";
-            foreach(var p in usage)
+            foreach (var p in usage)
             {
                 r += p.PcId;
                 r += ",";
@@ -739,13 +739,13 @@ namespace Clutchlit.Controllers
 
             string productId = "SP-" + product.Id.ToString();
 
-            return Json(productId+""+price);
+            return Json(productId + "" + price);
         }
         [HttpGet("get/auction/{id}")]
         public IActionResult GetAuction(string id)
         {
             string result = "";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+id+"");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + id + "");
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "GET";
@@ -756,7 +756,7 @@ namespace Clutchlit.Controllers
             using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
             {
                 var resource = streamReader.ReadToEnd();
-                result = resource;           
+                result = resource;
             }
             return Json(result);
         }
@@ -797,7 +797,7 @@ namespace Clutchlit.Controllers
                     fileLinks.Add(location);
                 }
             }
-            return Json(String.Join(",",fileLinks.ToArray()));
+            return Json(String.Join(",", fileLinks.ToArray()));
         }
 
         // TEST ===========
@@ -805,7 +805,7 @@ namespace Clutchlit.Controllers
         public IActionResult PostAuctionA(string id)
         {
             string FinalResponse = "";
-      
+
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             auction.id = id.ToString();
@@ -824,9 +824,9 @@ namespace Clutchlit.Controllers
 
             auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
             auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
-            
-                auction.FillListCompatible("sss");
-            
+
+            auction.FillListCompatible("sss");
+
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = "123";
             auction.sellingMode.price.currency = "PLN";
@@ -883,7 +883,7 @@ namespace Clutchlit.Controllers
             // ------
 
             List<string> Errors = new List<string>();
-            var httpWebRequestC = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+id+"");
+            var httpWebRequestC = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + id + "");
             httpWebRequestC.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequestC.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequestC.Method = "PUT";
@@ -897,15 +897,15 @@ namespace Clutchlit.Controllers
                 streamWriterA.Close();
             }
 
-                var httpResponseA = (HttpWebResponse)httpWebRequestC.GetResponse();
-                using (var readStream = new StreamReader(httpResponseA.GetResponseStream()))
-                {
-                    var resource = readStream.ReadToEnd();
-                    FinalResponse += "::" + resource;
-                    
-                }
+            var httpResponseA = (HttpWebResponse)httpWebRequestC.GetResponse();
+            using (var readStream = new StreamReader(httpResponseA.GetResponseStream()))
+            {
+                var resource = readStream.ReadToEnd();
+                FinalResponse += "::" + resource;
 
-    
+            }
+
+
             return Json(FinalResponse + "::::" + String.Join(",", Errors.ToArray()));
         }
 
@@ -927,12 +927,12 @@ namespace Clutchlit.Controllers
             DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
             FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
             List<string> fileLinks = new List<string>();
- 
+
 
             foreach (FileInfo fileName in Files)
             {
-                string pathToFile = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() +"/" + photos.CategoryId.ToString() +"/" + fileName.Name;
-               // string pathToFile = Path.Combine(pathToApp, "images/allegro", manufacturer.Tecdoc_id.ToString(), photos.CategoryId.ToString(), fileName);
+                string pathToFile = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "/" + fileName.Name;
+                // string pathToFile = Path.Combine(pathToApp, "images/allegro", manufacturer.Tecdoc_id.ToString(), photos.CategoryId.ToString(), fileName);
                 string data = "{\"url\": \"" + pathToFile + "\"}";
 
                 var httpWebRequestPhoto = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
@@ -947,8 +947,8 @@ namespace Clutchlit.Controllers
                     streamWriter.Flush();
                     streamWriter.Close();
                 }
-                var httpResponse = (HttpWebResponse)httpWebRequestPhoto.GetResponse();
-                using (var readStream = new StreamReader(httpResponse.GetResponseStream(), Encoding.Default))
+                var httpResponseB = (HttpWebResponse)httpWebRequestPhoto.GetResponse();
+                using (var readStream = new StreamReader(httpResponseB.GetResponseStream(), Encoding.Default))
                 {
                     var resource = readStream.ReadToEnd();
                     dynamic x = JsonConvert.DeserializeObject(resource);
@@ -965,7 +965,7 @@ namespace Clutchlit.Controllers
             else
                 TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
 
-            string productId = "SP-" + product.Id.ToString();
+            string productId = "SPC-" + product.Id.ToString();
 
             string price = product.Gross_price.ToString();
             // tu będziemy pobierać dane dot. danego produktu do aukcji
@@ -1010,7 +1010,7 @@ namespace Clutchlit.Controllers
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
-            auction.publication.status = "ACTIVE";
+            auction.publication.status = "INACTIVE";
             auction.publication.startingAt = null;
             auction.publication.endingAt = null;
 
@@ -1054,7 +1054,7 @@ namespace Clutchlit.Controllers
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
             // ------
-            
+
             List<string> Errors = new List<string>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + AllegroId + "");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
@@ -1069,28 +1069,17 @@ namespace Clutchlit.Controllers
                 streamWriter.Flush();
                 streamWriter.Close();
             }
-            try
-            {
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
-                {
-                    var resource = readStream.ReadToEnd();
-                    FinalResponse = resource;
-                    dynamic x = JsonConvert.DeserializeObject(resource);
 
-                    var errors = x.validation.errors;
-                    foreach (var error in errors)
-                    {
-                        Errors.Add(Convert.ToString(error.message));
-                    }
-                }
-            }
-            catch
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
             {
-                Response.StatusCode = 410;
+                var resource = readStream.ReadToEnd();
+                FinalResponse = resource;
+                dynamic x = JsonConvert.DeserializeObject(resource);
             }
+
             Response.StatusCode = 200;
-            
+
             return Json(outprint);
         }
 
