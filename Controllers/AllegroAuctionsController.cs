@@ -1046,15 +1046,15 @@ namespace Clutchlit.Controllers
             auction.updatedAt = null;
 
             var section = new Section();
-            //section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>"));
-            section.items.Add(new Item("TEXT", "<h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Zadzwoń lub napisz, chętnie pomożemy!</h1><h1>Nr tel. / e-mail znajdziesz poniżej w zakładce [-- O sprzedającym --]</h1>"));
+            section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>"));
+            //section.items.Add(new Item("TEXT", "<h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Zadzwoń lub napisz, chętnie pomożemy!</h1><h1>Nr tel. / e-mail znajdziesz poniżej w zakładce [-- O sprzedającym --]</h1>"));
 
             auction.description.sections.Add(section);
 
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
             // ------
-            /*
+            
             List<string> Errors = new List<string>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + AllegroId + "");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
@@ -1090,7 +1090,7 @@ namespace Clutchlit.Controllers
                 Response.StatusCode = 410;
             }
             Response.StatusCode = 200;
-            */
+            
             return Json(outprint);
         }
 
