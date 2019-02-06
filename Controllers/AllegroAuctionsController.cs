@@ -942,8 +942,7 @@ namespace Clutchlit.Controllers
                 streamWriter.Flush();
                 streamWriter.Close();
             }
-            try
-            {
+
                 var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
                 using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
                 {
@@ -957,11 +956,7 @@ namespace Clutchlit.Controllers
                         Errors.Add(Convert.ToString(error.message));
                     }
                 }
-            }
-            catch
-            {
-                return Json("DUPA");
-            }
+
     
             return Json(FinalResponse + "::::" + String.Join(",", Errors.ToArray()));
         }
