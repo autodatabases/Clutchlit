@@ -941,11 +941,11 @@ namespace Clutchlit.Controllers
                 httpWebRequestPhoto.Method = "POST";
                 httpWebRequestPhoto.Headers.Add("Authorization", "Bearer " + Token + "");
 
-                using (var streamWriter = new StreamWriter(httpWebRequestPhoto.GetRequestStream()))
+                using (var streamWriterA = new StreamWriter(httpWebRequestPhoto.GetRequestStream()))
                 {
-                    streamWriter.Write(data);
-                    streamWriter.Flush();
-                    streamWriter.Close();
+                    streamWriterA.Write(data);
+                    streamWriterA.Flush();
+                    streamWriterA.Close();
                 }
                 var httpResponseB = (HttpWebResponse)httpWebRequestPhoto.GetResponse();
                 using (var readStream = new StreamReader(httpResponseB.GetResponseStream(), Encoding.Default))
@@ -1048,13 +1048,13 @@ namespace Clutchlit.Controllers
 
             auction.description.sections.Add(section);
 
-            string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
+            string outprint = JsonConvert.SerializeObject(auction);
 
             // ------
 
             List<string> Errors = new List<string>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + AllegroId + "");
-            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json;charset=utf-8";
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "PUT";
             httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
@@ -1062,7 +1062,7 @@ namespace Clutchlit.Controllers
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                streamWriter.Write(outprint);
+                streamWriter.Write(outprint,Encoding.UTF8);
                 streamWriter.Flush();
                 streamWriter.Close();
             }
