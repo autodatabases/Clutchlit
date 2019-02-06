@@ -997,7 +997,7 @@ namespace Clutchlit.Controllers
 
             foreach (var car in usage)
             {
-                auction.FillListCompatible(_context.PassengerCars.Where(p => p.Ktype == car.PcId).Single().Fulldescription);
+                auction.FillListCompatible(_context.PassengerCars.Where(p => p.Ktype == car.PcId).Single().Ktype.ToString());
             }
 
             auction.sellingMode.format = "BUY_NOW";
