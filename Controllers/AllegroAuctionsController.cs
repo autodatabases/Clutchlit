@@ -801,142 +801,6 @@ namespace Clutchlit.Controllers
         }
 
         // TEST ===========
-        [HttpGet("controller2/action/{id}")]
-        public static string HTTP_PUT(string id)
-        {
-
-            var auction = new AuctionToPost();
-            auction.id = id.ToString();
-            auction.name = "Tytuł przk aukcji";
-            auction.category.id = "50884";
-
-
-            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
-            auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
-            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
-            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
-            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
-
-
-            auction.ean = null;
-
-            auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
-            auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
-
-            auction.FillListCompatible("sss");
-
-            auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = "123";
-            auction.sellingMode.price.currency = "PLN";
-            auction.sellingMode.minimalPrice = null;
-            auction.sellingMode.startingPrice = null;
-
-            auction.stock.available = 100;
-            auction.stock.unit = "UNIT";
-
-            auction.publication.duration = null;
-            auction.publication.status = "INACTIVE";
-            auction.publication.startingAt = null;
-            auction.publication.endingAt = null;
-
-            auction.delivery.shippingRates.id = "b25e1a2e-3f2d-4206-97de-234a9dbf91bf";
-            auction.delivery.handlingTime = "PT24H";
-            auction.delivery.additionalInfo = "Dodatkowe informacje";
-            auction.delivery.shipmentDate = null;
-
-            auction.payments.invoice = "VAT";
-
-            auction.afterSalesServices.impliedWarranty.id = "c2683ac1-b36b-42a1-b0f5-b45bdaf55928";
-            auction.afterSalesServices.returnPolicy.id = "eb7c8407-808c-4078-9250-9da488560634";
-            auction.afterSalesServices.warranty.id = "0dd88048-8163-4eba-9c12-768551bf407d";
-
-            auction.additionalServices = null;
-            auction.sizeTable = null;
-            auction.promotion.emphasized = false;
-            auction.promotion.bold = false;
-            auction.promotion.highlight = false;
-            auction.promotion.emphasizedHighlightBoldPackage = false;
-            auction.promotion.departmentPage = false;
-
-            auction.location.countryCode = "PL";
-            auction.location.province = "MAZOWIECKIE";
-            auction.location.city = "Warszawa";
-            auction.location.postCode = "00-132";
-
-            auction.external.id = "SPDSDS";
-            auction.contact = null;
-
-            auction.validation.validatedAt = null;
-            auction.createdAt = null;
-            auction.updatedAt = null;
-
-            var section = new Section();
-            //section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>"));
-            section.items.Add(new Item("TEXT", "<h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Zadzwoń lub napisz, chętnie pomożemy!</h1><h1>Nr tel. / e-mail znajdziesz poniżej w zakładce [-- O sprzedającym --]</h1>"));
-
-            auction.description.sections.Add(section);
-
-            var outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
-
-            string model = "";
-            string Data = outprint;
-            string Out = String.Empty;
-            string Error = String.Empty;
-            System.Net.WebRequest req = System.Net.WebRequest.Create("https://api.allegro.pl/sale/offers/" + id + "");
-
-            try
-            {
-                req.Method = "PUT";
-                req.Timeout = 100000;
-                req.Headers.Add("Authorization", "Bearer " + Token + "");
-                req.Headers.Add("accept", "application/vnd.allegro.public.v1+json");
-                req.ContentType = "application/vnd.allegro.public.v1+json";
-               
-                byte[] sentData = Encoding.UTF8.GetBytes(Data);
-                req.ContentLength = sentData.Length;
-
-                using (System.IO.Stream sendStream = req.GetRequestStream())
-                {
-                    sendStream.Write(sentData, 0, sentData.Length);
-                    sendStream.Close();
-
-                }
-
-                System.Net.WebResponse res = req.GetResponse();
-                System.IO.Stream ReceiveStream = res.GetResponseStream();
-                using (System.IO.StreamReader sr = new
-                System.IO.StreamReader(ReceiveStream, Encoding.UTF8))
-                {
-
-                    Char[] read = new Char[256];
-                    int count = sr.Read(read, 0, 256);
-
-                    while (count > 0)
-                    {
-                        String str = new String(read, 0, count);
-                        Out += str;
-                        count = sr.Read(read, 0, 256);
-                    }
-                }
-            }
-            catch (ArgumentException ex)
-            {
-                Error = string.Format("HTTP_ERROR :: The second HttpWebRequest object has raised an Argument Exception as 'Connection' Property is set to 'Close' :: {0}", ex.Message);
-            }
-            catch (WebException ex)
-            {
-                Error = string.Format("HTTP_ERROR :: WebException raised! :: {0}", ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Error = string.Format("HTTP_ERROR :: Exception raised! :: {0}", ex.Message);
-            }
-
-            model += Out;
-            model += Error;
-            
-            return model;
-        }
         [HttpGet("controller/action/{id}")]
         public IActionResult PostAuctionA(string id)
         {
@@ -1047,7 +911,7 @@ namespace Clutchlit.Controllers
 
         // TEST ===========
 
-        public string PostAuction(string AllegroId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt, Int64 InternalId)
+        public IActionResult PostAuction(string AllegroId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt, Int64 InternalId)
         {
             string FinalResponse = "";
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == InternalId).Single();
@@ -1226,7 +1090,7 @@ namespace Clutchlit.Controllers
                 Response.StatusCode = 410;
             }
             Response.StatusCode = 200;
-            return FinalResponse;
+            return Json("");
         }
 
         public IActionResult PostDraftAuction(string id)
