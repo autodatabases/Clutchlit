@@ -744,7 +744,7 @@ namespace Clutchlit.Controllers
         [HttpGet("get/auction/{id}")]
         public IActionResult GetAuction(string id)
         {
-
+            return Json("");
         }
         public IActionResult TestPhotoUp()
         {
