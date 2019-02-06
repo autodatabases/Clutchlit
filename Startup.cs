@@ -109,7 +109,7 @@ namespace Clutchlit
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-           // CreateRoles(serviceProvider).Wait();
+            CreateRoles(serviceProvider).Wait();
         }
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
@@ -136,9 +136,7 @@ namespace Clutchlit
                 user0 = new ApplicationUser()
                 {
                     UserName = "m.ferfet@sprzeglo.com.pl",
-                    Email = "m.ferfet@sprzeglo.com.pl",
-                    FirstName = "Mikołaj",
-                    LastName = "Ferfet"
+                    Email = "m.ferfet@sprzeglo.com.pl"
                 };
                 await UserManager.CreateAsync(user0, "Test@123");
             }
@@ -150,9 +148,7 @@ namespace Clutchlit
                 user = new ApplicationUser()
                 {
                     UserName = "m.zachwieja@sprzeglo.com.pl",
-                    Email = "m.zachwieja@sprzeglo.com.pl",
-                    FirstName = "Marcin",
-                    LastName = "Zachwieja"
+                    Email = "m.zachwieja@sprzeglo.com.pl"
                 };
                 await UserManager.CreateAsync(user, "Test@123");
             }
@@ -164,9 +160,7 @@ namespace Clutchlit
                 user1 = new ApplicationUser()
                 {
                     UserName = "a.zachwieja@sprzeglo.com.pl",
-                    Email = "a.zachwieja@sprzeglo.com.pl",
-                    FirstName = "Agnieszka",
-                    LastName = "Zachwieja"
+                    Email = "a.zachwieja@sprzeglo.com.pl"
                 };
                 await UserManager.CreateAsync(user1, "Test@123");
             }
@@ -178,9 +172,7 @@ namespace Clutchlit
                 user2 = new ApplicationUser()
                 {
                     UserName = "t.trepczynski@sprzeglo.com.pl",
-                    Email = "t.trepczynski@sprzeglo.com.pl",
-                    FirstName = "Tomasz",
-                    LastName = "Trepczynski"
+                    Email = "t.trepczynski@sprzeglo.com.pl"
                 };
                 await UserManager.CreateAsync(user2, "Test@123");
             }
@@ -192,9 +184,7 @@ namespace Clutchlit
                 user3 = new ApplicationUser()
                 {
                     UserName = "s.rachut@sprzeglo.com.pl",
-                    Email = "s.rachut@sprzeglo.com.pl",
-                    FirstName = "Szymon",
-                    LastName = "Rachut"
+                    Email = "s.rachut@sprzeglo.com.pl"
                 };
                 await UserManager.CreateAsync(user3, "Test@123");
             }
@@ -206,9 +196,7 @@ namespace Clutchlit
                 user4 = new ApplicationUser()
                 {
                     UserName = "h.andrzejewski@sprzeglo.com.pl",
-                    Email = "h.andrzejewski@sprzeglo.com.pl",
-                    FirstName = "Hubert",
-                    LastName =  "Andrzejewski"
+                    Email = "h.andrzejewski@sprzeglo.com.pl"
                 };
                 await UserManager.CreateAsync(user4, "Test@123");
             }
@@ -220,9 +208,7 @@ namespace Clutchlit
                 user5 = new ApplicationUser()
                 {
                     UserName = "k.banasik@sprzeglo.com.pl",
-                    Email = "k.banasik@sprzeglo.com.pl",
-                    FirstName = "Kamil",
-                    LastName = "Banasik"
+                    Email = "k.banasik@sprzeglo.com.pl"
                 };
                 await UserManager.CreateAsync(user5, "Test@123");
             }
@@ -234,9 +220,7 @@ namespace Clutchlit
                 user6 = new ApplicationUser()
                 {
                     UserName = "m.matejek@sprzeglo.com.pl",
-                    Email = "m.matejek@sprzeglo.com.pl",
-                    FirstName = "Marcin",
-                    LastName = "Matejek"
+                    Email = "m.matejek@sprzeglo.com.pl"
                 };
                 await UserManager.CreateAsync(user6, "Test@123");
             }
@@ -248,9 +232,7 @@ namespace Clutchlit
                 user7 = new ApplicationUser()
                 {
                     UserName = "k.zochowski@sprzeglo.com.pl",
-                    Email = "k.zochowski@sprzeglo.com.pl",
-                    FirstName = "Krzysztof",
-                    LastName = "Żochowski"
+                    Email = "k.zochowski@sprzeglo.com.pl"
                 };
                 await UserManager.CreateAsync(user7, "Test@123");
             }
@@ -262,9 +244,7 @@ namespace Clutchlit
                 user8 = new ApplicationUser()
                 {
                     UserName = "a.kordowski@sprzeglo.com.pl",
-                    Email = "a.kordowski@sprzeglo.com.pl",
-                    FirstName = "Artur",
-                    LastName = "Kordowski"
+                    Email = "a.kordowski@sprzeglo.com.pl"
                 };
                 await UserManager.CreateAsync(user8, "Test@123");
             }
