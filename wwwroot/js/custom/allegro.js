@@ -64,11 +64,11 @@ $(document).ready(function () {
             $.each(rows_selected, function (index, rowId) {
                 idR = rowId;
                 $.ajax({
-                    type: "POST",
+                    type: "PUT",
                     url: "/AllegroAuctions/PostDraftAuction/" + idR + "/", 
                     data: { "id": idR },
-                    contentType: "application/vnd.allegro.public.v1+json",
-                    dataType: "text",
+                    contentType: "application/json",
+                    dataType: "json",
                     success: function (msg) {
                         alert(msg);
                     },
