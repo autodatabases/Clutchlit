@@ -766,10 +766,10 @@ namespace Clutchlit.Controllers
             }
             return Json(String.Join(",",fileLinks.ToArray()));
         }
-        public string PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
+        public string PostAuction(string AllegroId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt, Int64 InternalId)
         {
             string FinalResponse = "";
-            var auctionData = _context.AllegroAuction.Where(m => m.AllegroId == AuctionId).Single();
+            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == InternalId).Single();
 
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
@@ -825,7 +825,7 @@ namespace Clutchlit.Controllers
             string price = product.Gross_price.ToString();
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
-            auction.id = AuctionId;
+            auction.id = AllegroId;
             auction.name = TitlePost.ToUpper();
             auction.category.id = Category;
 
@@ -1004,7 +1004,7 @@ namespace Clutchlit.Controllers
             auction.AllegroId = OfferResponse.ElementAt(0);
             _context.SaveChanges();
 
-            var result = PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a
+            var result = PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4), auction_id); // wystawiamy aukcję z draft'a
             // pośrednie błędy poniżej
             // return Json(errors_response + " \n " + OfferResponse.First() + result);
 
