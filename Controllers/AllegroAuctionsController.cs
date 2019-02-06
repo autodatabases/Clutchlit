@@ -943,8 +943,8 @@ namespace Clutchlit.Controllers
                 streamWriter.Close();
             }
 
-                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
+                var httpResponseA = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var readStream = new StreamReader(httpResponseA.GetResponseStream()))
                 {
                     var resource = readStream.ReadToEnd();
                     FinalResponse += "::" + resource;
