@@ -918,7 +918,7 @@ namespace Clutchlit.Controllers
 
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
-            //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
             string TitlePost = "";
@@ -941,11 +941,11 @@ namespace Clutchlit.Controllers
                 httpWebRequestPhoto.Method = "POST";
                 httpWebRequestPhoto.Headers.Add("Authorization", "Bearer " + Token + "");
 
-                using (var streamWriterA = new StreamWriter(httpWebRequestPhoto.GetRequestStream()))
+                using (var streamWriter = new StreamWriter(httpWebRequestPhoto.GetRequestStream()))
                 {
-                    streamWriterA.Write(data);
-                    streamWriterA.Flush();
-                    streamWriterA.Close();
+                    streamWriter.Write(data);
+                    streamWriter.Flush();
+                    streamWriter.Close();
                 }
                 var httpResponseB = (HttpWebResponse)httpWebRequestPhoto.GetResponse();
                 using (var readStream = new StreamReader(httpResponseB.GetResponseStream(), Encoding.Default))
@@ -995,7 +995,10 @@ namespace Clutchlit.Controllers
             //auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
             //auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
-            auction.FillListCompatible("Przykladowe auto");
+            foreach (var car in usage)
+            {
+                auction.FillListCompatible(_context.PassengerCars.Where(p => p.Ktype == car.PcId).Single().Ktype.ToString());
+            }
 
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = price;
@@ -1048,7 +1051,7 @@ namespace Clutchlit.Controllers
 
             auction.description.sections.Add(section);
 
-            string outprint = JsonConvert.SerializeObject(auction);
+            string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
             // ------
 
