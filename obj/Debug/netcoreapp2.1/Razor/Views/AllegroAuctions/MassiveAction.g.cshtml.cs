@@ -90,7 +90,7 @@ using Clutchlit.Models;
             ");
             EndContext();
             BeginContext(1111, 1744, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5c7c928b58724a5783b6cf445f4e7aa9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "34d728f3afe94156a8a9df1aa1de312b", async() => {
                 BeginContext(1131, 288, true);
                 WriteLiteral(@"
                 <div class=""col-lg-3"">
@@ -101,7 +101,7 @@ using Clutchlit.Models;
                         ");
                 EndContext();
                 BeginContext(1419, 36, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e65e16d323b4485e852dc5bc0a91cde2", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cc2b10eb75584f78961391db500a0d12", async() => {
                     BeginContext(1437, 9, true);
                     WriteLiteral("Wszystkie");
                     EndContext();
@@ -123,7 +123,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1481, 32, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "6d3efd6275b04d08a32ef11e4c5cb1b7", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "066f1d56dc164d628584101c850abc69", async() => {
                     BeginContext(1489, 15, true);
                     WriteLiteral("Zestaw sprzęgła");
                     EndContext();
@@ -143,7 +143,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1539, 32, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "08398d0e89ab4d0ba176f5316b9a9faa", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "85a5f38749644784898d2bb59db3d2ca", async() => {
                     BeginContext(1547, 15, true);
                     WriteLiteral("Docisk sprzęgła");
                     EndContext();
@@ -163,7 +163,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1597, 32, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e485094c6c31453eacd7b98a2b9ea3fc", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a9c5b5a3f930409790084698280df527", async() => {
                     BeginContext(1605, 15, true);
                     WriteLiteral("Tarcza sprzęgła");
                     EndContext();
@@ -183,7 +183,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1655, 43, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c3a7daff78184c28a361fb27fe3e3a83", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8ff9f0832aba4b519471f652f326e132", async() => {
                     BeginContext(1663, 26, true);
                     WriteLiteral("Koło zamachowe / dwumasowe");
                     EndContext();
@@ -203,7 +203,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1724, 39, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "469a040b0e9f42c9a6a3ddb76ba42392", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2d9707a2723d40e39d27ff8d2408e8c8", async() => {
                     BeginContext(1733, 21, true);
                     WriteLiteral("Wysprzęglik centralny");
                     EndContext();
@@ -223,7 +223,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1789, 32, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "abbef873c0ce40e49d8c8d8f822a0336", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c49e0267428f4bca9fffe32a247ec22b", async() => {
                     BeginContext(1797, 15, true);
                     WriteLiteral("Łożysko oporowe");
                     EndContext();
@@ -243,7 +243,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1847, 31, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "95d8ba4a0e7a4af588cf3d0259aab379", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "0869830ab98f425680d1b16fe43eb291", async() => {
                     BeginContext(1855, 14, true);
                     WriteLiteral("Pompa sprzęgła");
                     EndContext();
@@ -263,7 +263,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1904, 40, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e212d0ed91714644b20d9a9d692bb024", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "45d462c314a846c589ba16c582070036", async() => {
                     BeginContext(1912, 23, true);
                     WriteLiteral("Zestaw sprzęgła z kołem");
                     EndContext();
@@ -283,7 +283,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1970, 22, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3cf6e836cd434717baf6c3e92f78405f", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f11295bf59ad412b813d2221d466ef1d", async() => {
                     BeginContext(1978, 5, true);
                     WriteLiteral("Śruby");
                     EndContext();
@@ -303,7 +303,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2018, 34, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d2213fcdfb0b4021826ad467e48eb79d", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a53fb828298a458ebe886c0b4a79a898", async() => {
                     BeginContext(2026, 17, true);
                     WriteLiteral("Siłownik sprzęgła");
                     EndContext();
@@ -329,7 +329,7 @@ using Clutchlit.Models;
                         ");
                 EndContext();
                 BeginContext(2359, 38, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1d7226bc89aa4dc48b69d276d2c99269", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "895e832e2ca74c3ab862898cf1fbcc1a", async() => {
                     BeginContext(2379, 9, true);
                     WriteLiteral("Wszystkie");
                     EndContext();
@@ -351,7 +351,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2423, 30, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f3fd187b1ec94698af4ad03b6aca53d6", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "da6c080de9094ee096513d3beb118a4f", async() => {
                     BeginContext(2441, 3, true);
                     WriteLiteral("LUK");
                     EndContext();
@@ -373,7 +373,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2479, 33, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "be61ce286f71423eb18650e91a283b7a", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "42fa147ce00e44ce842a6e2ebb909136", async() => {
                     BeginContext(2498, 5, true);
                     WriteLiteral("SACHS");
                     EndContext();
@@ -395,7 +395,7 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2538, 33, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b4b8ac356a8047bbb64b5245898cec7b", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9738e90b6bd848dfb4902af076a08785", async() => {
                     BeginContext(2557, 5, true);
                     WriteLiteral("VALEO");
                     EndContext();

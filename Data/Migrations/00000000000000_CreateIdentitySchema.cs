@@ -8,6 +8,7 @@ namespace Clutchlit.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            /*
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -191,6 +192,7 @@ namespace Clutchlit.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "'NormalizedUserName' IS NOT NULL");
+                */
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

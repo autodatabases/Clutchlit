@@ -73,7 +73,7 @@ using Clutchlit.Models;
 ");
             EndContext();
             BeginContext(526, 128, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f24af526af8e4ef78c7bdfbf9931ea4a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "42e91d4aba0646c28796132ecb2207bf", async() => {
                 BeginContext(561, 86, true);
                 WriteLiteral(" \r\n    <input id=\"button2\" class=\"btn bg-orange\" type=\"submit\" value=\"Pokaż aukcje\">\r\n");
                 EndContext();
