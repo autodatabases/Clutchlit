@@ -1054,7 +1054,7 @@ namespace Clutchlit.Controllers
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
             // ------
-
+            /*
             List<string> Errors = new List<string>();
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + AllegroId + "");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
@@ -1090,7 +1090,8 @@ namespace Clutchlit.Controllers
                 Response.StatusCode = 410;
             }
             Response.StatusCode = 200;
-            return Json("");
+            */
+            return Json(outprint);
         }
 
         public IActionResult PostDraftAuction(string id)
