@@ -718,12 +718,12 @@ namespace Clutchlit.Controllers
         {
             AuctionId = "394007";
             string FinalResponse = "";
-            var auctionData = _context.AllegroAuction.Where(m => m.AllegroId == AuctionId).Single();
+            var auctionData = _context.AllegroAuction.Where(m => m.AllegroId == AuctionId).SingleOrDefault();
 
-            var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
-            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
-            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
-            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
+            //var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
+            //var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
+            //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+            //var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
             return Json(String.Join(",",auctionData));
         }
