@@ -795,44 +795,6 @@ namespace Clutchlit.Controllers
 
             string TitlePost = "";
 
-            string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "";
-            DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
-            FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
-            List<string> fileLinks = new List<string>();
-
-
-            foreach (FileInfo fileName in Files)
-            {
-                string pathToFile = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "/" + fileName.Name;
-                // string pathToFile = Path.Combine(pathToApp, "images/allegro", manufacturer.Tecdoc_id.ToString(), photos.CategoryId.ToString(), fileName);
-                string data = "{\"url\": \"" + pathToFile + "\"}";
-
-                var httpWebRequestPhoto = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
-                httpWebRequestPhoto.ContentType = "application/vnd.allegro.public.v1+json";
-                httpWebRequestPhoto.Accept = "application/vnd.allegro.public.v1+json";
-                httpWebRequestPhoto.Method = "POST";
-                httpWebRequestPhoto.Headers.Add("Authorization", "Bearer " + Token + "");
-
-                using (var streamWriter = new StreamWriter(httpWebRequestPhoto.GetRequestStream()))
-                {
-                    streamWriter.Write(data);
-                    streamWriter.Flush();
-                    streamWriter.Close();
-                }
-                var httpResponse = (HttpWebResponse)httpWebRequestPhoto.GetResponse();
-                using (var readStream = new StreamReader(httpResponse.GetResponseStream(), Encoding.Default))
-                {
-                    var resource = readStream.ReadToEnd();
-                    FinalResponse += resource;
-                    dynamic x = JsonConvert.DeserializeObject(resource);
-                    var location = Convert.ToString(x.location);
-                    var expiresAt = x.expiresAt;
-                    fileLinks.Add(location);
-                }
-
-            }
-
-
             if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
                 TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
             else
@@ -859,14 +821,11 @@ namespace Clutchlit.Controllers
             // dodać description
 
             // PHOTOS
-            foreach (string link in fileLinks)
-            {
-                auction.images.Add(new Images(link));
-            }
+            
 
             // PHOTOS
-            //auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
-            //auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
+            auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
+            auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
             foreach (var car in usage)
             {
