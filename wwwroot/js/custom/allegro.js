@@ -67,8 +67,8 @@ $(document).ready(function () {
                     type: "POST",
                     url: "/AllegroAuctions/PostDraftAuction/" + idR + "/", 
                     data: { "id": idR },
-                    contentType: "application/json;charset=utf-8",
-                    dataType: "json",
+                    contentType: "application/vnd.allegro.public.v1+json",
+                    dataType: "text",
                     success: function (msg) {
                         alert(msg);
                     },

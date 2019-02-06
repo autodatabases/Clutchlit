@@ -1062,7 +1062,7 @@ namespace Clutchlit.Controllers
 
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                streamWriter.Write(outprint,Encoding.UTF8);
+                streamWriter.Write(outprint);
                 streamWriter.Flush();
                 streamWriter.Close();
             }
