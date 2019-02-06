@@ -823,6 +823,7 @@ namespace Clutchlit.Controllers
                 using (var readStream = new StreamReader(httpResponse.GetResponseStream(), Encoding.Default))
                 {
                     var resource = readStream.ReadToEnd();
+                    FinalResponse += resource;
                     dynamic x = JsonConvert.DeserializeObject(resource);
                     var location = Convert.ToString(x.location);
                     var expiresAt = x.expiresAt;
@@ -947,7 +948,7 @@ namespace Clutchlit.Controllers
                 using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
                 {
                     var resource = readStream.ReadToEnd();
-                    FinalResponse = resource;
+                    FinalResponse += "::" + resource;
                     dynamic x = JsonConvert.DeserializeObject(resource);
 
                     var errors = x.validation.errors;
@@ -959,9 +960,9 @@ namespace Clutchlit.Controllers
             }
             catch
             {
-                Response.StatusCode = 410;
+                return Json("DUPA");
             }
-            Response.StatusCode = 200;
+    
             return Json(FinalResponse + "::::" + String.Join(",", Errors.ToArray()));
         }
 
