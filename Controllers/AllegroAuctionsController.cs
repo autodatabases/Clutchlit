@@ -744,7 +744,21 @@ namespace Clutchlit.Controllers
         [HttpGet("get/auction/{id}")]
         public IActionResult GetAuction(string id)
         {
-            return Json("");
+            string result = "";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+id+"");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Accept = "application/vnd.allegro.beta.v1+json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = streamReader.ReadToEnd();
+                result = resource;           
+            }
+            return Json(result);
         }
         public IActionResult TestPhotoUp()
         {
