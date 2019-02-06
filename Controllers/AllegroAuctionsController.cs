@@ -805,8 +805,8 @@ namespace Clutchlit.Controllers
             string price = product.Gross_price.ToString();
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
-            auction.id = "7825790732";
-            auction.name = TitlePost.ToUpper();
+            auction.id = id.ToString();
+            auction.name = "dsdsd";
             auction.category.id = "50884";
 
 
