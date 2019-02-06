@@ -1069,7 +1069,7 @@ namespace Clutchlit.Controllers
                 streamWriter.Flush();
                 streamWriter.Close();
             }
-
+            /*
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
             using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
             {
@@ -1077,7 +1077,7 @@ namespace Clutchlit.Controllers
                 FinalResponse = resource;
                 dynamic x = JsonConvert.DeserializeObject(resource);
             }
-
+            */
             Response.StatusCode = 200;
 
             return Json(outprint);
