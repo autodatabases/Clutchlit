@@ -905,7 +905,7 @@ namespace Clutchlit.Controllers
 
             List<string> Errors = new List<string>();
             var httpWebRequestC = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+id+"");
-            httpWebRequestC.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequestC.ContentType = "application/json";
             httpWebRequestC.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequestC.Method = "PUT";
             httpWebRequestC.Headers.Add("Authorization", "Bearer " + Token + "");
