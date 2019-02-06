@@ -805,23 +805,7 @@ namespace Clutchlit.Controllers
         public IActionResult PostAuctionA(string id)
         {
             string FinalResponse = "";
-            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == 472744).Single();
-
-            var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
-            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
-            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
-            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
-
-            string TitlePost = "";
-
-            if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
-                TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
-            else
-                TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
-
-            string productId = "SP-" + product.Id.ToString();
-
-            string price = product.Gross_price.ToString();
+      
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             auction.id = id.ToString();
@@ -837,24 +821,19 @@ namespace Clutchlit.Controllers
 
 
             auction.ean = null;
-            // dodać description
 
-            // PHOTOS
-            
-
-            // PHOTOS
             auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
             auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
             
                 auction.FillListCompatible("sss");
             
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = price;
+            auction.sellingMode.price.amount = "123";
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
 
-            auction.stock.available = 1000;
+            auction.stock.available = 100;
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
@@ -886,7 +865,7 @@ namespace Clutchlit.Controllers
             auction.location.city = "Warszawa";
             auction.location.postCode = "00-132";
 
-            auction.external.id = productId;
+            auction.external.id = "SPDSDS";
             auction.contact = null;
 
             auction.validation.validatedAt = null;
@@ -905,17 +884,17 @@ namespace Clutchlit.Controllers
 
             List<string> Errors = new List<string>();
             var httpWebRequestC = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+id+"");
-            httpWebRequestC.ContentType = "application/json";
+            httpWebRequestC.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequestC.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequestC.Method = "PUT";
             httpWebRequestC.Headers.Add("Authorization", "Bearer " + Token + "");
 
 
-            using (var streamWriter = new StreamWriter(httpWebRequestC.GetRequestStream()))
+            using (var streamWriterA = new StreamWriter(httpWebRequestC.GetRequestStream()))
             {
-                streamWriter.Write(outprint);
-                streamWriter.Flush();
-                streamWriter.Close();
+                streamWriterA.Write(outprint);
+                streamWriterA.Flush();
+                streamWriterA.Close();
             }
 
                 var httpResponseA = (HttpWebResponse)httpWebRequestC.GetResponse();
@@ -923,13 +902,7 @@ namespace Clutchlit.Controllers
                 {
                     var resource = readStream.ReadToEnd();
                     FinalResponse += "::" + resource;
-                    dynamic x = JsonConvert.DeserializeObject(resource);
-
-                    var errors = x.validation.errors;
-                    foreach (var error in errors)
-                    {
-                        Errors.Add(Convert.ToString(error.message));
-                    }
+                    
                 }
 
     
