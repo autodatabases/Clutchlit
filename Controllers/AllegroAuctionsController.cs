@@ -1217,7 +1217,9 @@ namespace Clutchlit.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("https://api.allegro.pl");
-                var result = await client.PostAsync("/sale/offers", new StringContent(outprint, Encoding.UTF8, "application/json"));
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
+                var result = await client.PostAsync("/sale/offers", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
                 string resultContent = await result.Content.ReadAsStringAsync();
                 FinalResponse = resultContent;
             }
