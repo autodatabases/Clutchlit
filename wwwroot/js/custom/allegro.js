@@ -64,7 +64,7 @@ $(document).ready(function () {
             $.each(rows_selected, function (index, rowId) {
                 idR = rowId;
                 $.ajax({
-                    type: "PUT",
+                    type: "POST",
                     url: "/AllegroAuctions/PostAuctionTest/" + idR + "/", 
                     data: { "id": idR },
                     dataType: "json",
