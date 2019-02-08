@@ -1159,7 +1159,9 @@ namespace Clutchlit.Controllers
             {
                 auction.images.Add(new Images(link));
             }
-            
+
+            auction.compatibilityList.items.Add(new Text("BMW serie 3"));
+
 
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = price;
