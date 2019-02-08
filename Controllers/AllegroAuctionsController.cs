@@ -1083,6 +1083,162 @@ namespace Clutchlit.Controllers
             return Json(outprint);
         }
 
+        public IActionResult PostAuctionTest(string id)
+        {
+            string FinalResponse = "";
+
+            var auction_id = Convert.ToInt32(id);
+            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
+
+            var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
+            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
+            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
+
+            string TitlePost = "";
+
+            string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "";
+            DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
+            List<string> fileLinks = new List<string>();
+
+
+            foreach (FileInfo fileName in Files)
+            {
+                string pathToFile = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "/" + fileName.Name;
+                // string pathToFile = Path.Combine(pathToApp, "images/allegro", manufacturer.Tecdoc_id.ToString(), photos.CategoryId.ToString(), fileName);
+                string data = "{\"url\": \"" + pathToFile + "\"}";
+
+                var httpWebRequestPhoto = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
+                httpWebRequestPhoto.ContentType = "application/vnd.allegro.public.v1+json";
+                httpWebRequestPhoto.Accept = "application/vnd.allegro.public.v1+json";
+                httpWebRequestPhoto.Method = "POST";
+                httpWebRequestPhoto.Headers.Add("Authorization", "Bearer " + Token + "");
+
+                using (var streamWriter = new StreamWriter(httpWebRequestPhoto.GetRequestStream()))
+                {
+                    streamWriter.Write(data);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
+                var httpResponseB = (HttpWebResponse)httpWebRequestPhoto.GetResponse();
+                using (var readStream = new StreamReader(httpResponseB.GetResponseStream(), Encoding.Default))
+                {
+                    var resource = readStream.ReadToEnd();
+                    dynamic x = JsonConvert.DeserializeObject(resource);
+                    var location = Convert.ToString(x.location);
+                    var expiresAt = x.expiresAt;
+                    fileLinks.Add(location);
+                }
+
+            }
+            if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
+                TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
+            else
+                TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
+
+            string productId = "SPCA-" + product.Id.ToString();
+            string price = product.Gross_price.ToString();
+            // tu będziemy pobierać dane dot. danego produktu do aukcji
+            var auction = new AuctionToPost();
+            //auction.id = AllegroId;
+            auction.name = TitlePost.ToUpper();
+            auction.category.id = "50884";
+
+            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
+            auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
+            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
+            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
+            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
+            auction.ean = null;
+            // PHOTOS
+            foreach (string link in fileLinks)
+            {
+                auction.images.Add(new Images(link));
+            }
+
+            foreach (var car in usage)
+            {
+                auction.FillListCompatible(_context.PassengerCars.Where(p => p.Ktype == car.PcId).Single().Ktype.ToString());
+            }
+
+            auction.sellingMode.format = "BUY_NOW";
+            auction.sellingMode.price.amount = price;
+            auction.sellingMode.price.currency = "PLN";
+            auction.sellingMode.minimalPrice = null;
+            auction.sellingMode.startingPrice = null;
+
+            auction.stock.available = 1000;
+            auction.stock.unit = "UNIT";
+
+            auction.publication.duration = null;
+            auction.publication.status = "INACTIVE";
+            auction.publication.startingAt = null;
+            auction.publication.endingAt = null;
+
+            auction.delivery.shippingRates.id = "b25e1a2e-3f2d-4206-97de-234a9dbf91bf";
+            auction.delivery.handlingTime = "PT24H";
+            auction.delivery.additionalInfo = "Dodatkowe informacje";
+            auction.delivery.shipmentDate = null;
+
+            auction.payments.invoice = "VAT";
+
+            auction.afterSalesServices.impliedWarranty.id = "c2683ac1-b36b-42a1-b0f5-b45bdaf55928";
+            auction.afterSalesServices.returnPolicy.id = "eb7c8407-808c-4078-9250-9da488560634";
+            auction.afterSalesServices.warranty.id = "0dd88048-8163-4eba-9c12-768551bf407d";
+
+            auction.additionalServices = null;
+            auction.sizeTable = null;
+            auction.promotion.emphasized = false;
+            auction.promotion.bold = false;
+            auction.promotion.highlight = false;
+            auction.promotion.emphasizedHighlightBoldPackage = false;
+            auction.promotion.departmentPage = false;
+
+            auction.location.countryCode = "PL";
+            auction.location.province = "MAZOWIECKIE";
+            auction.location.city = "Warszawa";
+            auction.location.postCode = "00-132";
+
+            auction.external.id = productId;
+            auction.contact = null;
+
+            auction.validation.validatedAt = null;
+            auction.createdAt = null;
+            auction.updatedAt = null;
+
+            var section = new Section();
+            section.items.Add(new Item("TEXT", "<p>Przykladowy opsi</p>"));
+            auction.description.sections.Add(section);
+
+            string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
+
+            // ------
+           
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers");
+            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "POST";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+           
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                streamWriter.Write(outprint);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = readStream.ReadToEnd();
+                FinalResponse = resource;
+            }
+            
+            return Json(FinalResponse);
+
+        }
+
         public IActionResult PostDraftAuction(string id)
         {
             var auction_id = Convert.ToInt32(id);

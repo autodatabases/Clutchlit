@@ -65,7 +65,7 @@ $(document).ready(function () {
                 idR = rowId;
                 $.ajax({
                     type: "PUT",
-                    url: "/AllegroAuctions/PostDraftAuction/" + idR + "/", 
+                    url: "/AllegroAuctions/PostAuctionTest/" + idR + "/", 
                     data: { "id": idR },
                     dataType: "json",
                     success: function (msg) {
