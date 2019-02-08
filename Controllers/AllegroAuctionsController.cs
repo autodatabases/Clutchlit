@@ -1092,7 +1092,9 @@ namespace Clutchlit.Controllers
 
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
-            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+            //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+           
+
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
             string TitlePost = "";
@@ -1157,10 +1159,7 @@ namespace Clutchlit.Controllers
             {
                 auction.images.Add(new Images(link));
             }
-            foreach (var car in usage)
-            {
-                auction.FillListCompatible("lllll");
-            }
+            
 
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = price;
