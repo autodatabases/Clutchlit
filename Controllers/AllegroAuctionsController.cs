@@ -1083,7 +1083,7 @@ namespace Clutchlit.Controllers
             return Json(outprint);
         }
 
-        public async Task PostAuctionTest(string id)
+        public async Task<JsonResult> PostAuctionTest(string id)
         {
             string FinalResponse = "";
 
@@ -1219,10 +1219,10 @@ namespace Clutchlit.Controllers
                 client.BaseAddress = new Uri("https://api.allegro.pl");
                 var result = await client.PostAsync("/sale/offers", new StringContent(outprint, Encoding.UTF8, "application/json"));
                 string resultContent = await result.Content.ReadAsStringAsync();
-                Console.WriteLine(resultContent);
+                FinalResponse = resultContent;
             }
 
-            //return Json(FinalResponse);
+            return new JsonResult(FinalResponse);
         }
 
         public IActionResult PostDraftAuction(string id)
