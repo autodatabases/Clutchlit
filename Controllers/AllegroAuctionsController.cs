@@ -1095,6 +1095,8 @@ namespace Clutchlit.Controllers
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
 
             var allegroManufacturer = _context.AllegroManufacturers.Where(m=>m.ManufacturerId == manufacturer.Tecdoc_id).Single();
+            var productPrice = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product.Id).Single();
+
             //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
            
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
@@ -1136,7 +1138,8 @@ namespace Clutchlit.Controllers
                 }
 
             }
-            if(additionalInfo.SecondTitle != "")
+            // Generowanie tytułu
+            if (additionalInfo.SecondTitle != "")
             {
                 if ((additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle).Length <= 50)
                     TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle;
@@ -1150,8 +1153,10 @@ namespace Clutchlit.Controllers
                 else
                     TitlePost = additionalInfo.FirstTitle + " " + auctionData.AuctionTitle;
             }
+            //Generowanie tytułu
+
             string productId = "SP-" + product.Id.ToString();
-            string price = product.Gross_price.ToString();
+            string price = Math.Round(decimal.ToDouble(productPrice.Price) * 1.23,0).ToString(); 
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             //auction.id = AllegroId;
@@ -1163,7 +1168,12 @@ namespace Clutchlit.Controllers
             auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
             auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
             auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
-            auction.ean = null;
+
+            if (additionalInfo.Ean != null)
+                auction.ean = additionalInfo.Ean;
+            else
+                auction.ean = null;
+            
             // PHOTOS
             foreach (string link in fileLinks)
             {
