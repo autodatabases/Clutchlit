@@ -30,6 +30,7 @@ namespace Clutchlit.Data
         public DbSet<AllegroAuctionUsage> AllegroAuctionUsage { get; set; }
         public DbSet<AllegroAuctionPc> AllegroAuctionPc { get; set; }
         public DbSet<AllegroPhotos> AllegroPhotos { get; set; }
+        public DbSet<AllegroAdditionalInfo> AllegroAdditional { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

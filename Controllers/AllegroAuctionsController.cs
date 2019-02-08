@@ -1089,12 +1089,13 @@ namespace Clutchlit.Controllers
 
             var auction_id = Convert.ToInt32(id);
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
-
+           
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
+            var additionalInfo = _context.AllegroAdditional.Where(a => Int32.Parse(a.ProductId) == product.Id).Single();
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
+
             //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
            
-
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
             string TitlePost = "";
@@ -1160,7 +1161,7 @@ namespace Clutchlit.Controllers
                 auction.images.Add(new Images(link));
             }
 
-            auction.compatibilityList.items.Add(new Text("BMW serie 3"));
+            //auction.compatibilityList.items.Add(new Text("BMW serie 3"));
 
 
             auction.sellingMode.format = "BUY_NOW";
