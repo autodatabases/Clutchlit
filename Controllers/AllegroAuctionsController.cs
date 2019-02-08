@@ -1132,6 +1132,7 @@ namespace Clutchlit.Controllers
                 }
 
             }
+
             if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
                 TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
             else
@@ -1156,7 +1157,6 @@ namespace Clutchlit.Controllers
             {
                 auction.images.Add(new Images(link));
             }
-
             foreach (var car in usage)
             {
                 auction.FillListCompatible(_context.PassengerCars.Where(p => p.Ktype == car.PcId).Single().Ktype.ToString());
@@ -1214,29 +1214,22 @@ namespace Clutchlit.Controllers
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
             // ------
-           
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers");
-            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Method = "POST";
-            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
-           
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                streamWriter.Write(outprint);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("https://api.allegro.pl/sale/offers");
+            client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));//ACCEPT header
 
-            using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                var resource = readStream.ReadToEnd();
-                FinalResponse = resource;
-            }
-            
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "https://api.allegro.pl/sale/offers");
+            request.Content = new StringContent(outprint,Encoding.UTF8, "application/vnd.allegro.public.v1+json");//CONTENT-TYPE header
+
+            client.SendAsync(request)
+                  .ContinueWith(responseTask =>
+                  {
+                    FinalResponse = responseTask.Result.ToString();
+                  });
+
             return Json(FinalResponse);
-
         }
 
         public IActionResult PostDraftAuction(string id)
