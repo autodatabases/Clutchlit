@@ -1091,9 +1091,10 @@ namespace Clutchlit.Controllers
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
            
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
-            var additionalInfo = _context.AllegroAdditional.Where(a => Int32.Parse(a.ProductId) == product.Id).Single();
+            var additionalInfo = _context.AllegroAdditional.Where(a => a.ProductId == product.Id.ToString()).Single();
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
 
+            var allegroManufacturer = _context.AllegroManufacturers.Where(m=>m.ManufacturerId == manufacturer.Tecdoc_id).Single();
             //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
            
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
@@ -1135,13 +1136,21 @@ namespace Clutchlit.Controllers
                 }
 
             }
-
-            if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
-                TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
+            if(additionalInfo.SecondTitle != "")
+            {
+                if ((additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle).Length <= 50)
+                    TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle;
+                else
+                    TitlePost = additionalInfo.FirstTitle + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle;
+            }
             else
-                TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
-
-            string productId = "SPCA-" + product.Id.ToString();
+            {
+                if ((additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle).Length <= 50)
+                    TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
+                else
+                    TitlePost = additionalInfo.FirstTitle + " " + auctionData.AuctionTitle;
+            }
+            string productId = "SP-" + product.Id.ToString();
             string price = product.Gross_price.ToString();
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
@@ -1150,7 +1159,7 @@ namespace Clutchlit.Controllers
             auction.category.id = "50884";
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
-            auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
+            auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
             auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
             auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
             auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
