@@ -1083,7 +1083,7 @@ namespace Clutchlit.Controllers
             return Json(outprint);
         }
 
-        public IActionResult PostAuctionTest(string id)
+        public async Task PostAuctionTest(string id)
         {
             string FinalResponse = "";
 
@@ -1214,22 +1214,15 @@ namespace Clutchlit.Controllers
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
             // ------
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://api.allegro.pl/sale/offers");
-            client.DefaultRequestHeaders
-                  .Accept
-                  .Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));//ACCEPT header
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://api.allegro.pl");
+                var result = await client.PostAsync("/sale/offers", new StringContent(outprint, Encoding.UTF8, "application/json"));
+                string resultContent = await result.Content.ReadAsStringAsync();
+                Console.WriteLine(resultContent);
+            }
 
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "https://api.allegro.pl/sale/offers");
-            request.Content = new StringContent(outprint,Encoding.UTF8, "application/vnd.allegro.public.v1+json");//CONTENT-TYPE header
-
-            client.SendAsync(request)
-                  .ContinueWith(responseTask =>
-                  {
-                    FinalResponse = responseTask.Result.ToString();
-                  });
-
-            return Json(FinalResponse);
+            //return Json(FinalResponse);
         }
 
         public IActionResult PostDraftAuction(string id)
