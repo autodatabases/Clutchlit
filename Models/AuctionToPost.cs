@@ -62,7 +62,7 @@ namespace Clutchlit.Models
         public string additionalServices { get; set; }
         public AfterSalesServices afterSalesServices = new AfterSalesServices();
         public JustId category = new JustId();
-        public CompatibleList compatibilityList = new CompatibleList();
+        
         public string contact { get; set; }
         public string createdAt { get; set; }
         public Delivery delivery = new Delivery();
@@ -77,6 +77,7 @@ namespace Clutchlit.Models
         public Promotion promotion = new Promotion();
         public Publication publication = new Publication();
         public SellingMode sellingMode = new SellingMode();
+        public CompatibleList compatibilityList = new CompatibleList();
         public string sizeTable { get; set; }
         public Stock stock = new Stock();
         public string updatedAt { get; set; }

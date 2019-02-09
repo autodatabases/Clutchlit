@@ -825,8 +825,7 @@ namespace Clutchlit.Controllers
             auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
             auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
-            auction.FillListCompatible("sss");
-            auction.FillListCompatible("sss");
+            
 
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = "123";
@@ -868,6 +867,9 @@ namespace Clutchlit.Controllers
 
             auction.external.id = "SPDSDS";
             auction.contact = null;
+
+            auction.FillListCompatible("sss");
+            auction.FillListCompatible("sss");
 
             auction.validation.validatedAt = null;
             auction.createdAt = null;
