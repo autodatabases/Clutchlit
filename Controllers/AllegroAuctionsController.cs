@@ -1206,7 +1206,7 @@ namespace Clutchlit.Controllers
 
             var section = new Section();
             section.items.Add(new Item("TEXT", "<p>Przykladowy opsi</p>", null));
-            section.items.Add(new Item("IMAGE",null, "https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
+            section.items.Add(new Item("IMAGE",null, fileLinks.ElementAt(0)));
             auction.description.sections.Add(section);
 
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
