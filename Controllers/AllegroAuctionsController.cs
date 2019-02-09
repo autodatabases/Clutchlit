@@ -873,7 +873,7 @@ namespace Clutchlit.Controllers
             auction.updatedAt = null;
 
             var section = new Section();
-            //section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>"));
+            section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>"));
             section.items.Add(new Item("TEXT", "<h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Zadzwoń lub napisz, chętnie pomożemy!</h1><h1>Nr tel. / e-mail znajdziesz poniżej w zakładce [-- O sprzedającym --]</h1>"));
 
             auction.description.sections.Add(section);
@@ -882,31 +882,7 @@ namespace Clutchlit.Controllers
 
             // ------
 
-            List<string> Errors = new List<string>();
-            var httpWebRequestC = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + id + "");
-            httpWebRequestC.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequestC.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequestC.Method = "PUT";
-            httpWebRequestC.Headers.Add("Authorization", "Bearer " + Token + "");
-
-
-            using (var streamWriterA = new StreamWriter(httpWebRequestC.GetRequestStream()))
-            {
-                streamWriterA.Write(outprint);
-                streamWriterA.Flush();
-                streamWriterA.Close();
-            }
-
-            var httpResponseA = (HttpWebResponse)httpWebRequestC.GetResponse();
-            using (var readStream = new StreamReader(httpResponseA.GetResponseStream()))
-            {
-                var resource = readStream.ReadToEnd();
-                FinalResponse += "::" + resource;
-
-            }
-
-
-            return Json(FinalResponse + "::::" + String.Join(",", Errors.ToArray()));
+            return Json(outprint);
         }
 
         // TEST ===========
@@ -1082,7 +1058,7 @@ namespace Clutchlit.Controllers
 
             return Json(outprint);
         }
-
+        // Poniższa metoda do wrzucania aukcji 
         public async Task<JsonResult> PostAuctionTest(string id)
         {
             string FinalResponse = "";
@@ -1230,6 +1206,7 @@ namespace Clutchlit.Controllers
 
             var section = new Section();
             section.items.Add(new Item("TEXT", "<p>Przykladowy opsi</p>"));
+            section.items.Add(new Item("TEXT", "<p>dfdfd</p>"));
             auction.description.sections.Add(section);
 
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
