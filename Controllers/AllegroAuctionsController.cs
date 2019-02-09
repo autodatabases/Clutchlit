@@ -826,6 +826,7 @@ namespace Clutchlit.Controllers
             auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
             auction.FillListCompatible("sss");
+            auction.FillListCompatible("sss");
 
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = "123";
@@ -1206,13 +1207,10 @@ namespace Clutchlit.Controllers
             auction.images.Add(new Images(ManufacturerCertLink));
             auction.images.Add(new Images(ManufacturerLogo));
 
-            foreach(var car in usage)
-            {
-                auction.FillListCompatible("BMW Serie2");
-            }
+            auction.FillListCompatible("BMW Serie2");
+            auction.FillListCompatible("BMW Serie2");
 
-           
-            
+
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = price;
             auction.sellingMode.price.currency = "PLN";
@@ -1270,6 +1268,7 @@ namespace Clutchlit.Controllers
             var manuSection = new Section();
             manuSection.items.Add(new Item("IMAGE", null, ManufacturerLogo));
             manuSection.items.Add(new Item("TEXT", allegroManufacturer.AllegroDescription, null));
+            auction.description.sections.Add(manuSection);
 
             var certSection = new Section();
             certSection.items.Add(new Item("IMAGE", null, ManufacturerCertLink));
