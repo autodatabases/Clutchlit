@@ -868,8 +868,8 @@ namespace Clutchlit.Controllers
             auction.external.id = "SPDSDS";
             auction.contact = null;
 
-            auction.FillListCompatible("sss");
-            auction.FillListCompatible("sss");
+            auction.FillListCompatible("BMW 3 (E46) 330 d 204 KM / 150 kW 2993 ccm");
+            auction.FillListCompatible("BMW 3 (E46) 330 i 231 KM / 170 kW 2979 ccm");
 
             auction.validation.validatedAt = null;
             auction.createdAt = null;
@@ -1209,9 +1209,8 @@ namespace Clutchlit.Controllers
             auction.images.Add(new Images(ManufacturerCertLink));
             auction.images.Add(new Images(ManufacturerLogo));
 
-            auction.FillListCompatible("BMW Serie2");
-            auction.FillListCompatible("BMW Serie2");
-
+            auction.FillListCompatible("BMW 3 (E46) 330 i 231 KM / 170 kW 2979 ccm");
+            auction.FillListCompatible("BMW 3 (E46) 330 i 231 KM / 170 kW 2979 ccm");
 
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = price;
