@@ -881,7 +881,7 @@ namespace Clutchlit.Controllers
 
             auction.description.sections.Add(section);
 
-            var outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
+            var outprint = JsonConvert.SerializeObject(auction);
 
             // ------
 
@@ -1107,7 +1107,7 @@ namespace Clutchlit.Controllers
             var allegroManufacturer = _context.AllegroManufacturers.Where(m => m.ManufacturerId == manufacturer.Tecdoc_id).Single();
             var productPrice = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product.Id).Single();
 
-            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+            //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
 
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
@@ -1209,8 +1209,8 @@ namespace Clutchlit.Controllers
             auction.images.Add(new Images(ManufacturerCertLink));
             auction.images.Add(new Images(ManufacturerLogo));
 
-            auction.FillListCompatible("BMW 3 (E46) 330 i 231 KM / 170 kW 2979 ccm");
-            auction.FillListCompatible("BMW 3 (E46) 330 i 231 KM / 170 kW 2979 ccm");
+          //  auction.FillListCompatible("BMW 3 (E46) 330 i 231 KM / 170 kW 2979 ccm");
+           // auction.FillListCompatible("BMW 2 (E46) 330 i 231 KM / 170 kW 2979 ccm");
 
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = price;
