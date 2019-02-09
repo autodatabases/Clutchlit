@@ -873,8 +873,8 @@ namespace Clutchlit.Controllers
             auction.updatedAt = null;
 
             var section = new Section();
-            section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>"));
-            section.items.Add(new Item("TEXT", "<h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Zadzwoń lub napisz, chętnie pomożemy!</h1><h1>Nr tel. / e-mail znajdziesz poniżej w zakładce [-- O sprzedającym --]</h1>"));
+            section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>",null));
+            section.items.Add(new Item("IMAGE",null, "https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
             auction.description.sections.Add(section);
 
@@ -1205,8 +1205,8 @@ namespace Clutchlit.Controllers
             auction.updatedAt = null;
 
             var section = new Section();
-            section.items.Add(new Item("TEXT", "<p>Przykladowy opsi</p>"));
-            section.items.Add(new Item("TEXT", "<p>dfdfd</p>"));
+            section.items.Add(new Item("TEXT", "<p>Przykladowy opsi</p>", null));
+            section.items.Add(new Item("IMAGE",null, "https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
             auction.description.sections.Add(section);
 
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);

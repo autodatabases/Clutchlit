@@ -31,12 +31,13 @@ namespace Clutchlit.Models
     {
         public string type { get; set; }
         public string content { get; set; }
-        //public string url {get;set;}
+        public string url {get;set;}
         public Item() { }
-        public Item(string Type, string Content)
+        public Item(string Type, string Content = null, string Url = null)
         {
             this.type = Type;
             this.content = Content;
+            this.url = Url;
         }
     }
     public class Section
