@@ -873,8 +873,8 @@ namespace Clutchlit.Controllers
             auction.updatedAt = null;
 
             var section = new Section();
-            section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>",null));
-            section.items.Add(new Item("IMAGE",null,"https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
+            section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>", null));
+            section.items.Add(new Item("IMAGE", null, "https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
             auction.description.sections.Add(section);
 
@@ -1058,6 +1058,37 @@ namespace Clutchlit.Controllers
 
             return Json(outprint);
         }
+
+        public string PhotoUpload(string Url)
+        {
+            string PhotoLink = "";
+
+            string dataA = "{\"url\": \"" + Url + "\"}";
+
+            var httpWebRequestPhotoA = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
+            httpWebRequestPhotoA.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequestPhotoA.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequestPhotoA.Method = "POST";
+            httpWebRequestPhotoA.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            using (var streamWriter = new StreamWriter(httpWebRequestPhotoA.GetRequestStream()))
+            {
+                streamWriter.Write(dataA);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponseBA = (HttpWebResponse)httpWebRequestPhotoA.GetResponse();
+            using (var readStream = new StreamReader(httpResponseBA.GetResponseStream(), Encoding.Default))
+            {
+                var resource = readStream.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                var location = Convert.ToString(x.location);
+                var expiresAt = x.expiresAt;
+                PhotoLink = location;
+            }
+            return PhotoLink;
+
+        }
         // Poniższa metoda do wrzucania aukcji 
         public async Task<JsonResult> PostAuctionTest(string id)
         {
@@ -1065,16 +1096,16 @@ namespace Clutchlit.Controllers
 
             var auction_id = Convert.ToInt32(id);
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
-           
+
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var additionalInfo = _context.AllegroAdditional.Where(a => a.ProductId == product.Id.ToString()).Single();
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
 
-            var allegroManufacturer = _context.AllegroManufacturers.Where(m=>m.ManufacturerId == manufacturer.Tecdoc_id).Single();
+            var allegroManufacturer = _context.AllegroManufacturers.Where(m => m.ManufacturerId == manufacturer.Tecdoc_id).Single();
             var productPrice = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product.Id).Single();
 
-            //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
-           
+            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
             string TitlePost = "";
@@ -1087,6 +1118,8 @@ namespace Clutchlit.Controllers
 
             List<string> fileLinks = new List<string>();
             string ManufacturerPhotoLink = "";
+            string ManufacturerCertLink = "";
+            string ManufacturerLogo = "";
 
             foreach (FileInfo fileName in Files)
             {
@@ -1117,32 +1150,17 @@ namespace Clutchlit.Controllers
                 }
 
             }
+            string pathToPhoto = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + ".png";
+            string pathToPhotoC = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + "c.jpg";
+            string pathToLogo = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + ".png";
+            ManufacturerPhotoLink = this.PhotoUpload(pathToPhoto);
+            ManufacturerCertLink = this.PhotoUpload(pathToPhotoC);
+            ManufacturerLogo = this.PhotoUpload(pathToLogo);
+            // przesyłanie zdjęcia
 
-            string pathToPhoto = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString()+".png";
-            string dataA = "{\"url\": \"" + pathToPhoto + "\"}";
 
-            var httpWebRequestPhotoA = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
-            httpWebRequestPhotoA.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequestPhotoA.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequestPhotoA.Method = "POST";
-            httpWebRequestPhotoA.Headers.Add("Authorization", "Bearer " + Token + "");
 
-            using (var streamWriter = new StreamWriter(httpWebRequestPhotoA.GetRequestStream()))
-            {
-                streamWriter.Write(dataA);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-            var httpResponseBA = (HttpWebResponse)httpWebRequestPhotoA.GetResponse();
-            using (var readStream = new StreamReader(httpResponseBA.GetResponseStream(), Encoding.Default))
-            {
-                var resource = readStream.ReadToEnd();
-                dynamic x = JsonConvert.DeserializeObject(resource);
-                var location = Convert.ToString(x.location);
-                var expiresAt = x.expiresAt;
-                ManufacturerPhotoLink = location;
-            }
-            
+            //przesyłanie zdjęcia
             // Generowanie tytułu
             if (additionalInfo.SecondTitle != "")
             {
@@ -1161,7 +1179,7 @@ namespace Clutchlit.Controllers
             //Generowanie tytułu
 
             string productId = "SP-" + product.Id.ToString();
-            string price = Math.Round(decimal.ToDouble(productPrice.Price) * 1.23,0).ToString(); 
+            string price = Math.Round(decimal.ToDouble(productPrice.Price) * 1.23, 0).ToString();
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             //auction.id = AllegroId;
@@ -1178,16 +1196,23 @@ namespace Clutchlit.Controllers
                 auction.ean = additionalInfo.Ean;
             else
                 auction.ean = null;
-            
+
             // PHOTOS
             foreach (string link in fileLinks)
             {
                 auction.images.Add(new Images(link));
             }
             auction.images.Add(new Images(ManufacturerPhotoLink));
-            //auction.compatibilityList.items.Add(new Text("BMW serie 3"));
+            auction.images.Add(new Images(ManufacturerCertLink));
+            auction.images.Add(new Images(ManufacturerLogo));
 
+            foreach(var car in usage)
+            {
+                auction.FillListCompatible("BMW Serie2");
+            }
 
+           
+            
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = price;
             auction.sellingMode.price.currency = "PLN";
@@ -1234,14 +1259,22 @@ namespace Clutchlit.Controllers
             auction.updatedAt = null;
 
             var headerSection = new Section();
-            headerSection.items.Add(new Item("IMAGE",null,ManufacturerPhotoLink));
+            headerSection.items.Add(new Item("IMAGE", null, ManufacturerPhotoLink));
             auction.description.sections.Add(headerSection);
 
             var section = new Section();
             section.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(0)));
             section.items.Add(new Item("TEXT", "<h1>Zestaw sprzęgła</h1>", null));
-            
             auction.description.sections.Add(section);
+
+            var manuSection = new Section();
+            manuSection.items.Add(new Item("IMAGE", null, ManufacturerLogo));
+            manuSection.items.Add(new Item("TEXT", allegroManufacturer.AllegroDescription, null));
+
+            var certSection = new Section();
+            certSection.items.Add(new Item("IMAGE", null, ManufacturerCertLink));
+            auction.description.sections.Add(certSection);
+
 
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 

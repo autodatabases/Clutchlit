@@ -17,5 +17,7 @@ namespace Clutchlit.Models
         public int ManufacturerId { get; set; }
         [Column("allegro_manufacturer_id")]
         public string AllegroManufacturerId { get; set; }
+        [Column("manufacturer_description")]
+        public string AllegroDescription { get; set; }
     }
 }
