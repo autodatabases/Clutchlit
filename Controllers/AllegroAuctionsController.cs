@@ -1082,8 +1082,11 @@ namespace Clutchlit.Controllers
             string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "";
             DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
             FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
-            List<string> fileLinks = new List<string>();
 
+            Array.Sort(Files, (f1, f2) => f1.Name.CompareTo(f2.Name)); // sortowanie plikow
+
+            List<string> fileLinks = new List<string>();
+            string ManufacturerPhotoLink = "";
 
             foreach (FileInfo fileName in Files)
             {
@@ -1114,6 +1117,32 @@ namespace Clutchlit.Controllers
                 }
 
             }
+
+            string pathToPhoto = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString()+".png";
+            string dataA = "{\"url\": \"" + pathToPhoto + "\"}";
+
+            var httpWebRequestPhotoA = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
+            httpWebRequestPhotoA.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequestPhotoA.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequestPhotoA.Method = "POST";
+            httpWebRequestPhotoA.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            using (var streamWriter = new StreamWriter(httpWebRequestPhotoA.GetRequestStream()))
+            {
+                streamWriter.Write(dataA);
+                streamWriter.Flush();
+                streamWriter.Close();
+            }
+            var httpResponseBA = (HttpWebResponse)httpWebRequestPhotoA.GetResponse();
+            using (var readStream = new StreamReader(httpResponseBA.GetResponseStream(), Encoding.Default))
+            {
+                var resource = readStream.ReadToEnd();
+                dynamic x = JsonConvert.DeserializeObject(resource);
+                var location = Convert.ToString(x.location);
+                var expiresAt = x.expiresAt;
+                ManufacturerPhotoLink = location;
+            }
+            
             // Generowanie tytułu
             if (additionalInfo.SecondTitle != "")
             {
@@ -1155,7 +1184,7 @@ namespace Clutchlit.Controllers
             {
                 auction.images.Add(new Images(link));
             }
-
+            auction.images.Add(new Images(ManufacturerPhotoLink));
             //auction.compatibilityList.items.Add(new Text("BMW serie 3"));
 
 
@@ -1204,9 +1233,14 @@ namespace Clutchlit.Controllers
             auction.createdAt = null;
             auction.updatedAt = null;
 
+            var headerSection = new Section();
+            headerSection.items.Add(new Item("IMAGE",null,ManufacturerPhotoLink));
+            auction.description.sections.Add(headerSection);
+
             var section = new Section();
-            section.items.Add(new Item("TEXT", "<p>Przykladowy opsi</p>", null));
-            section.items.Add(new Item("IMAGE",null, fileLinks.ElementAt(0)));
+            section.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(0)));
+            section.items.Add(new Item("TEXT", "<h1>Zestaw sprzęgła</h1>", null));
+            
             auction.description.sections.Add(section);
 
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
