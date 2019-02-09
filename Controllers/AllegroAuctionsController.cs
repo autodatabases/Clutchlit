@@ -1268,7 +1268,7 @@ namespace Clutchlit.Controllers
 
             var manuSection = new Section();
             manuSection.items.Add(new Item("IMAGE", null, ManufacturerLogo));
-            manuSection.items.Add(new Item("TEXT", allegroManufacturer.AllegroDescription, null));
+            manuSection.items.Add(new Item("TEXT", "<p>"+allegroManufacturer.AllegroDescription+"</p>", null));
             auction.description.sections.Add(manuSection);
 
             var certSection = new Section();
