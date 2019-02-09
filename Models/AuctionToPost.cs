@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +31,9 @@ namespace Clutchlit.Models
     public class Item
     {
         public string type { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string content { get; set; }
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string url {get;set;}
         public Item() { }
         public Item(string Type, string Content = null, string Url = null)
@@ -40,6 +43,7 @@ namespace Clutchlit.Models
             this.url = Url;
         }
     }
+
     public class Section
     {
         public List<Item> items = new List<Item>();

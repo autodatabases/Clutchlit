@@ -874,7 +874,7 @@ namespace Clutchlit.Controllers
 
             var section = new Section();
             section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>",null));
-            section.items.Add(new Item("IMAGE",null, "https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
+            section.items.Add(new Item("IMAGE",null,"https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
             auction.description.sections.Add(section);
 
