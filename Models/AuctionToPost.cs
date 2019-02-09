@@ -58,7 +58,7 @@ namespace Clutchlit.Models
     }
     public class AuctionToPost
     {
-        public Description description = new Description();
+        
         public string additionalServices { get; set; }
         public AfterSalesServices afterSalesServices = new AfterSalesServices();
         public JustId category = new JustId();
@@ -70,6 +70,7 @@ namespace Clutchlit.Models
         public JustId external = new JustId();
         public string id { get; set; }
         public List<Images> images = new List<Images>();
+        public Description description = new Description();
         public Location location = new Location();
         public string name { get; set; }
         public List<Parameters> parameters = new List<Parameters>();

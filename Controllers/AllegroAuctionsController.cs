@@ -1276,7 +1276,7 @@ namespace Clutchlit.Controllers
             auction.description.sections.Add(certSection);
 
 
-            string outprint = JsonConvert.SerializeObject(auction);
+            string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
             // ------
             using (var client = new HttpClient())
