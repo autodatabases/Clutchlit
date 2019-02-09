@@ -372,6 +372,15 @@
                                 </a>
                             }
                         </li>
+                        <li>
+                            @if (User.IsInRole("Admin") || User.IsInRole("IT"))
+                            {
+                                <a asp-controller="AllegroAuctions" asp-action="MassiveAction">
+                                    <i class="fa fa-pagelines"></i>
+                                    <span>Masowe działania</span>
+                                </a>
+                            }
+                        </li>
                     }
 
                     @if (User.IsInRole("Admin"))
@@ -625,7 +634,7 @@
                             idR = rowId;
                             $.ajax({
                                 type: "POST",
-                                url: "/AllegroAuctions/ActivateOffer/" + idR + "/",
+                                url: "/AllegroAuctions/ActivateOffer/" + idR + "/", 
                                 data: { "Id": idR },
                                 contentType: "application/json;charset=utf-8",
                                 dataType: "json",

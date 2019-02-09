@@ -34,7 +34,7 @@ namespace Clutchlit.Data
         public DbSet<AllegroAuction> Allegro_auctions { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("Host=mysql-sprzegla.nano.pl;Database=db100006140;Username=db100006140_mik;Password=eX6eZeCZ");
+            optionsBuilder.UseMySql("Host=mysql-sprzegla.nano.pl;Database=db100008757;Username=db100008757_apli;Password=8ZAYsiU1");
         }
     }
 }

@@ -117,7 +117,7 @@ namespace Clutchlit.Controllers
             //
 
             var sp24 = _contextSp24.Orders_sp24;
-            var spC = _contextSp.Orders_spcom;
+            var spC = _contextSp.Orders_spcom; 
 
             var res_sp24 = Enumerable.Empty<A_orders_display>().AsQueryable();
             var res_spC = Enumerable.Empty<A_orders_display>().AsQueryable();

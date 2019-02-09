@@ -12,6 +12,6 @@ namespace Clutchlit.Models
         public string ParentId { get; set; }
         public string Leaf { get; set; }
         public string Advertisement { get; set; }
-        public string AdvertisementPriceOptional { get; set; }
+        public string AdvertisementPriceOptional { get; set; } 
     }
 }

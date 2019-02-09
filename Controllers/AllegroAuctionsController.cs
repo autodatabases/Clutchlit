@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Clutchlit.Data;
 using Clutchlit.Models;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +25,9 @@ namespace Clutchlit.Controllers
         private static string SellerId = "sprzeglo-com-pl";
         private static string AccessToken = "";
         private IHostingEnvironment hostingEnv;
-
+        private static string pathToApp = "http://clutchlit.trimfit.pl/";
+        private readonly ApplicationDbContext _context;
+        private readonly MysqlContext _contextShop;
         HttpClient client = new HttpClient();
 
         public List<Auction> list = new List<Auction>();
@@ -34,8 +37,10 @@ namespace Clutchlit.Controllers
             return View();
         }
 
-        public AllegroAuctionsController(IHostingEnvironment env)
+        public AllegroAuctionsController(IHostingEnvironment env, ApplicationDbContext context, MysqlContext contextShop)
         {
+            _context = context;
+            _contextShop = contextShop;
             client.BaseAddress = new Uri("https://api.allegro.pl/");
             client.DefaultRequestHeaders.Accept.Add(
                 new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json")
@@ -563,17 +568,251 @@ namespace Clutchlit.Controllers
         [HttpGet("AllegroAuctions/GetValidationData/{id}")]
         public IActionResult GetValidationData(string id)
         {
-           
+
             return Json(id);
 
         }
-
-        public IActionResult PostAuction(string AuctionId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt)
+        [HttpGet("[controller]/[action]/")]
+        public IActionResult MassiveAction()
         {
+            return View();
+        }
+        ///[Produces("application/json")]
+        public IActionResult GetAllegroAuctionsList(string FlagCategory, string FlagManufacturer)
+        {
+            var auctionsList = _context.AllegroAuction;
+            var productsList = _context.Products;
+            var List = Enumerable.Empty<AllegroAuction>().AsQueryable();
+
+            // tylko filtrowanie
+            if (FlagCategory == "0" && FlagManufacturer == "ALL")
+            {
+                List = (from auctions in auctionsList
+                        select new AllegroAuction()
+                        {
+                            AuctionId = auctions.AuctionId,
+                            AllegroId = auctions.AllegroId,
+                            ProductId = auctions.ProductId,
+                            AuctionTitle = auctions.AuctionTitle,
+                            Category = auctions.Category,
+                            Status = auctions.Status
+                        });
+            }
+            else
+            {
+                if (FlagCategory == "0" && FlagManufacturer != "ALL")
+                {
+                    List = (from auctions in auctionsList
+                            join products in productsList on auctions.ProductId equals products.Id
+                            where products.Manufacturer_id == int.Parse(FlagManufacturer)
+                            select new AllegroAuction()
+                            {
+                                AuctionId = auctions.AuctionId,
+                                AllegroId = auctions.AllegroId,
+                                ProductId = auctions.ProductId,
+                                AuctionTitle = auctions.AuctionTitle,
+                                Category = auctions.Category,
+                                Status = auctions.Status
+                            });
+                }
+                else if (FlagCategory != "0" && FlagManufacturer == "ALL")
+                {
+                    List = (from auctions in auctionsList
+                            where auctions.Category == FlagCategory
+                            select new AllegroAuction()
+                            {
+                                AuctionId = auctions.AuctionId,
+                                AllegroId = auctions.AllegroId,
+                                ProductId = auctions.ProductId,
+                                AuctionTitle = auctions.AuctionTitle,
+                                Category = auctions.Category,
+                                Status = auctions.Status
+                            });
+                }
+                else if (FlagCategory != "0" && FlagManufacturer != "ALL")
+                {
+                    List = (from auctions in auctionsList
+                            join products in productsList on auctions.ProductId equals products.Id
+                            where products.Manufacturer_id == int.Parse(FlagManufacturer) && auctions.Category == FlagCategory
+                            select new AllegroAuction()
+                            {
+                                AuctionId = auctions.AuctionId,
+                                AllegroId = auctions.AllegroId,
+                                ProductId = auctions.ProductId,
+                                AuctionTitle = auctions.AuctionTitle,
+                                Category = auctions.Category,
+                                Status = auctions.Status
+                            });
+                }
+            }
+
+
+            var count = List.Count();
+
+            var concat = List;
+            // porządkujemy liste
+            var concat_sorted = concat.OrderByDescending(o => o.AuctionId);
+
+
+            var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 10;
+
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+
+            int recordsTotal = 0;
+            IQueryable<AllegroAuction> result = null;
+            result = concat_sorted.AsQueryable();
+            var customerData = result;
+            //Sorting  
+
+            //Search  
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                customerData = customerData.Where(m => m.AuctionTitle.ToUpper().Contains(searchValue.ToUpper()));
+            }
+            //Paging   
+            recordsTotal = customerData.Count();
+            //Paging   
+            var data = customerData.Skip(skip).Take(pageSize).ToList();
+            //Returning Json Data  
+            Response.StatusCode = 200;
+            return new JsonResult(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
+
+        }
+        // konwertujemy plik na postać binarną
+        private byte[] GetBinaryFile(string filename)
+        {
+            byte[] bytes;
+            using (FileStream file = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                bytes = new byte[file.Length];
+                file.Read(bytes, 0, (int)file.Length);
+            }
+            return bytes;
+        }
+        // Massive action
+        public IActionResult GetPhotoLink()
+        {
+            var photos = _context.AllegroPhotos.Where(p => p.ProductId == 42).Single(); // pobieramy kategorie do zdjęć.
+            string path = "";
+            string folderPath = hostingEnv.WebRootPath + "/images/allegro/6" + "/" + photos.CategoryId + "";
+            string[] fileArray = Directory.GetFiles(folderPath, "*.jpg", SearchOption.AllDirectories);
+
+            foreach (string fileName in fileArray)
+            {
+                string absPaht = Path.Combine(folderPath, fileName);
+                path = absPaht;
+            }
+
+            return Json(path);
+        }
+        // [HttpGet("controller/action/{id}")]
+        public IActionResult TestAuction(Int64 AuctionId)
+        {
+            var TitlePost = "";
+            AuctionId = 394007;
+            string FinalResponse = "";
+            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == AuctionId).Single();
+
+            var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
+            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
+            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
+            string r = "";
+            foreach (var p in usage)
+            {
+                r += p.PcId;
+                r += ",";
+            }
+            string price = product.Gross_price.ToString();
+            if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
+                TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
+            else
+                TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
+
+            string productId = "SP-" + product.Id.ToString();
+
+            return Json(productId + "" + price);
+        }
+        [HttpGet("get/auction/{id}")]
+        public IActionResult GetAuction(string id)
+        {
+            string result = "";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + id + "");
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequest.Method = "GET";
+            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+
+            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+            {
+                var resource = streamReader.ReadToEnd();
+                result = resource;
+            }
+            return Json(result);
+        }
+        public IActionResult TestPhotoUp()
+        {
+            string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + "6" + "/" + "1607" + "";
+            DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
+            List<string> fileLinks = new List<string>();
+            string response = "";
+
+            foreach (FileInfo fileName in Files)
+            {
+                string pathToFile = pathToApp + "images/allegro/" + "6/" + "1607/" + fileName.Name;
+
+                string data = "{\"url\": \"" + pathToFile + "\"}";
+
+                var httpWebRequestPhoto = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
+                httpWebRequestPhoto.ContentType = "application/vnd.allegro.public.v1+json";
+                httpWebRequestPhoto.Accept = "application/vnd.allegro.public.v1+json";
+                httpWebRequestPhoto.Method = "POST";
+                httpWebRequestPhoto.Headers.Add("Authorization", "Bearer " + Token + "");
+
+                using (var streamWriter = new StreamWriter(httpWebRequestPhoto.GetRequestStream()))
+                {
+                    streamWriter.Write(data);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
+                var httpResponse = (HttpWebResponse)httpWebRequestPhoto.GetResponse();
+                using (var readStream = new StreamReader(httpResponse.GetResponseStream(), Encoding.Default))
+                {
+                    var resource = readStream.ReadToEnd();
+                    response = resource;
+                    dynamic x = JsonConvert.DeserializeObject(resource);
+                    var location = Convert.ToString(x.location);
+                    var expiresAt = x.expiresAt;
+                    fileLinks.Add(location);
+                }
+            }
+            return Json(String.Join(",", fileLinks.ToArray()));
+        }
+
+        // TEST ===========
+        [HttpGet("controller/action/{id}")]
+        public IActionResult PostAuctionA(string id)
+        {
+            string FinalResponse = "";
+
+            // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
-            auction.id = AuctionId;
-            auction.name = Title;
-            auction.category.id = Category;
+            auction.id = id.ToString();
+            auction.name = "Tytuł przk aukcji";
+            auction.category.id = "50884";
+
+
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
             auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
@@ -582,11 +821,11 @@ namespace Clutchlit.Controllers
 
 
             auction.ean = null;
-            // dodać description
-            auction.images.Add(new Images("https://a.allegroimg.com/original/11494b/f8ab199f475e985d22d060fb2d9d"));
-            auction.images.Add(new Images("https://a.allegroimg.com/original/115c5e/8e34c34045f888f804695e093403"));
-            auction.FillListCompatible("Alfa Romeo 159");
-            auction.FillListCompatible("Alfa Romeo 159 1.9JTDM");
+
+            auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
+            auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
+
+            auction.FillListCompatible("sss");
 
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = "123";
@@ -594,7 +833,7 @@ namespace Clutchlit.Controllers
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
 
-            auction.stock.available = 4;
+            auction.stock.available = 100;
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
@@ -626,7 +865,7 @@ namespace Clutchlit.Controllers
             auction.location.city = "Warszawa";
             auction.location.postCode = "00-132";
 
-            auction.external.id = "SP24-121";
+            auction.external.id = "SPDSDS";
             auction.contact = null;
 
             auction.validation.validatedAt = null;
@@ -634,7 +873,181 @@ namespace Clutchlit.Controllers
             auction.updatedAt = null;
 
             var section = new Section();
-            section.items.Add(new Item("TEXT", "<p>Opis przedmiotu</p>"));
+            //section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>"));
+            section.items.Add(new Item("TEXT", "<h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Zadzwoń lub napisz, chętnie pomożemy!</h1><h1>Nr tel. / e-mail znajdziesz poniżej w zakładce [-- O sprzedającym --]</h1>"));
+
+            auction.description.sections.Add(section);
+
+            var outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
+
+            // ------
+
+            List<string> Errors = new List<string>();
+            var httpWebRequestC = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + id + "");
+            httpWebRequestC.ContentType = "application/vnd.allegro.public.v1+json";
+            httpWebRequestC.Accept = "application/vnd.allegro.public.v1+json";
+            httpWebRequestC.Method = "PUT";
+            httpWebRequestC.Headers.Add("Authorization", "Bearer " + Token + "");
+
+
+            using (var streamWriterA = new StreamWriter(httpWebRequestC.GetRequestStream()))
+            {
+                streamWriterA.Write(outprint);
+                streamWriterA.Flush();
+                streamWriterA.Close();
+            }
+
+            var httpResponseA = (HttpWebResponse)httpWebRequestC.GetResponse();
+            using (var readStream = new StreamReader(httpResponseA.GetResponseStream()))
+            {
+                var resource = readStream.ReadToEnd();
+                FinalResponse += "::" + resource;
+
+            }
+
+
+            return Json(FinalResponse + "::::" + String.Join(",", Errors.ToArray()));
+        }
+
+        // TEST ===========
+
+        public IActionResult PostAuction(string AllegroId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt, Int64 InternalId)
+        {
+            string FinalResponse = "";
+            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == InternalId).Single();
+
+            var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
+            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
+            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
+
+            string TitlePost = "";
+
+            string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "";
+            DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
+            List<string> fileLinks = new List<string>();
+
+
+            foreach (FileInfo fileName in Files)
+            {
+                string pathToFile = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "/" + fileName.Name;
+                // string pathToFile = Path.Combine(pathToApp, "images/allegro", manufacturer.Tecdoc_id.ToString(), photos.CategoryId.ToString(), fileName);
+                string data = "{\"url\": \"" + pathToFile + "\"}";
+
+                var httpWebRequestPhoto = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
+                httpWebRequestPhoto.ContentType = "application/vnd.allegro.public.v1+json";
+                httpWebRequestPhoto.Accept = "application/vnd.allegro.public.v1+json";
+                httpWebRequestPhoto.Method = "POST";
+                httpWebRequestPhoto.Headers.Add("Authorization", "Bearer " + Token + "");
+
+                using (var streamWriter = new StreamWriter(httpWebRequestPhoto.GetRequestStream()))
+                {
+                    streamWriter.Write(data);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
+                var httpResponseB = (HttpWebResponse)httpWebRequestPhoto.GetResponse();
+                using (var readStream = new StreamReader(httpResponseB.GetResponseStream(), Encoding.Default))
+                {
+                    var resource = readStream.ReadToEnd();
+                    dynamic x = JsonConvert.DeserializeObject(resource);
+                    var location = Convert.ToString(x.location);
+                    var expiresAt = x.expiresAt;
+                    fileLinks.Add(location);
+                }
+
+            }
+
+
+            if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
+                TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
+            else
+                TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
+
+            string productId = "SPC-" + product.Id.ToString();
+
+            string price = product.Gross_price.ToString();
+            // tu będziemy pobierać dane dot. danego produktu do aukcji
+            var auction = new AuctionToPost();
+            auction.id = AllegroId;
+            auction.name = TitlePost.ToUpper();
+            auction.category.id = Category;
+
+
+            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
+            auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
+            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
+            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
+            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
+
+
+            auction.ean = null;
+            // dodać description
+
+            // PHOTOS
+            foreach (string link in fileLinks)
+            {
+                auction.images.Add(new Images(link));
+            }
+
+            // PHOTOS
+            //auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
+            //auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
+
+            foreach (var car in usage)
+            {
+                auction.FillListCompatible(_context.PassengerCars.Where(p => p.Ktype == car.PcId).Single().Ktype.ToString());
+            }
+
+            auction.sellingMode.format = "BUY_NOW";
+            auction.sellingMode.price.amount = price;
+            auction.sellingMode.price.currency = "PLN";
+            auction.sellingMode.minimalPrice = null;
+            auction.sellingMode.startingPrice = null;
+
+            auction.stock.available = 1000;
+            auction.stock.unit = "UNIT";
+
+            auction.publication.duration = null;
+            auction.publication.status = "INACTIVE";
+            auction.publication.startingAt = null;
+            auction.publication.endingAt = null;
+
+            auction.delivery.shippingRates.id = "b25e1a2e-3f2d-4206-97de-234a9dbf91bf";
+            auction.delivery.handlingTime = "PT24H";
+            auction.delivery.additionalInfo = "Dodatkowe informacje";
+            auction.delivery.shipmentDate = null;
+
+            auction.payments.invoice = "VAT";
+
+            auction.afterSalesServices.impliedWarranty.id = "c2683ac1-b36b-42a1-b0f5-b45bdaf55928";
+            auction.afterSalesServices.returnPolicy.id = "eb7c8407-808c-4078-9250-9da488560634";
+            auction.afterSalesServices.warranty.id = "0dd88048-8163-4eba-9c12-768551bf407d";
+
+            auction.additionalServices = null;
+            auction.sizeTable = null;
+            auction.promotion.emphasized = false;
+            auction.promotion.bold = false;
+            auction.promotion.highlight = false;
+            auction.promotion.emphasizedHighlightBoldPackage = false;
+            auction.promotion.departmentPage = false;
+
+            auction.location.countryCode = "PL";
+            auction.location.province = "MAZOWIECKIE";
+            auction.location.city = "Warszawa";
+            auction.location.postCode = "00-132";
+
+            auction.external.id = productId;
+            auction.contact = null;
+
+            auction.validation.validatedAt = null;
+            auction.createdAt = null;
+            auction.updatedAt = null;
+
+            var section = new Section();
+            section.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p>"));
+            //section.items.Add(new Item("TEXT", "<h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Zadzwoń lub napisz, chętnie pomożemy!</h1><h1>Nr tel. / e-mail znajdziesz poniżej w zakładce [-- O sprzedającym --]</h1>"));
 
             auction.description.sections.Add(section);
 
@@ -643,7 +1056,7 @@ namespace Clutchlit.Controllers
             // ------
 
             List<string> Errors = new List<string>();
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/"+AuctionId+"");
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + AllegroId + "");
             httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
             httpWebRequest.Method = "PUT";
@@ -656,34 +1069,202 @@ namespace Clutchlit.Controllers
                 streamWriter.Flush();
                 streamWriter.Close();
             }
+            /*
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
             using (var readStream = new StreamReader(httpResponse.GetResponseStream()))
             {
                 var resource = readStream.ReadToEnd();
+                FinalResponse = resource;
                 dynamic x = JsonConvert.DeserializeObject(resource);
-                
-                var errors = x.validation.errors;
-                foreach (var error in errors)
-                {
-                    Errors.Add(Convert.ToString(error.message));
-                }
             }
+            */
+            Response.StatusCode = 200;
 
-            return Json(String.Join(", ", Errors.ToArray()));
+            return Json(outprint);
         }
 
-        public void PostDraftAuction(string title, string category)
+        public async Task<JsonResult> PostAuctionTest(string id)
         {
-            title = "Tytuł oferty 223";
-            category = "50884";
+            string FinalResponse = "";
+
+            var auction_id = Convert.ToInt32(id);
+            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
+           
+            var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
+            var additionalInfo = _context.AllegroAdditional.Where(a => a.ProductId == product.Id.ToString()).Single();
+            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
+
+            var allegroManufacturer = _context.AllegroManufacturers.Where(m=>m.ManufacturerId == manufacturer.Tecdoc_id).Single();
+            var productPrice = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product.Id).Single();
+
+            //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+           
+            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
+
+            string TitlePost = "";
+
+            string folderPath = hostingEnv.WebRootPath + "/images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "";
+            DirectoryInfo d = new DirectoryInfo(folderPath);//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles("*.jpg"); //Getting Text files
+            List<string> fileLinks = new List<string>();
+
+
+            foreach (FileInfo fileName in Files)
+            {
+                string pathToFile = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "/" + fileName.Name;
+                // string pathToFile = Path.Combine(pathToApp, "images/allegro", manufacturer.Tecdoc_id.ToString(), photos.CategoryId.ToString(), fileName);
+                string data = "{\"url\": \"" + pathToFile + "\"}";
+
+                var httpWebRequestPhoto = (HttpWebRequest)WebRequest.Create("https://upload.allegro.pl/sale/images");
+                httpWebRequestPhoto.ContentType = "application/vnd.allegro.public.v1+json";
+                httpWebRequestPhoto.Accept = "application/vnd.allegro.public.v1+json";
+                httpWebRequestPhoto.Method = "POST";
+                httpWebRequestPhoto.Headers.Add("Authorization", "Bearer " + Token + "");
+
+                using (var streamWriter = new StreamWriter(httpWebRequestPhoto.GetRequestStream()))
+                {
+                    streamWriter.Write(data);
+                    streamWriter.Flush();
+                    streamWriter.Close();
+                }
+                var httpResponseB = (HttpWebResponse)httpWebRequestPhoto.GetResponse();
+                using (var readStream = new StreamReader(httpResponseB.GetResponseStream(), Encoding.Default))
+                {
+                    var resource = readStream.ReadToEnd();
+                    dynamic x = JsonConvert.DeserializeObject(resource);
+                    var location = Convert.ToString(x.location);
+                    var expiresAt = x.expiresAt;
+                    fileLinks.Add(location);
+                }
+
+            }
+            // Generowanie tytułu
+            if (additionalInfo.SecondTitle != "")
+            {
+                if ((additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle).Length <= 50)
+                    TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle;
+                else
+                    TitlePost = additionalInfo.FirstTitle + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle;
+            }
+            else
+            {
+                if ((additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle).Length <= 50)
+                    TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
+                else
+                    TitlePost = additionalInfo.FirstTitle + " " + auctionData.AuctionTitle;
+            }
+            //Generowanie tytułu
+
+            string productId = "SP-" + product.Id.ToString();
+            string price = Math.Round(decimal.ToDouble(productPrice.Price) * 1.23,0).ToString(); 
+            // tu będziemy pobierać dane dot. danego produktu do aukcji
+            var auction = new AuctionToPost();
+            //auction.id = AllegroId;
+            auction.name = TitlePost.ToUpper();
+            auction.category.id = "50884";
+
+            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
+            auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
+            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
+            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
+            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
+
+            if (additionalInfo.Ean != null)
+                auction.ean = additionalInfo.Ean;
+            else
+                auction.ean = null;
+            
+            // PHOTOS
+            foreach (string link in fileLinks)
+            {
+                auction.images.Add(new Images(link));
+            }
+
+            //auction.compatibilityList.items.Add(new Text("BMW serie 3"));
+
+
+            auction.sellingMode.format = "BUY_NOW";
+            auction.sellingMode.price.amount = price;
+            auction.sellingMode.price.currency = "PLN";
+            auction.sellingMode.minimalPrice = null;
+            auction.sellingMode.startingPrice = null;
+
+            auction.stock.available = 1000;
+            auction.stock.unit = "UNIT";
+
+            auction.publication.duration = null;
+            auction.publication.status = "INACTIVE";
+            auction.publication.startingAt = null;
+            auction.publication.endingAt = null;
+
+            auction.delivery.shippingRates.id = "b25e1a2e-3f2d-4206-97de-234a9dbf91bf";
+            auction.delivery.handlingTime = "PT24H";
+            auction.delivery.additionalInfo = "Dodatkowe informacje";
+            auction.delivery.shipmentDate = null;
+
+            auction.payments.invoice = "VAT";
+
+            auction.afterSalesServices.impliedWarranty.id = "c2683ac1-b36b-42a1-b0f5-b45bdaf55928";
+            auction.afterSalesServices.returnPolicy.id = "eb7c8407-808c-4078-9250-9da488560634";
+            auction.afterSalesServices.warranty.id = "0dd88048-8163-4eba-9c12-768551bf407d";
+
+            auction.additionalServices = null;
+            auction.sizeTable = null;
+            auction.promotion.emphasized = false;
+            auction.promotion.bold = false;
+            auction.promotion.highlight = false;
+            auction.promotion.emphasizedHighlightBoldPackage = false;
+            auction.promotion.departmentPage = false;
+
+            auction.location.countryCode = "PL";
+            auction.location.province = "MAZOWIECKIE";
+            auction.location.city = "Warszawa";
+            auction.location.postCode = "00-132";
+
+            auction.external.id = productId;
+            auction.contact = null;
+
+            auction.validation.validatedAt = null;
+            auction.createdAt = null;
+            auction.updatedAt = null;
+
+            var section = new Section();
+            section.items.Add(new Item("TEXT", "<p>Przykladowy opsi</p>"));
+            auction.description.sections.Add(section);
+
+            string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
+
+            // ------
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri("https://api.allegro.pl");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
+                var result = await client.PostAsync("/sale/offers", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
+                string resultContent = await result.Content.ReadAsStringAsync();
+                FinalResponse = resultContent;
+            }
+
+            return new JsonResult(FinalResponse);
+        }
+
+        public IActionResult PostDraftAuction(string id)
+        {
+            var auction_id = Convert.ToInt32(id);
+            var auction = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
+            // dodać aktualizacje id aukcji allegro do bazy 
+            var FirstTitle = auction.Category;
+            var Title = auction.AuctionTitle;
+
+            var ConcatTitle = FirstTitle + "" + Title;
+            var Category = "50884";
 
             string outprint = "{" +
-                "\"name\": \"Oferta testowa\"," +
+                "\"name\": \"" + Title + "\"," +
                 "\"category\": " +
-                "{\"id\": \"50884\"" +
+                "{\"id\": \"" + Category + "\"" +
                 "}" +
-                "}"; 
+                "}";
 
             List<string> OfferResponse = new List<string>();
             List<string> Errors = new List<string>(); // errors handler
@@ -719,10 +1300,15 @@ namespace Clutchlit.Controllers
                 }
             }
             var errors_response = String.Join(", ", Errors.ToArray());
-            PostAuction(OfferResponse.ElementAt(0), title, category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4)); // wystawiamy aukcję z draft'a;
-            
-            
-            //return Json(errors_response + " \n " + OfferResponse.First());
+
+            auction.AllegroId = OfferResponse.ElementAt(0);
+            _context.SaveChanges();
+
+            var result = PostAuction(OfferResponse.ElementAt(0), Title, Category, OfferResponse.ElementAt(2), OfferResponse.ElementAt(3), OfferResponse.ElementAt(4), auction_id); // wystawiamy aukcję z draft'a
+            // pośrednie błędy poniżej
+            // return Json(errors_response + " \n " + OfferResponse.First() + result);
+
+            return Json(result);
         }
     }
 }

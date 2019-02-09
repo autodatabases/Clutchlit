@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewData["Title"] = "Masowe działania | Aukcje | Dział allegro";
+    ViewData["Title_1"] = "Masowe działania";
+    ViewData["Title_2"] = "Allegro";
+}
+
+
+<div class="box">
+    <div class="images-loader" style="background:url(/images/Pacman-0.7s-91px.svg) center center no-repeat; display:none; background-color:rgba(0, 00, 0, .5); position:absolute; width:100%; z-index:1; height:100%;"></div>
+
+    <div class="box-header with-border">
+        <h3 class="box-title">Wystaw nową aukcję</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Zwiń">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Zamknij">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body ">
+        <div style="float:left; width:100%; margin-bottom:20px; ">
+            <form method="post">
+                <div class="col-lg-3">
+                    <label for="allegro_category">
+                        Kategoria
+                    </label>
+                    <select name="allegro_category" id="allegro_category" class="form-control select2">
+                        <option value="0">Wszystkie</option>
+                        <option>Zestaw sprzęgła</option>
+                        <option>Docisk sprzęgła</option>
+                        <option>Tarcza sprzęgła</option>
+                        <option>Koło zamachowe / dwumasowe</option>
+                        <option >Wysprzęglik centralny</option>
+                        <option>Łożysko oporowe</option>
+                        <option>Pompa sprzęgła</option>
+                        <option>Zestaw sprzęgła z kołem</option>
+                        <option>Śruby</option>
+                        <option>Siłownik sprzęgła</option>
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <label for="allegro_manufacturer">Producent</label>
+                    <select name="allegro_manufacturer" id="allegro_manufacturer" class="form-control select2">
+                        <option value="ALL">Wszystkie</option>
+                        <option value="6">LUK</option>
+                        <option value="32">SACHS</option>
+                        <option value="21">VALEO</option>
+                    </select>
+                </div>
+                
+                <div class="col-lg-3">
+                    <button id="submit_allegro_filters" name="submit_allegro_filters" class="btn bg-orange">Filtruj</button>
+                </div>
+            </form>
+
+        </div>
+
+        <table id="massiveAction" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Id</th>
+                    <th>Allegro ID</th>
+                    <th>Produkt ID</th>
+                    <th>Tytuł aukcji</th>
+                    <th>Kategoria</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th>Id</th>
+                    <th>Allegro ID</th>
+                    <th>Produkt ID</th>
+                    <th>Tytuł aukcji</th>
+                    <th>Kategoria</th>
+                    <th>Status</th>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div style="float:left; width:100%; margin-bottom:20px; ">
+            <a id="create_selected" class="btn bg-orange">Wystaw zaznaczone</a>
+        </div>
+    </div>
+   
+    
+
+</div>
+

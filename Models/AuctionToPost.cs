@@ -175,7 +175,7 @@ namespace Clutchlit.Models
 
         public Text(string textToInsert)
         {
-            text = textToInsert;
+            this.text = textToInsert;
         }
     }
     public class CompatibleList
