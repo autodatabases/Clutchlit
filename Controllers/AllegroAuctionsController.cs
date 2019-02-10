@@ -1282,7 +1282,7 @@ namespace Clutchlit.Controllers
             auction.category.id = auctionParams.AllegroCategory;
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { auctionParams.AllegroStatus })); // nowa / uzywana
-            auction.parameters.Add(new Parameters("215858", new string[] { }, new string[] { product.Reference }));
+            auction.parameters.Add(new Parameters("215858", new string[] { }, new string[] { auctionParams.ProductReference }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
 
             if (auctionParams.AllegroType.Replace(" ","") == "Dostawcze")
@@ -1294,7 +1294,7 @@ namespace Clutchlit.Controllers
 
             auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { auctionParams.AllegroQuality })); // jakosc czesci
             auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { auctionParams.AllegroEngine }));  // diesel / benzyna
-
+          
             if (additionalInfo.Ean != null)
                 auction.ean = additionalInfo.Ean;
             else
