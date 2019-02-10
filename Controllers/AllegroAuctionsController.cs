@@ -1142,6 +1142,7 @@ namespace Clutchlit.Controllers
 
             var auction_id = Convert.ToInt32(id);
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
+            var auctionParams = _context.AllegroParams.Where(p=>p.AuctionId == auction_id).Single();
 
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var additionalInfo = _context.AllegroAdditional.Where(a => a.ProductId == product.Id.ToString()).Single();
@@ -1278,13 +1279,21 @@ namespace Clutchlit.Controllers
             var auction = new AuctionToPost();
             //auction.id = AllegroId;
             auction.name = TitlePost.ToUpper();
-            auction.category.id = "50884";
+            auction.category.id = auctionParams.AllegroCategory;
 
-            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
+            auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { auctionParams.AllegroStatus })); // nowa / uzywana
+            auction.parameters.Add(new Parameters("215858", new string[] { }, new string[] { product.Reference }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
-            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
-            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
-            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
+
+            if (auctionParams.AllegroType.Replace(" ","") == "Dostawcze")
+                auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] {"129591_2" }));
+            else if(auctionParams.AllegroType.Replace(" ","") == "Osobowe")
+                auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1"}));
+            else
+                auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
+
+            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { auctionParams.AllegroQuality })); // jakosc czesci
+            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { auctionParams.AllegroEngine }));  // diesel / benzyna
 
             if (additionalInfo.Ean != null)
                 auction.ean = additionalInfo.Ean;
@@ -1343,7 +1352,7 @@ namespace Clutchlit.Controllers
             auction.location.countryCode = "PL";
             auction.location.province = "MAZOWIECKIE";
             auction.location.city = "Warszawa";
-            auction.location.postCode = "00-132";
+            auction.location.postCode = "02-180";
 
             auction.external.id = productId;
             auction.contact = null;
@@ -1374,7 +1383,7 @@ namespace Clutchlit.Controllers
                 photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(2)));
                 auction.description.sections.Add(photoSection_1);
             }
-            if (PhotoNumber == 4) // mamy 3 zdjecia szczegolowe, nie liczymy glownego zdjecia
+            else if (PhotoNumber == 4) // mamy 3 zdjecia szczegolowe, nie liczymy glownego zdjecia
             {
                 var photoSection_1 = new Section();
                 photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(1)));
@@ -1396,6 +1405,22 @@ namespace Clutchlit.Controllers
                 photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(3)));
                 photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(4)));
                 auction.description.sections.Add(photoSection_2);
+            }
+            else if (PhotoNumber == 6)
+            {
+                var photoSection_1 = new Section();
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(1)));
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(2)));
+                auction.description.sections.Add(photoSection_1);
+
+                var photoSection_2 = new Section();
+                photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(3)));
+                photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(4)));
+                auction.description.sections.Add(photoSection_2);
+
+                var photoSection_3 = new Section();
+                photoSection_3.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(5)));
+                auction.description.sections.Add(photoSection_3);
             }
 
             var manuSection = new Section();
