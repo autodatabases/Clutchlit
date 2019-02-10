@@ -1282,7 +1282,7 @@ namespace Clutchlit.Controllers
             auction.category.id = auctionParams.AllegroCategory;
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { auctionParams.AllegroStatus })); // nowa / uzywana
-            auction.parameters.Add(new Parameters("215858", new string[] { }, new string[] { auctionParams.ProductReference }));
+            auction.parameters.Add(new Parameters("215858", new string[] { product.Reference }, new string[] { }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
 
             if (auctionParams.AllegroType.Replace(" ","") == "Dostawcze")
