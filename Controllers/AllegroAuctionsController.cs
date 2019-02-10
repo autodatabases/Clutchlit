@@ -812,6 +812,24 @@ namespace Clutchlit.Controllers
             auction.name = "Tytuł przk aukcji";
             auction.category.id = "50884";
 
+            var FeatureList = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
+            var feature = _contextShop.AllegroFeature.Where(f => f.ProductId == 42);
+            var featureValue = _contextShop.AllegroFeatureValue;
+
+            FeatureList = (from features in feature
+                           join featuresValue in featureValue on features.FeatureValueId equals featuresValue.FeatureValueId
+                           where features.ProductId == 42
+                           select new AllegroFeatureValue()
+                           {
+                               FeatureValueId = featuresValue.FeatureValueId,
+                               LangId = featuresValue.LangId,
+                               Value = featuresValue.Value,
+                               FeatureId = features.FeatureId
+                           });
+
+            var radius = FeatureList.Where(f => f.FeatureId == 5002).SingleOrDefault().Value;
+            var F_title = FeatureList.Where(f => f.FeatureId == 5000).SingleOrDefault().Value;
+            FinalResponse += F_title;
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
@@ -825,7 +843,7 @@ namespace Clutchlit.Controllers
             auction.images.Add(new Images("https://a.allegroimg.com/original/11af91/03b8f20345efa50bb520090e8b38"));
             auction.images.Add(new Images("https://a.allegroimg.com/original/11df2f/d512915b4c9eb1a7d9cd042e5c1e"));
 
-            
+
 
             auction.sellingMode.format = "BUY_NOW";
             auction.sellingMode.price.amount = "123";
@@ -885,7 +903,7 @@ namespace Clutchlit.Controllers
 
             // ------
 
-            return Json(outprint);
+            return Json(FinalResponse);
         }
 
         // TEST ===========
@@ -1107,6 +1125,26 @@ namespace Clutchlit.Controllers
             var allegroManufacturer = _context.AllegroManufacturers.Where(m => m.ManufacturerId == manufacturer.Tecdoc_id).Single();
             var productPrice = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product.Id).Single();
 
+            // obsługujemy specyfikacje produktu
+            var FeatureList = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
+            var feature = _contextShop.AllegroFeature.Where(f => f.ProductId == product.Id);
+            var featureValue = _contextShop.AllegroFeatureValue;
+
+            FeatureList = (from features in feature
+                           join featuresValue in featureValue on features.FeatureValueId equals featuresValue.FeatureValueId
+                           where features.ProductId == product.Id
+                           select new AllegroFeatureValue()
+                           {
+                               FeatureValueId = featuresValue.FeatureValueId,
+                               LangId = featuresValue.LangId,
+                               Value = featuresValue.Value,
+                               FeatureId = features.FeatureId
+                           });
+            var F_title = FeatureList.Where(f => f.FeatureId == 5000).SingleOrDefault().Value;
+            var F_radius = FeatureList.Where(f => f.FeatureId == 5002).SingleOrDefault().Value;
+            var F_disk = FeatureList.Where(f => f.FeatureId == 5003).SingleOrDefault().Value;
+            // obsługujemy specyfikacje produktu
+
             //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
 
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
@@ -1209,8 +1247,8 @@ namespace Clutchlit.Controllers
             auction.images.Add(new Images(ManufacturerCertLink));
             auction.images.Add(new Images(ManufacturerLogo));
 
-          //  auction.FillListCompatible("BMW 3 (E46) 330 i 231 KM / 170 kW 2979 ccm");
-           // auction.FillListCompatible("BMW 2 (E46) 330 i 231 KM / 170 kW 2979 ccm");
+            //  auction.FillListCompatible("BMW 3 (E46) 330 i 231 KM / 170 kW 2979 ccm");
+            // auction.FillListCompatible("BMW 2 (E46) 330 i 231 KM / 170 kW 2979 ccm");
 
             auction.sellingMode.format = "BUY_NOW";
             if (price == "0")
@@ -1267,17 +1305,15 @@ namespace Clutchlit.Controllers
 
             var section = new Section();
             section.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(0)));
-            section.items.Add(new Item("TEXT", "<h1>Zestaw sprzęgła</h1>", null));
+            section.items.Add(new Item("TEXT", "<h1>" + F_title + " do " + auctionData.AuctionTitle + "</h1><h2>SPECYFIKACJA</h2><ul><li>Producent: <b>" + manufacturer.Description + "</b></li><li>Nr katalogowy: <b>" + product.Reference + "</b></li><li>Średnica tarczy: <b>" + F_radius + " mm</b></li><li>Ilość zębów: <b>" + F_disk + "</b></li><li>Gwarancja producenta: <b>2 lata</b></li>Stan: <b>fabrycznie nowe części</b><li></li></ul>", null));
             auction.description.sections.Add(section);
 
             var manuSection = new Section();
-            manuSection.items.Add(new Item("IMAGE", null, ManufacturerLogo));
-            manuSection.items.Add(new Item("TEXT", "<p>"+allegroManufacturer.AllegroDescription+"</p>", null));
+            manuSection.items.Add(new Item("IMAGE", null, ManufacturerCertLink));
+            manuSection.items.Add(new Item("TEXT", "<h1>Marka "+manufacturer.Description+"</h1><p>" + allegroManufacturer.AllegroDescription + "</p>", null));
             auction.description.sections.Add(manuSection);
 
-            var certSection = new Section();
-            certSection.items.Add(new Item("IMAGE", null, ManufacturerCertLink));
-            auction.description.sections.Add(certSection);
+
 
 
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
