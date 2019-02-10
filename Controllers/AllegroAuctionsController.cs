@@ -829,7 +829,32 @@ namespace Clutchlit.Controllers
 
             var radius = FeatureList.Where(f => f.FeatureId == 5002).SingleOrDefault().Value;
             var F_title = FeatureList.Where(f => f.FeatureId == 5000).SingleOrDefault().Value;
-            FinalResponse += F_title;
+            string F_set = "<h2>W ZESTAWIE</h2><ul>";
+            foreach(var result in FeatureList.Where(f=>f.FeatureId == 5001))
+            {
+                F_set += "<li>"+result.Value + "</li>";
+            }
+            F_set += "</ul>";
+            //FinalResponse += F_set;
+
+            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == 393961);
+            var usageDesc = _context.AllegroUsage;
+            var UsageList = Enumerable.Empty<AllegroAuctionUsageDescription>().AsQueryable();
+
+            UsageList = (from u in usage
+                         join ud in usageDesc on u.PcId equals ud.PcId
+                         where u.ProductId == "42"
+                         select new AllegroAuctionUsageDescription()
+                         {
+                             Description_desc = ud.Description_desc,
+                             Description_list = ud.Description_list,
+                             Id = ud.Id,
+                             PcId = ud.PcId
+                         });
+            foreach(var r in UsageList)
+            {
+                FinalResponse += r.Description_desc + "<br />";
+            }
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
@@ -1140,12 +1165,39 @@ namespace Clutchlit.Controllers
                                Value = featuresValue.Value,
                                FeatureId = features.FeatureId
                            });
+
+            string F_set = "<h2>W ZESTAWIE</h2><ul>";
+            foreach (var result in FeatureList.Where(f => f.FeatureId == 5001))
+            {
+                F_set += "<li>" + result.Value + "</li>";
+            }
+            F_set += "<li>Oryginalne opakowanie</li>";
+            F_set += "<li>Paragon / Faktura Vat</li>";
+            F_set += "</ul>";
             var F_title = FeatureList.Where(f => f.FeatureId == 5000).SingleOrDefault().Value;
             var F_radius = FeatureList.Where(f => f.FeatureId == 5002).SingleOrDefault().Value;
             var F_disk = FeatureList.Where(f => f.FeatureId == 5003).SingleOrDefault().Value;
             // obsługujemy specyfikacje produktu
 
-            //var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
+            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId);
+            var usageDesc = _context.AllegroUsage;
+            var UsageList = Enumerable.Empty<AllegroAuctionUsageDescription>().AsQueryable();
+            var UsageDescription = "<h1>Zastosowanie - informacje uzupełniające</h1><h2>W uwagach do zamówienia podaj dane Twojego samochodu i nr VIN - Sprawdzimy czy zamówione części na 100% będą pasowały.</h2><ul>";
+            UsageList = (from u in usage
+                         join ud in usageDesc on u.PcId equals ud.PcId
+                         where u.ProductId == product.Id.ToString()
+                         select new AllegroAuctionUsageDescription()
+                         {
+                              Description_desc = ud.Description_desc,
+                              Description_list = ud.Description_list,
+                              Id = ud.Id,
+                              PcId = ud.PcId
+                         });
+            foreach (var r in UsageList)
+            {
+                UsageDescription += "<li><b>" +r.Description_desc + "</b></li>";
+            }
+            UsageDescription += "</ul>";
 
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
@@ -1161,9 +1213,10 @@ namespace Clutchlit.Controllers
             string ManufacturerPhotoLink = "";
             string ManufacturerCertLink = "";
             string ManufacturerLogo = "";
-
+            int PhotoNumber = 0;
             foreach (FileInfo fileName in Files)
             {
+                PhotoNumber++;
                 string pathToFile = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + "/" + photos.CategoryId.ToString() + "/" + fileName.Name;
                 // string pathToFile = Path.Combine(pathToApp, "images/allegro", manufacturer.Tecdoc_id.ToString(), photos.CategoryId.ToString(), fileName);
                 string data = "{\"url\": \"" + pathToFile + "\"}";
@@ -1305,16 +1358,55 @@ namespace Clutchlit.Controllers
 
             var section = new Section();
             section.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(0)));
-            section.items.Add(new Item("TEXT", "<h1>" + F_title + " do " + auctionData.AuctionTitle + "</h1><h2>SPECYFIKACJA</h2><ul><li>Producent: <b>" + manufacturer.Description + "</b></li><li>Nr katalogowy: <b>" + product.Reference + "</b></li><li>Średnica tarczy: <b>" + F_radius + " mm</b></li><li>Ilość zębów: <b>" + F_disk + "</b></li><li>Gwarancja producenta: <b>2 lata</b></li><li>Stan: <b>fabrycznie nowe części</b></li></ul>", null));
+            section.items.Add(new Item("TEXT", "<h1>" + F_title + " do " + auctionData.AuctionTitle + "</h1><h2>SPECYFIKACJA</h2><ul><li>Producent: <b>" + manufacturer.Description + "</b></li><li>Nr katalogowy: <b>" + product.Reference.Replace(" ","") + "</b></li><li>Średnica tarczy: <b>" + F_radius + " mm</b></li><li>Ilość zębów: <b>" + F_disk + "</b></li><li>Gwarancja producenta: <b>2 lata</b></li><li>Stan: <b>fabrycznie nowe części</b></li></ul>"+F_set+"", null));
             auction.description.sections.Add(section);
+
+            var usageSection = new Section();
+            usageSection.items.Add(new Item("TEXT", UsageDescription));
+            auction.description.sections.Add(usageSection);
+
+            
+
+            if(PhotoNumber == 3) // mamy 2 zdjecia szczegolowe, nie liczymy glownego zdjecia
+            {
+                var photoSection_1 = new Section();
+                photoSection_1.items.Add(new Item("IMAGE",null,fileLinks.ElementAt(1)));
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(2)));
+                auction.description.sections.Add(photoSection_1);
+            }
+            if (PhotoNumber == 4) // mamy 3 zdjecia szczegolowe, nie liczymy glownego zdjecia
+            {
+                var photoSection_1 = new Section();
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(1)));
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(2)));
+                auction.description.sections.Add(photoSection_1);
+
+                var photoSection_2 = new Section();
+                photoSection_2.items.Add(new Item("IMAGE",null,fileLinks.ElementAt(3)));
+                auction.description.sections.Add(photoSection_2);
+            }
+            else if (PhotoNumber == 5) // mamy 4 zdjecia szczegolowe, nie liczymy glownego zdjecia
+            {
+                var photoSection_1 = new Section();
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(1)));
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(2)));
+                auction.description.sections.Add(photoSection_1);
+
+                var photoSection_2 = new Section();
+                photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(3)));
+                photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(4)));
+                auction.description.sections.Add(photoSection_2);
+            }
 
             var manuSection = new Section();
             manuSection.items.Add(new Item("IMAGE", null, ManufacturerCertLink));
-            manuSection.items.Add(new Item("TEXT", "<h1>Marka "+manufacturer.Description+"</h1><p>" + allegroManufacturer.AllegroDescription + "</p>", null));
+            manuSection.items.Add(new Item("TEXT", "<h1>Marka " + manufacturer.Description + "</h1><p>" + allegroManufacturer.AllegroDescription + "</p>", null));
             auction.description.sections.Add(manuSection);
 
 
-
+            var footerSection = new Section();
+            footerSection.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p><h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Zadzwoń lub napisz, chętnie pomożemy!</h1><h1>Nr tel. / e-mail znajdziesz poniżej w zakładce [-- O sprzedającym --]</h1>", null));
+            auction.description.sections.Add(footerSection);
 
             string outprint = JsonConvert.SerializeObject(auction, Formatting.Indented);
 
