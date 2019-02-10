@@ -1155,7 +1155,7 @@ namespace Clutchlit.Controllers
             }
             string pathToPhoto = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + ".png";
             string pathToPhotoC = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + "c.jpg";
-            string pathToLogo = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + ".png";
+            string pathToLogo = pathToApp + "images/allegro/" + manufacturer.Tecdoc_id.ToString() + "l.png";
             ManufacturerPhotoLink = this.PhotoUpload(pathToPhoto);
             ManufacturerCertLink = this.PhotoUpload(pathToPhotoC);
             ManufacturerLogo = this.PhotoUpload(pathToLogo);
@@ -1213,7 +1213,11 @@ namespace Clutchlit.Controllers
            // auction.FillListCompatible("BMW 2 (E46) 330 i 231 KM / 170 kW 2979 ccm");
 
             auction.sellingMode.format = "BUY_NOW";
-            auction.sellingMode.price.amount = price;
+            if (price == "0")
+                auction.sellingMode.price.amount = "10000";
+            else
+                auction.sellingMode.price.amount = price;
+
             auction.sellingMode.price.currency = "PLN";
             auction.sellingMode.minimalPrice = null;
             auction.sellingMode.startingPrice = null;
