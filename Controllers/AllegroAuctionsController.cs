@@ -1434,7 +1434,7 @@ namespace Clutchlit.Controllers
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { auctionParams.AllegroStatus })); // nowa / uzywana
             auction.parameters.Add(new Parameters("215858", new string[] { productDisplay.Reference }, new string[] { }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
-            auction.parameters.Add(new Parameters("215941", new string[] { String.Join(", ", crosy.ToArray()) }, new string[] { }));
+            auction.parameters.Add(new Parameters("215941", crosy.ToArray() , new string[] { }));
             
             if (auctionParams.AllegroType.Replace(" ", "") == "Dostawcze")
                 auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_2" }));
