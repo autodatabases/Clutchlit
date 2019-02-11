@@ -1182,6 +1182,7 @@ namespace Clutchlit.Controllers
             var productPrice = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product.Id).SingleOrDefault();
             var productDisplay = _contextShop.ProductDisplay.Where(p=>p.ProductId == product.Id).SingleOrDefault();
             // obsługujemy specyfikacje produktu
+
             var FeatureList = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
             var feature = _contextShop.AllegroFeature.Where(f => f.ProductId == product.Id);
             var featureValue = _contextShop.AllegroFeatureValue;
