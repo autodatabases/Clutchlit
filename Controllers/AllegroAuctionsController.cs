@@ -1180,7 +1180,7 @@ namespace Clutchlit.Controllers
 
             var allegroManufacturer = _context.AllegroManufacturers.Where(m => m.ManufacturerId == manufacturer.Tecdoc_id).SingleOrDefault();
             var productPrice = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product.Id).SingleOrDefault();
-
+            var productDisplay = _contextShop.ProductDisplay.Where(p=>p.ProductId == product.Id).SingleOrDefault();
             // obsługujemy specyfikacje produktu
             var FeatureList = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
             var feature = _contextShop.AllegroFeature.Where(f => f.ProductId == product.Id);
@@ -1201,7 +1201,7 @@ namespace Clutchlit.Controllers
                            });
 
             
-            if (auctionParams.AllegroCategory == "50884" || auctionParams.AllegroCategory == "255983")
+            if (auctionParams.AllegroCategory == "50884" || auctionParams.AllegroCategory == "255983" || auctionParams.AllegroCategory == "255984")
             {
 
                 foreach (var result in FeatureList.Where(f => f.FeatureId == 5001))
@@ -1210,25 +1210,30 @@ namespace Clutchlit.Controllers
                 }
                 F_set += "<li>Oryginalne opakowanie</li>";
                 F_set += "<li>Paragon / Faktura Vat</li>";
-                
+                F_set += "</ul>";
             }
             else 
             {
+                if (auctionParams.AllegroCategory == "255985")
+                    F_set += "<li>Koło zamachowe</li>";
+                else
+                    F_set += "<li>Koło dwumasowe</li>";
+
                 if (photos.CategoryId % 2 == 0)
                 {
-                    F_set += "<li>Koło dwumasowe</li>";
                     F_set += "<li>Zestaw śrub</li>";
                     F_set += "<li>Oryginalne opakowanie</li>";
                     F_set += "<li>Paragon / Faktura Vat</li>";
+                    F_set += "</ul>";
                 }
                 else
                 {
-                    F_set += "<li>Koło dwumasowe</li>";
                     F_set += "<li>Oryginalne opakowanie</li>";
                     F_set += "<li>Paragon / Faktura Vat</li>";
+                    F_set += "</ul>";
                 }
             }
-            F_set += "</ul>";
+            
 
             var F_title = FeatureList.Where(f => f.FeatureId == 5000).SingleOrDefault().Value;
             var F_radius = FeatureList.Where(f => f.FeatureId == 5002).SingleOrDefault().Value;
@@ -1360,7 +1365,7 @@ namespace Clutchlit.Controllers
             auction.category.id = auctionParams.AllegroCategory;
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { auctionParams.AllegroStatus })); // nowa / uzywana
-            auction.parameters.Add(new Parameters("215858", new string[] { product.Reference }, new string[] { }));
+            auction.parameters.Add(new Parameters("215858", new string[] { productDisplay.Reference }, new string[] { }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
 
 
@@ -1455,7 +1460,7 @@ namespace Clutchlit.Controllers
 
             var manuSection = new Section();
             manuSection.items.Add(new Item("IMAGE", null, ManufacturerCertLink));
-            manuSection.items.Add(new Item("TEXT", "<h1>Marka " + manufacturer.Description + "</h1><p>" + allegroManufacturer.AllegroDescription + "</p>", null));
+            manuSection.items.Add(new Item("TEXT", "<h1>" + manufacturer.Description + " w Sprzegla24</h1><p>" + allegroManufacturer.AllegroDescription + "</p>", null));
             auction.description.sections.Add(manuSection);
 
             if(PhotoNumber ==2)
