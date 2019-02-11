@@ -1461,7 +1461,7 @@ namespace Clutchlit.Controllers
 
             var manuSection = new Section();
             manuSection.items.Add(new Item("IMAGE", null, ManufacturerCertLink));
-            manuSection.items.Add(new Item("TEXT", "<h1>" + manufacturer.Description + " w Sprzegla24</h1><p>" + allegroManufacturer.AllegroDescription + "</p>", null));
+            manuSection.items.Add(new Item("TEXT", "<h1>" + manufacturer.Description + " w Sprzegla24</h1>" + allegroManufacturer.AllegroDescription + "", null));
             auction.description.sections.Add(manuSection);
 
             if(PhotoNumber ==2)
