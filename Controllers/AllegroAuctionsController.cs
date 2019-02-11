@@ -1168,7 +1168,8 @@ namespace Clutchlit.Controllers
         {
             string FinalResponse = "";
             string ResponseId = "";
-           
+            string crosy = "";
+
             var auction_id = Convert.ToInt32(id);
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).SingleOrDefault();
             var auctionParams = _context.AllegroParams.Where(p => p.AuctionId == auction_id).SingleOrDefault();
@@ -1381,8 +1382,8 @@ namespace Clutchlit.Controllers
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { auctionParams.AllegroStatus })); // nowa / uzywana
             auction.parameters.Add(new Parameters("215858", new string[] { productDisplay.Reference }, new string[] { }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
-
-
+            auction.parameters.Add(new Parameters("215941", new string[] { crosy }, new string[] { }));
+            
             if (auctionParams.AllegroType.Replace(" ", "") == "Dostawcze")
                 auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_2" }));
             else if (auctionParams.AllegroType.Replace(" ", "") == "Osobowe")
