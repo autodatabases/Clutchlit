@@ -1200,7 +1200,7 @@ namespace Clutchlit.Controllers
                            });
 
             string F_set = "<h2>W ZESTAWIE</h2><ul>";
-            if (FeatureList != null && auctionParams.AllegroCategory == "50884")
+            if (auctionParams.AllegroCategory == "50884")
             {
 
                 foreach (var result in FeatureList.Where(f => f.FeatureId == 5001))
@@ -1209,7 +1209,7 @@ namespace Clutchlit.Controllers
                 }
                 F_set += "<li>Oryginalne opakowanie</li>";
                 F_set += "<li>Paragon / Faktura Vat</li>";
-                F_set += "</ul>";
+                
             }
             else
             {
@@ -1219,16 +1219,15 @@ namespace Clutchlit.Controllers
                     F_set += "<li>Zestaw śrub</li>";
                     F_set += "<li>Oryginalne opakowanie</li>";
                     F_set += "<li>Paragon / Faktura Vat</li>";
-                    F_set += "</ul>";
                 }
                 else
                 {
                     F_set += "<li>Koło dwumasowe</li>";
                     F_set += "<li>Oryginalne opakowanie</li>";
                     F_set += "<li>Paragon / Faktura Vat</li>";
-                    F_set += "</ul>";
                 }
             }
+            F_set += "</ul>";
 
             var F_title = FeatureList.Where(f => f.FeatureId == 5000).SingleOrDefault().Value;
             var F_radius = FeatureList.Where(f => f.FeatureId == 5002).SingleOrDefault().Value;
