@@ -38,7 +38,7 @@ namespace Clutchlit.Data
         public DbSet<A_product_display> ProductDisplay { get; set; }
         public DbSet<AllegroTag> Tag { get; set; }
         public DbSet<AllegroTagProduct> TagProduct { get; set; }
-
+        public DbSet<A_manufacturer> ShopManufacturer { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("Host=mysql-sprzegla.nano.pl;Database=db100008759;Username=db100008759_apli;Password=7hV5vR5e");

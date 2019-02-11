@@ -15,5 +15,7 @@ namespace Clutchlit.Models
         public int ProductId { get; set; }
         [Column("id_tag")]
         public int TagId { get; set; }
+        [Column("id_lang")]
+        public int LangId { get; set; }
     }
 }

@@ -881,8 +881,33 @@ namespace Clutchlit.Controllers
             UsageDescription += "</ul>";
 
             // dodatkowe informacje do proudktu
+            var crosy = "";
+            var tagProduct = _contextShop.TagProduct.Where(t => t.ProductId == 30960);
+            var tag = _contextShop.Tag;
+            var TagList = Enumerable.Empty<AllegroTag>().AsQueryable();
 
-            FinalResponse += UsageDescription;
+            if (tagProduct != null)
+            {
+                TagList = (from tp in tagProduct
+                           join t in tag on tp.TagId equals t.TagId
+                           join m in _contextShop.ShopManufacturer on t.ManufacturerId equals m.ManuId
+                           select new AllegroTag()
+                           {
+                               LangId = t.LangId,
+                               TagId = t.TagId,
+                               Manufacturer = m.Name,
+                               ManufacturerId = t.ManufacturerId,
+                               Name = t.Name
+                           });
+                if (TagList != null)
+                {
+                    foreach (var singletag in TagList)
+                    {
+                        crosy += singletag.Manufacturer + " " + singletag.Name + ",";
+                    }
+                }
+            }
+            FinalResponse = crosy;
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
@@ -1186,20 +1211,20 @@ namespace Clutchlit.Controllers
             var tag = _contextShop.Tag;
             var TagList = Enumerable.Empty<AllegroTag>().AsQueryable();
 
-            if(tagProduct != null)
+            if (tagProduct != null)
             {
                 TagList = (from tp in tagProduct
                            join t in tag on tp.TagId equals t.TagId
-                           join m in _context.Manufacturers on t.ManufacturerId equals m.Tecdoc_id
+                           join m in _contextShop.ShopManufacturer on t.ManufacturerId equals m.ManuId
                            select new AllegroTag()
                            {
                                LangId = t.LangId,
                                TagId = t.TagId,
                                Manufacturer = m.Name,
-                               ManufacturerId = m.Id,
+                               ManufacturerId = t.ManufacturerId,
                                Name = t.Name
                            });
-                if(TagList != null)
+                if (TagList != null)
                 {
                     foreach (var singletag in TagList)
                     {
