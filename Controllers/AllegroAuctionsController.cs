@@ -22,7 +22,7 @@ namespace Clutchlit.Controllers
     public class AllegroAuctionsController : Controller
     {
         public static string Token = "";
-        private static string SellerId = "sprzegla24";
+        private static string SellerId = "Sprzegla24";
         private static string AccessToken = "";
         private IHostingEnvironment hostingEnv;
         private static string pathToApp = "http://clutchlit.trimfit.pl/";
@@ -61,6 +61,9 @@ namespace Clutchlit.Controllers
         {
             return Json(Token);
         }
+        //NGZlMGU1ZTcxMTRjNDE1ZmI3ZjY5Y2JmZDFkYWFiMTY6dGtwWGF2WWFmTGVmRnNRQllBRDV6UDl0S2lXQU1RdW9hc05WMHhndTZJRzRXYU12ZmllWnpFNjNQU1k5RlNSRQ==
+
+        // Wyżej BASIC do sprzeglo-com-pl
         public string GetToken(string token)
         {
             string response = "";
@@ -68,7 +71,7 @@ namespace Clutchlit.Controllers
             httpWebRequest.ContentType = "application/json";
             httpWebRequest.Accept = "*/*";
             httpWebRequest.Method = "POST";
-            httpWebRequest.Headers.Add("Authorization", "Basic NGZlMGU1ZTcxMTRjNDE1ZmI3ZjY5Y2JmZDFkYWFiMTY6dGtwWGF2WWFmTGVmRnNRQllBRDV6UDl0S2lXQU1RdW9hc05WMHhndTZJRzRXYU12ZmllWnpFNjNQU1k5RlNSRQ==");
+            httpWebRequest.Headers.Add("Authorization", "Basic OTU0MGUyZmIzNjQ5NDA2N2E2NmNlOWRjY2JhMDBmZjQ6SnlRQU1mMG5JRXNCa2JOTzlwNzFWbldhQlJWQkJSVW43RmxVYnFtY1V5Z290ZUVhV0htQzRsUVdjTlpzME1jYw==");
 
             var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
 
@@ -1448,7 +1451,10 @@ namespace Clutchlit.Controllers
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
-            auction.publication.status = "ACTIVE";
+            if(productDisplay.Quantity == 0)
+                auction.publication.status = "INACTIVE";
+            else
+                auction.publication.status = "ACTIVE";
             auction.publication.startingAt = null;
             auction.publication.endingAt = null;
 
