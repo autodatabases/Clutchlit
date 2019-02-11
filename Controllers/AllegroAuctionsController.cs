@@ -1168,6 +1168,7 @@ namespace Clutchlit.Controllers
         {
             string FinalResponse = "";
             string ResponseId = "";
+            var F_set = "<h2>W ZESTAWIE</h2><ul>";
 
             var auction_id = Convert.ToInt32(id);
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
@@ -1199,7 +1200,7 @@ namespace Clutchlit.Controllers
                                FeatureId = features.FeatureId
                            });
 
-            string F_set = "<h2>W ZESTAWIE</h2><ul>";
+            
             if (auctionParams.AllegroCategory == "50884")
             {
 
@@ -1452,6 +1453,11 @@ namespace Clutchlit.Controllers
             usageSection.items.Add(new Item("TEXT", UsageDescription));
             auction.description.sections.Add(usageSection);
 
+            var manuSection = new Section();
+            manuSection.items.Add(new Item("IMAGE", null, ManufacturerCertLink));
+            manuSection.items.Add(new Item("TEXT", "<h1>Marka " + manufacturer.Description + "</h1><p>" + allegroManufacturer.AllegroDescription + "</p>", null));
+            auction.description.sections.Add(manuSection);
+
             if (PhotoNumber == 3) // mamy 2 zdjecia szczegolowe, nie liczymy glownego zdjecia
             {
                 var photoSection_1 = new Section();
@@ -1499,10 +1505,7 @@ namespace Clutchlit.Controllers
                 auction.description.sections.Add(photoSection_3);
             }
 
-            var manuSection = new Section();
-            manuSection.items.Add(new Item("IMAGE", null, ManufacturerCertLink));
-            manuSection.items.Add(new Item("TEXT", "<h1>Marka " + manufacturer.Description + "</h1><p>" + allegroManufacturer.AllegroDescription + "</p>", null));
-            auction.description.sections.Add(manuSection);
+            
 
 
             var footerSection = new Section();
