@@ -36,6 +36,8 @@ namespace Clutchlit.Data
         public DbSet<AllegroTermsOfUse> AllegroTerms { get; set; }
         public DbSet<AllegroFeatureLang> AllegroFeatureLang { get; set; }
         public DbSet<A_product_display> ProductDisplay { get; set; }
+        public DbSet<AllegroTag> Tag { get; set; }
+        public DbSet<AllegroTagProduct> TagProduct { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

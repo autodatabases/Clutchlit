@@ -1177,10 +1177,37 @@ namespace Clutchlit.Controllers
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).SingleOrDefault();
             var additionalInfo = _context.AllegroAdditional.Where(a => a.ProductId == product.Id.ToString()).SingleOrDefault();
             var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).SingleOrDefault();
-
+           
             var allegroManufacturer = _context.AllegroManufacturers.Where(m => m.ManufacturerId == manufacturer.Tecdoc_id).SingleOrDefault();
             var productPrice = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product.Id).SingleOrDefault();
             var productDisplay = _contextShop.ProductDisplay.Where(p=>p.ProductId == product.Id).SingleOrDefault();
+
+            var tagProduct = _contextShop.TagProduct.Where(t => t.ProductId == product.Id);
+            var tag = _contextShop.Tag;
+            var TagList = Enumerable.Empty<AllegroTag>().AsQueryable();
+
+            if(tagProduct != null)
+            {
+                TagList = (from tp in tagProduct
+                           join t in tag on tp.TagId equals t.TagId
+                           join m in _context.Manufacturers on t.ManufacturerId equals m.Tecdoc_id
+                           select new AllegroTag()
+                           {
+                               LangId = t.LangId,
+                               TagId = t.TagId,
+                               Manufacturer = m.Name,
+                               ManufacturerId = m.Id,
+                               Name = t.Name
+                           });
+                if(TagList != null)
+                {
+                    foreach (var singletag in TagList)
+                    {
+                        crosy += singletag.Manufacturer + " " + singletag.Name + ",";
+                    }
+                }
+            }
+
             // obsługujemy specyfikacje produktu
 
             var FeatureList = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
