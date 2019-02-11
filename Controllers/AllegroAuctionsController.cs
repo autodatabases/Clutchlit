@@ -1168,8 +1168,7 @@ namespace Clutchlit.Controllers
         {
             string FinalResponse = "";
             string ResponseId = "";
-            var F_set = "<h2>W ZESTAWIE</h2><ul>";
-
+           
             var auction_id = Convert.ToInt32(id);
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).SingleOrDefault();
             var auctionParams = _context.AllegroParams.Where(p => p.AuctionId == auction_id).SingleOrDefault();
@@ -1184,26 +1183,32 @@ namespace Clutchlit.Controllers
             // obsługujemy specyfikacje produktu
 
             var FeatureList = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
-            var feature = _contextShop.AllegroFeature.Where(f => f.ProductId == product.Id);
-            var featureValue = _contextShop.AllegroFeatureValue;
-            var featureLang = _contextShop.AllegroFeatureLang;
+            var feature = Enumerable.Empty<AllegroFeature>().AsQueryable();
+            var featureValue = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
+            var featureLang = Enumerable.Empty<AllegroFeatureLang>().AsQueryable();
+
+            var F_set = "<h2>W ZESTAWIE</h2><ul>";
+            var F_title = "";
+            var F_radius = "";
+            var F_disk = "";
 
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).SingleOrDefault(); // pobieramy kategorie do zdjęć.
-
-            FeatureList = (from features in feature
-                           join featuresValue in featureValue on features.FeatureValueId equals featuresValue.FeatureValueId
-                           where features.ProductId == product.Id
-                           select new AllegroFeatureValue()
-                           {
-                               FeatureValueId = featuresValue.FeatureValueId,
-                               LangId = featuresValue.LangId,
-                               Value = featuresValue.Value,
-                               FeatureId = features.FeatureId
-                           });
-
             
             if (auctionParams.AllegroCategory == "50884" || auctionParams.AllegroCategory == "255983" || auctionParams.AllegroCategory == "255984")
             {
+                feature = _contextShop.AllegroFeature.Where(f => f.ProductId == product.Id);
+                featureValue = _contextShop.AllegroFeatureValue;
+                featureLang = _contextShop.AllegroFeatureLang;
+                FeatureList = (from features in feature
+                               join featuresValue in featureValue on features.FeatureValueId equals featuresValue.FeatureValueId
+                               where features.ProductId == product.Id
+                               select new AllegroFeatureValue()
+                               {
+                                   FeatureValueId = featuresValue.FeatureValueId,
+                                   LangId = featuresValue.LangId,
+                                   Value = featuresValue.Value,
+                                   FeatureId = features.FeatureId
+                               });
 
                 foreach (var result in FeatureList.Where(f => f.FeatureId == 5001))
                 {
@@ -1212,13 +1217,23 @@ namespace Clutchlit.Controllers
                 F_set += "<li>Oryginalne opakowanie</li>";
                 F_set += "<li>Paragon / Faktura Vat</li>";
                 F_set += "</ul>";
+
+                F_title = FeatureList.Where(f => f.FeatureId == 5000).SingleOrDefault().Value;
+                F_radius = FeatureList.Where(f => f.FeatureId == 5002).SingleOrDefault().Value;
+                F_disk = FeatureList.Where(f => f.FeatureId == 5003).SingleOrDefault().Value;
             }
             else 
             {
                 if (auctionParams.AllegroCategory == "255985")
+                {
                     F_set += "<li>Koło zamachowe</li>";
+                    F_title = "Koło zamachowe";
+                }     
                 else
+                {
                     F_set += "<li>Koło dwumasowe</li>";
+                    F_title = "Koło dwumasowe";
+                }
 
                 if (photos.CategoryId % 2 == 0)
                 {
@@ -1236,9 +1251,7 @@ namespace Clutchlit.Controllers
             }
             
 
-            var F_title = FeatureList.Where(f => f.FeatureId == 5000).SingleOrDefault().Value;
-            var F_radius = FeatureList.Where(f => f.FeatureId == 5002).SingleOrDefault().Value;
-            var F_disk = FeatureList.Where(f => f.FeatureId == 5003).SingleOrDefault().Value;
+           
             // obsługujemy specyfikacje produktu
 
             var TermsList = Enumerable.Empty<AllegroTermsOfUse>().AsQueryable();
@@ -1452,7 +1465,14 @@ namespace Clutchlit.Controllers
 
             var section = new Section();
             section.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(0)));
-            section.items.Add(new Item("TEXT", "<h1>" + F_title + " do " + auctionData.AuctionTitle + "</h1><h2>SPECYFIKACJA</h2><ul><li>Producent: <b>" + manufacturer.Description + "</b></li><li>Nr katalogowy: <b>" + product.Reference.Replace(" ", "") + "</b></li><li>Średnica tarczy: <b>" + F_radius + " mm</b></li><li>Ilość zębów: <b>" + F_disk + "</b></li><li>Gwarancja producenta: <b>2 lata</b></li><li>Stan: <b>fabrycznie nowe części</b></li></ul>" + F_set + "", null));
+            if (auctionParams.AllegroCategory == "50884" || auctionParams.AllegroCategory == "255983" || auctionParams.AllegroCategory == "255984")
+            {
+                section.items.Add(new Item("TEXT", "<h1>" + F_title + " do " + auctionData.AuctionTitle + "</h1><h2>SPECYFIKACJA</h2><ul><li>Producent: <b>" + manufacturer.Description + "</b></li><li>Nr katalogowy: <b>" + product.Reference.Replace(" ", "") + "</b></li><li>Średnica tarczy: <b>" + F_radius + " mm</b></li><li>Ilość zębów: <b>" + F_disk + "</b></li><li>Gwarancja producenta: <b>2 lata</b></li><li>Stan: <b>fabrycznie nowe części</b></li></ul>" + F_set + "", null));
+            }
+            else
+            {
+                section.items.Add(new Item("TEXT", "<h1>" + F_title + " do " + auctionData.AuctionTitle + "</h1><h2>SPECYFIKACJA</h2><ul><li>Producent: <b>" + manufacturer.Description + "</b></li><li>Nr katalogowy: <b>" + product.Reference.Replace(" ", "") + "</b></li><li>Gwarancja producenta: <b>2 lata</b></li><li>Stan: <b>fabrycznie nowe części</b></li></ul>" + F_set + "", null));
+            }
             auction.description.sections.Add(section);
 
             var usageSection = new Section();
