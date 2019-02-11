@@ -1504,6 +1504,44 @@ namespace Clutchlit.Controllers
                 photoSection_3.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(1)));
                 auction.description.sections.Add(photoSection_3);
             }
+            else if(PhotoNumber == 7)
+            {
+                var photoSection_1 = new Section();
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(1)));
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(2)));
+                auction.description.sections.Add(photoSection_1);
+
+                var photoSection_2 = new Section();
+                photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(3)));
+                photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(4)));
+                auction.description.sections.Add(photoSection_2);
+
+                var photoSection_3 = new Section();
+                photoSection_3.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(5)));
+                photoSection_3.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(6)));
+                auction.description.sections.Add(photoSection_3);
+            }
+            else if(PhotoNumber == 8)
+            {
+                var photoSection_1 = new Section();
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(2)));
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(3)));
+                auction.description.sections.Add(photoSection_1);
+
+                var photoSection_2 = new Section();
+                photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(4)));
+                photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(5)));
+                auction.description.sections.Add(photoSection_2);
+
+                var photoSection_3 = new Section();
+                photoSection_3.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(6)));
+                photoSection_3.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(7)));
+                auction.description.sections.Add(photoSection_3);
+
+                var photoSection_4 = new Section();
+                photoSection_4.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(1)));
+                auction.description.sections.Add(photoSection_4);
+            }
 
             
 
