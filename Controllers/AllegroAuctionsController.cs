@@ -831,9 +831,9 @@ namespace Clutchlit.Controllers
             var radius = FeatureList.Where(f => f.FeatureId == 5002).SingleOrDefault().Value;
             var F_title = FeatureList.Where(f => f.FeatureId == 5000).SingleOrDefault().Value;
             string F_set = "<h2>W ZESTAWIE</h2><ul>";
-            foreach(var result in FeatureList.Where(f=>f.FeatureId == 5001))
+            foreach (var result in FeatureList.Where(f => f.FeatureId == 5001))
             {
-                F_set += "<li>"+result.Value + "</li>";
+                F_set += "<li>" + result.Value + "</li>";
             }
             F_set += "</ul>";
             //FinalResponse += F_set;
@@ -1171,7 +1171,7 @@ namespace Clutchlit.Controllers
 
             var auction_id = Convert.ToInt32(id);
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
-            var auctionParams = _context.AllegroParams.Where(p=>p.AuctionId == auction_id).Single();
+            var auctionParams = _context.AllegroParams.Where(p => p.AuctionId == auction_id).Single();
 
             var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
             var additionalInfo = _context.AllegroAdditional.Where(a => a.ProductId == product.Id.ToString()).Single();
@@ -1186,7 +1186,7 @@ namespace Clutchlit.Controllers
             var featureValue = _contextShop.AllegroFeatureValue;
             var featureLang = _contextShop.AllegroFeatureLang;
 
-           
+            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
             FeatureList = (from features in feature
                            join featuresValue in featureValue on features.FeatureValueId equals featuresValue.FeatureValueId
@@ -1200,13 +1200,36 @@ namespace Clutchlit.Controllers
                            });
 
             string F_set = "<h2>W ZESTAWIE</h2><ul>";
-            foreach (var result in FeatureList.Where(f => f.FeatureId == 5001))
+            if (FeatureList != null)
             {
-                F_set += "<li>" + result.Value + "</li>";
+
+                foreach (var result in FeatureList.Where(f => f.FeatureId == 5001))
+                {
+                    F_set += "<li>" + result.Value + "</li>";
+                }
+                F_set += "<li>Oryginalne opakowanie</li>";
+                F_set += "<li>Paragon / Faktura Vat</li>";
+                F_set += "</ul>";
             }
-            F_set += "<li>Oryginalne opakowanie</li>";
-            F_set += "<li>Paragon / Faktura Vat</li>";
-            F_set += "</ul>";
+            else
+            {
+                if (photos.CategoryId % 2 == 0)
+                {
+                    F_set += "<li>Koło dwumasowe</li>";
+                    F_set += "<li>Zestaw śrub</li>";
+                    F_set += "<li>Oryginalne opakowanie</li>";
+                    F_set += "<li>Paragon / Faktura Vat</li>";
+                    F_set += "</ul>";
+                }
+                else
+                {
+                    F_set += "<li>Koło dwumasowe</li>";
+                    F_set += "<li>Oryginalne opakowanie</li>";
+                    F_set += "<li>Paragon / Faktura Vat</li>";
+                    F_set += "</ul>";
+                }
+            }
+
             var F_title = FeatureList.Where(f => f.FeatureId == 5000).SingleOrDefault().Value;
             var F_radius = FeatureList.Where(f => f.FeatureId == 5002).SingleOrDefault().Value;
             var F_disk = FeatureList.Where(f => f.FeatureId == 5003).SingleOrDefault().Value;
@@ -1224,14 +1247,14 @@ namespace Clutchlit.Controllers
                          where u.ProductId == product.Id.ToString()
                          select new AllegroAuctionUsageDescription()
                          {
-                              Description_desc = ud.Description_desc,
-                              Description_list = ud.Description_list,
-                              Id = ud.Id,
-                              PcId = ud.PcId
+                             Description_desc = ud.Description_desc,
+                             Description_list = ud.Description_list,
+                             Id = ud.Id,
+                             PcId = ud.PcId
                          });
             foreach (var r in UsageList)
             {
-                var ktype = r.PcId+500000;
+                var ktype = r.PcId + 500000;
                 TermsList = (from t in Terms
                              join f in featureLang on t.FeatureId equals f.FeatureId
                              where t.CategoryId == ktype
@@ -1248,7 +1271,7 @@ namespace Clutchlit.Controllers
                 UsageDescription += "<li><b>" + r.Description_desc + "</b> ";
                 foreach (var singleterm in TermsList)
                 {
-                    UsageDescription += singleterm.Name + " " +singleterm.Value + ", ";
+                    UsageDescription += singleterm.Name + " <b>" + singleterm.Value + "</b>, ";
                 }
                 UsageDescription += "</li>";
             }
@@ -1257,7 +1280,7 @@ namespace Clutchlit.Controllers
             // dodatkowe informacje do proudktu
             //
 
-            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
+
 
             string TitlePost = "";
 
@@ -1341,16 +1364,16 @@ namespace Clutchlit.Controllers
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
 
 
-            if (auctionParams.AllegroType.Replace(" ","") == "Dostawcze")
-                auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] {"129591_2" }));
-            else if(auctionParams.AllegroType.Replace(" ","") == "Osobowe")
-                auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1"}));
+            if (auctionParams.AllegroType.Replace(" ", "") == "Dostawcze")
+                auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_2" }));
+            else if (auctionParams.AllegroType.Replace(" ", "") == "Osobowe")
+                auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1" }));
             else
                 auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
 
             auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { auctionParams.AllegroQuality })); // jakosc czesci
             auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { auctionParams.AllegroEngine }));  // diesel / benzyna
-          
+
             if (additionalInfo.Ean != null)
                 auction.ean = additionalInfo.Ean;
             else
@@ -1423,17 +1446,17 @@ namespace Clutchlit.Controllers
 
             var section = new Section();
             section.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(0)));
-            section.items.Add(new Item("TEXT", "<h1>" + F_title + " do " + auctionData.AuctionTitle + "</h1><h2>SPECYFIKACJA</h2><ul><li>Producent: <b>" + manufacturer.Description + "</b></li><li>Nr katalogowy: <b>" + product.Reference.Replace(" ","") + "</b></li><li>Średnica tarczy: <b>" + F_radius + " mm</b></li><li>Ilość zębów: <b>" + F_disk + "</b></li><li>Gwarancja producenta: <b>2 lata</b></li><li>Stan: <b>fabrycznie nowe części</b></li></ul>"+F_set+"", null));
+            section.items.Add(new Item("TEXT", "<h1>" + F_title + " do " + auctionData.AuctionTitle + "</h1><h2>SPECYFIKACJA</h2><ul><li>Producent: <b>" + manufacturer.Description + "</b></li><li>Nr katalogowy: <b>" + product.Reference.Replace(" ", "") + "</b></li><li>Średnica tarczy: <b>" + F_radius + " mm</b></li><li>Ilość zębów: <b>" + F_disk + "</b></li><li>Gwarancja producenta: <b>2 lata</b></li><li>Stan: <b>fabrycznie nowe części</b></li></ul>" + F_set + "", null));
             auction.description.sections.Add(section);
 
             var usageSection = new Section();
             usageSection.items.Add(new Item("TEXT", UsageDescription));
             auction.description.sections.Add(usageSection);
 
-            if(PhotoNumber == 3) // mamy 2 zdjecia szczegolowe, nie liczymy glownego zdjecia
+            if (PhotoNumber == 3) // mamy 2 zdjecia szczegolowe, nie liczymy glownego zdjecia
             {
                 var photoSection_1 = new Section();
-                photoSection_1.items.Add(new Item("IMAGE",null,fileLinks.ElementAt(1)));
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(1)));
                 photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(2)));
                 auction.description.sections.Add(photoSection_1);
             }
@@ -1445,7 +1468,7 @@ namespace Clutchlit.Controllers
                 auction.description.sections.Add(photoSection_1);
 
                 var photoSection_2 = new Section();
-                photoSection_2.items.Add(new Item("IMAGE",null,fileLinks.ElementAt(3)));
+                photoSection_2.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(3)));
                 auction.description.sections.Add(photoSection_2);
             }
             else if (PhotoNumber == 5) // mamy 4 zdjecia szczegolowe, nie liczymy glownego zdjecia
