@@ -1200,7 +1200,7 @@ namespace Clutchlit.Controllers
                            });
 
             string F_set = "<h2>W ZESTAWIE</h2><ul>";
-            if (FeatureList != null)
+            if (FeatureList != null && auctionParams.AllegroCategory == "50884")
             {
 
                 foreach (var result in FeatureList.Where(f => f.FeatureId == 5001))
