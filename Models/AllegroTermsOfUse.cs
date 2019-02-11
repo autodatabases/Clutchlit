@@ -21,5 +21,7 @@ namespace Clutchlit.Models
         public int FeatureId { get; set; }
         [Column("value")]
         public string Value { get; set; }
+        [NotMapped]
+        public string Name { get; set; }
     }
 }

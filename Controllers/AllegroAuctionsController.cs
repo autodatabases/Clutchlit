@@ -1207,20 +1207,20 @@ namespace Clutchlit.Controllers
                 TermsList = (from terms in Terms
                              join f in feature on terms.FeatureId equals f.FeatureId
                              join fv in featureValue on f.FeatureValueId equals fv.FeatureValueId
-                             where terms.CategoryId == ktype
                              select new AllegroTermsOfUse()
                              {
                                  CategoryId = terms.CategoryId,
                                  FeatureId = terms.FeatureId,
                                  LangId = terms.LangId,
                                  ProductId = terms.ProductId,
-                                 Value = terms.Value
+                                 Value = terms.Value,
+                                 Name = fv.Value
                              });
 
                 UsageDescription += "<li><b>" + r.Description_desc + "</b> ";
                 foreach (var singleterm in TermsList)
                 {
-                    UsageDescription += singleterm.Value + ", ";
+                    UsageDescription += singleterm.Name + ":" +singleterm.Value + ", ";
                 }
                 UsageDescription += "</li>";
             }
