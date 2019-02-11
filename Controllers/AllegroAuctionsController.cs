@@ -815,6 +815,7 @@ namespace Clutchlit.Controllers
             var FeatureList = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
             var feature = _contextShop.AllegroFeature.Where(f => f.ProductId == 42);
             var featureValue = _contextShop.AllegroFeatureValue;
+            var featureLang = _contextShop.AllegroFeatureLang;
 
             FeatureList = (from features in feature
                            join featuresValue in featureValue on features.FeatureValueId equals featuresValue.FeatureValueId
@@ -837,13 +838,16 @@ namespace Clutchlit.Controllers
             F_set += "</ul>";
             //FinalResponse += F_set;
 
-            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == 393961);
+            var TermsList = Enumerable.Empty<AllegroTermsOfUse>().AsQueryable();
+            var Terms = _contextShop.AllegroTerms.Where(t => t.ProductId == 30185);
+
+            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == 464127);
             var usageDesc = _context.AllegroUsage;
             var UsageList = Enumerable.Empty<AllegroAuctionUsageDescription>().AsQueryable();
-
+            var UsageDescription = "<h1>Zastosowanie - informacje uzupełniające</h1><h2>W uwagach do zamówienia podaj dane Twojego samochodu i nr VIN - Sprawdzimy czy zamówione części na 100% będą pasowały.</h2><ul>";
             UsageList = (from u in usage
                          join ud in usageDesc on u.PcId equals ud.PcId
-                         where u.ProductId == "42"
+                         where u.ProductId == "30185"
                          select new AllegroAuctionUsageDescription()
                          {
                              Description_desc = ud.Description_desc,
@@ -851,10 +855,34 @@ namespace Clutchlit.Controllers
                              Id = ud.Id,
                              PcId = ud.PcId
                          });
-            foreach(var r in UsageList)
+            foreach (var r in UsageList)
             {
-                FinalResponse += r.Description_desc + "<br />";
+                var ktype = r.PcId + 500000;
+                TermsList = (from t in Terms
+                             join f in featureLang on t.FeatureId equals f.FeatureId
+                             where t.CategoryId == ktype
+                             select new AllegroTermsOfUse()
+                             {
+                                 CategoryId = t.CategoryId,
+                                 FeatureId = t.FeatureId,
+                                 LangId = t.LangId,
+                                 ProductId = t.ProductId,
+                                 Value = t.Value,
+                                 Name = f.Value
+                             });
+
+                UsageDescription += "<li><b>" + r.Description_desc + "</b> ";
+                foreach (var singleterm in TermsList)
+                {
+                    UsageDescription += singleterm.Name + ":" + singleterm.Value + ", ";
+                }
+                UsageDescription += "</li>";
             }
+            UsageDescription += "</ul>";
+
+            // dodatkowe informacje do proudktu
+
+            FinalResponse += UsageDescription;
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { "11323_1" }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { "127417_2" }));
@@ -1156,7 +1184,7 @@ namespace Clutchlit.Controllers
             var FeatureList = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
             var feature = _contextShop.AllegroFeature.Where(f => f.ProductId == product.Id);
             var featureValue = _contextShop.AllegroFeatureValue;
-
+            var featureLang = _contextShop.AllegroFeatureLang;
 
            
 
@@ -1185,7 +1213,7 @@ namespace Clutchlit.Controllers
             // obsługujemy specyfikacje produktu
 
             var TermsList = Enumerable.Empty<AllegroTermsOfUse>().AsQueryable();
-            var Terms = _contextShop.AllegroTerms.Where(t => t.ProductId == product.Id);
+            var Terms = _contextShop.AllegroTerms.Where(t => t.ProductId == auctionData.ProductId);
 
             var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId);
             var usageDesc = _context.AllegroUsage;
@@ -1204,32 +1232,29 @@ namespace Clutchlit.Controllers
             foreach (var r in UsageList)
             {
                 var ktype = r.PcId+500000;
-                TermsList = (from terms in Terms
-                             join f in feature on terms.FeatureId equals f.FeatureId
-                             join fv in featureValue on f.FeatureValueId equals fv.FeatureValueId
+                TermsList = (from t in Terms
+                             join f in featureLang on t.FeatureId equals f.FeatureId
+                             where t.CategoryId == ktype
                              select new AllegroTermsOfUse()
                              {
-                                 CategoryId = terms.CategoryId,
-                                 FeatureId = terms.FeatureId,
-                                 LangId = terms.LangId,
-                                 ProductId = terms.ProductId,
-                                 Value = terms.Value,
-                                 Name = fv.Value
+                                 CategoryId = t.CategoryId,
+                                 FeatureId = t.FeatureId,
+                                 LangId = t.LangId,
+                                 ProductId = t.ProductId,
+                                 Value = t.Value,
+                                 Name = f.Value
                              });
 
                 UsageDescription += "<li><b>" + r.Description_desc + "</b> ";
                 foreach (var singleterm in TermsList)
                 {
-                    UsageDescription += singleterm.Name + ":" +singleterm.Value + ", ";
+                    UsageDescription += singleterm.Name + " " +singleterm.Value + ", ";
                 }
                 UsageDescription += "</li>";
             }
             UsageDescription += "</ul>";
 
             // dodatkowe informacje do proudktu
-            
-
-            
             //
 
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.

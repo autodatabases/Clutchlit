@@ -34,6 +34,9 @@ namespace Clutchlit.Data
         public DbSet<AllegroFeature> AllegroFeature { get; set; }
         public DbSet<AllegroFeatureValue> AllegroFeatureValue { get; set; }
         public DbSet<AllegroTermsOfUse> AllegroTerms { get; set; }
+        public DbSet<AllegroFeatureLang> AllegroFeatureLang { get; set; }
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("Host=mysql-sprzegla.nano.pl;Database=db100008759;Username=db100008759_apli;Password=7hV5vR5e");
