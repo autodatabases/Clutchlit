@@ -561,10 +561,10 @@ namespace Clutchlit.Controllers
         {
             //ViewData["token"] = AccessToken;
             ViewData["Delivery"] = GetDeliveryMethods();
-            ViewData["Shipping"] = GetShippingRates("45582318");
-            ViewData["Warranty"] = GetWarranties("45582318");
-            ViewData["ImpliesWarranty"] = GetImpliedWarranties("45582318");
-            ViewData["ReturnPolicy"] = GetReturnPolicy("45582318");
+            ViewData["Shipping"] = GetShippingRates("50667320");
+            ViewData["Warranty"] = GetWarranties("50667320");
+            ViewData["ImpliesWarranty"] = GetImpliedWarranties("50667320");
+            ViewData["ReturnPolicy"] = GetReturnPolicy("50667320");
             ViewData["MainCategories"] = GetCategory();
             return View();
         }
