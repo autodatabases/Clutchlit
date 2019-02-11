@@ -1201,7 +1201,7 @@ namespace Clutchlit.Controllers
                            });
 
             
-            if (auctionParams.AllegroCategory == "50884")
+            if (auctionParams.AllegroCategory == "50884" || auctionParams.AllegroCategory == "255983")
             {
 
                 foreach (var result in FeatureList.Where(f => f.FeatureId == 5001))
@@ -1212,7 +1212,7 @@ namespace Clutchlit.Controllers
                 F_set += "<li>Paragon / Faktura Vat</li>";
                 
             }
-            else
+            else 
             {
                 if (photos.CategoryId % 2 == 0)
                 {
