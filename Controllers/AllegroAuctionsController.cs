@@ -1458,16 +1458,16 @@ namespace Clutchlit.Controllers
             auction.publication.startingAt = null;
             auction.publication.endingAt = null;
 
-            auction.delivery.shippingRates.id = "b25e1a2e-3f2d-4206-97de-234a9dbf91bf";
+            auction.delivery.shippingRates.id = "5f220a6c-fff5-473d-a88f-2117473f045f";
             auction.delivery.handlingTime = "PT24H";
             auction.delivery.additionalInfo = "Dodatkowe informacje";
             auction.delivery.shipmentDate = null;
 
             auction.payments.invoice = "VAT";
 
-            auction.afterSalesServices.impliedWarranty.id = "c2683ac1-b36b-42a1-b0f5-b45bdaf55928";
-            auction.afterSalesServices.returnPolicy.id = "eb7c8407-808c-4078-9250-9da488560634";
-            auction.afterSalesServices.warranty.id = "0dd88048-8163-4eba-9c12-768551bf407d";
+            auction.afterSalesServices.impliedWarranty.id = "14c80388-0f3e-459c-a76f-7a148fc0fcaf";
+            auction.afterSalesServices.returnPolicy.id = "963764a4-77cc-4a4f-883d-01e24128ba64";
+            auction.afterSalesServices.warranty.id = "3b3dd2db-0c31-45d6-9105-cbc1ea0bd140";
 
             auction.additionalServices = null;
             auction.sizeTable = null;
