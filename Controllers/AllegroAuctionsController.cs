@@ -1171,15 +1171,15 @@ namespace Clutchlit.Controllers
             var F_set = "<h2>W ZESTAWIE</h2><ul>";
 
             var auction_id = Convert.ToInt32(id);
-            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
-            var auctionParams = _context.AllegroParams.Where(p => p.AuctionId == auction_id).Single();
+            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).SingleOrDefault();
+            var auctionParams = _context.AllegroParams.Where(p => p.AuctionId == auction_id).SingleOrDefault();
 
-            var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
-            var additionalInfo = _context.AllegroAdditional.Where(a => a.ProductId == product.Id.ToString()).Single();
-            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
+            var product = _context.Products.Where(p => p.Id == auctionData.ProductId).SingleOrDefault();
+            var additionalInfo = _context.AllegroAdditional.Where(a => a.ProductId == product.Id.ToString()).SingleOrDefault();
+            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).SingleOrDefault();
 
-            var allegroManufacturer = _context.AllegroManufacturers.Where(m => m.ManufacturerId == manufacturer.Tecdoc_id).Single();
-            var productPrice = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product.Id).Single();
+            var allegroManufacturer = _context.AllegroManufacturers.Where(m => m.ManufacturerId == manufacturer.Tecdoc_id).SingleOrDefault();
+            var productPrice = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product.Id).SingleOrDefault();
 
             // obsługujemy specyfikacje produktu
             var FeatureList = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
@@ -1187,7 +1187,7 @@ namespace Clutchlit.Controllers
             var featureValue = _contextShop.AllegroFeatureValue;
             var featureLang = _contextShop.AllegroFeatureLang;
 
-            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
+            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).SingleOrDefault(); // pobieramy kategorie do zdjęć.
 
             FeatureList = (from features in feature
                            join featuresValue in featureValue on features.FeatureValueId equals featuresValue.FeatureValueId
@@ -1458,7 +1458,13 @@ namespace Clutchlit.Controllers
             manuSection.items.Add(new Item("TEXT", "<h1>Marka " + manufacturer.Description + "</h1><p>" + allegroManufacturer.AllegroDescription + "</p>", null));
             auction.description.sections.Add(manuSection);
 
-            if (PhotoNumber == 3) // mamy 2 zdjecia szczegolowe, nie liczymy glownego zdjecia
+            if(PhotoNumber ==2)
+            {
+                var photoSection_1 = new Section();
+                photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(1)));
+                auction.description.sections.Add(photoSection_1);
+            }
+            else if (PhotoNumber == 3) // mamy 2 zdjecia szczegolowe, nie liczymy glownego zdjecia
             {
                 var photoSection_1 = new Section();
                 photoSection_1.items.Add(new Item("IMAGE", null, fileLinks.ElementAt(1)));
