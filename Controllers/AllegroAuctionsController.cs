@@ -1139,6 +1139,7 @@ namespace Clutchlit.Controllers
         public async Task<JsonResult> PostAuctionTest(string id)
         {
             string FinalResponse = "";
+            string ResponseId = "";
 
             var auction_id = Convert.ToInt32(id);
             var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == auction_id).Single();
@@ -1155,6 +1156,9 @@ namespace Clutchlit.Controllers
             var FeatureList = Enumerable.Empty<AllegroFeatureValue>().AsQueryable();
             var feature = _contextShop.AllegroFeature.Where(f => f.ProductId == product.Id);
             var featureValue = _contextShop.AllegroFeatureValue;
+
+
+           
 
             FeatureList = (from features in feature
                            join featuresValue in featureValue on features.FeatureValueId equals featuresValue.FeatureValueId
@@ -1180,6 +1184,9 @@ namespace Clutchlit.Controllers
             var F_disk = FeatureList.Where(f => f.FeatureId == 5003).SingleOrDefault().Value;
             // obsługujemy specyfikacje produktu
 
+            var TermsList = Enumerable.Empty<AllegroTermsOfUse>().AsQueryable();
+            var Terms = _contextShop.AllegroTerms.Where(t => t.ProductId == product.Id);
+
             var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId);
             var usageDesc = _context.AllegroUsage;
             var UsageList = Enumerable.Empty<AllegroAuctionUsageDescription>().AsQueryable();
@@ -1196,9 +1203,34 @@ namespace Clutchlit.Controllers
                          });
             foreach (var r in UsageList)
             {
-                UsageDescription += "<li><b>" +r.Description_desc + "</b></li>";
+                var ktype = r.PcId+500000;
+                TermsList = (from terms in Terms
+                             join f in feature on terms.FeatureId equals f.FeatureId
+                             join fv in featureValue on f.FeatureValueId equals fv.FeatureValueId
+                             where terms.CategoryId == ktype
+                             select new AllegroTermsOfUse()
+                             {
+                                 CategoryId = terms.CategoryId,
+                                 FeatureId = terms.FeatureId,
+                                 LangId = terms.LangId,
+                                 ProductId = terms.ProductId,
+                                 Value = terms.Value
+                             });
+
+                UsageDescription += "<li><b>" + r.Description_desc + "</b> ";
+                foreach (var singleterm in TermsList)
+                {
+                    UsageDescription += singleterm.Value + ", ";
+                }
+                UsageDescription += "</li>";
             }
             UsageDescription += "</ul>";
+
+            // dodatkowe informacje do proudktu
+            
+
+            
+            //
 
             var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
 
@@ -1253,8 +1285,6 @@ namespace Clutchlit.Controllers
             ManufacturerLogo = this.PhotoUpload(pathToLogo);
             // przesyłanie zdjęcia
 
-
-
             //przesyłanie zdjęcia
             // Generowanie tytułu
             if (additionalInfo.SecondTitle != "")
@@ -1284,13 +1314,7 @@ namespace Clutchlit.Controllers
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { auctionParams.AllegroStatus })); // nowa / uzywana
             auction.parameters.Add(new Parameters("215858", new string[] { product.Reference }, new string[] { }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
-<<<<<<< Updated upstream
-=======
-            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
-            auction.parameters.Add(new Parameters("215858", new string[] { }, new string[] { product.Reference}));
-            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
-            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
->>>>>>> Stashed changes
+
 
             if (auctionParams.AllegroType.Replace(" ","") == "Dostawcze")
                 auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] {"129591_2" }));
@@ -1321,7 +1345,7 @@ namespace Clutchlit.Controllers
 
             auction.sellingMode.format = "BUY_NOW";
             if (price == "0")
-                auction.sellingMode.price.amount = "10000";
+                auction.sellingMode.price.amount = "9999";
             else
                 auction.sellingMode.price.amount = price;
 
@@ -1380,8 +1404,6 @@ namespace Clutchlit.Controllers
             var usageSection = new Section();
             usageSection.items.Add(new Item("TEXT", UsageDescription));
             auction.description.sections.Add(usageSection);
-
-            
 
             if(PhotoNumber == 3) // mamy 2 zdjecia szczegolowe, nie liczymy glownego zdjecia
             {
@@ -1451,7 +1473,12 @@ namespace Clutchlit.Controllers
                 var result = await client.PostAsync("/sale/offers", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
                 string resultContent = await result.Content.ReadAsStringAsync();
                 FinalResponse = resultContent;
+                dynamic x = JsonConvert.DeserializeObject(resultContent);
+                ResponseId = x.id;
             }
+
+            auctionData.AllegroId = ResponseId; // aktualizujemy id
+            _context.SaveChanges(); // aktualizujemy id 
 
             return new JsonResult(FinalResponse);
         }

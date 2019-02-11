@@ -33,6 +33,7 @@ namespace Clutchlit.Data
         public DbSet<A_Cart_ip> Ip_cart_sp24 { get; set; }
         public DbSet<AllegroFeature> AllegroFeature { get; set; }
         public DbSet<AllegroFeatureValue> AllegroFeatureValue { get; set; }
+        public DbSet<AllegroTermsOfUse> AllegroTerms { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql("Host=mysql-sprzegla.nano.pl;Database=db100008759;Username=db100008759_apli;Password=7hV5vR5e");
