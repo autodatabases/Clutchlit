@@ -22,7 +22,7 @@ namespace Clutchlit.Controllers
     public class AllegroAuctionsController : Controller
     {
         public static string Token = "";
-        private static string SellerId = "sprzeglo-com-pl";
+        private static string SellerId = "sprzegla24";
         private static string AccessToken = "";
         private IHostingEnvironment hostingEnv;
         private static string pathToApp = "http://clutchlit.trimfit.pl/";
@@ -713,34 +713,7 @@ namespace Clutchlit.Controllers
 
             return Json(path);
         }
-        // [HttpGet("controller/action/{id}")]
-        public IActionResult TestAuction(Int64 AuctionId)
-        {
-            var TitlePost = "";
-            AuctionId = 394007;
-            string FinalResponse = "";
-            var auctionData = _context.AllegroAuction.Where(m => m.AuctionId == AuctionId).Single();
-
-            var product = _context.Products.Where(p => p.Id == auctionData.ProductId).Single();
-            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).Single();
-            var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auctionData.AuctionId).ToList();
-            var photos = _context.AllegroPhotos.Where(p => p.ProductId == product.Id).Single(); // pobieramy kategorie do zdjęć.
-            string r = "";
-            foreach (var p in usage)
-            {
-                r += p.PcId;
-                r += ",";
-            }
-            string price = product.Gross_price.ToString();
-            if ((auctionData.AuctionTitle + " " + auctionData.Category + " " + manufacturer.Description).Length <= 49)
-                TitlePost = auctionData.Category + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
-            else
-                TitlePost = auctionData.Category + " " + auctionData.AuctionTitle;
-
-            string productId = "SP-" + product.Id.ToString();
-
-            return Json(productId + "" + price);
-        }
+       
         [HttpGet("get/auction/{id}")]
         public IActionResult GetAuction(string id)
         {
@@ -983,9 +956,7 @@ namespace Clutchlit.Controllers
 
             return Json(FinalResponse);
         }
-
         // TEST ===========
-
         public IActionResult PostAuction(string AllegroId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt, Int64 InternalId)
         {
             string FinalResponse = "";
@@ -1477,7 +1448,7 @@ namespace Clutchlit.Controllers
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
-            auction.publication.status = "INACTIVE";
+            auction.publication.status = "ACTIVE";
             auction.publication.startingAt = null;
             auction.publication.endingAt = null;
 
