@@ -1451,10 +1451,7 @@ namespace Clutchlit.Controllers
             auction.stock.unit = "UNIT";
 
             auction.publication.duration = null;
-            if(productDisplay.Quantity == 0)
-                auction.publication.status = "INACTIVE";
-            else
-                auction.publication.status = "ACTIVE";
+            auction.publication.status = "INACTIVE";
             auction.publication.startingAt = null;
             auction.publication.endingAt = null;
 
@@ -1629,6 +1626,11 @@ namespace Clutchlit.Controllers
 
             auctionData.AllegroId = ResponseId; // aktualizujemy id
             _context.SaveChanges(); // aktualizujemy id 
+
+            if(productDisplay.Quantity != 0)
+            {
+                this.ActivateOffer(ResponseId);
+            }
 
             return new JsonResult(FinalResponse);
         }
