@@ -1284,6 +1284,13 @@ namespace Clutchlit.Controllers
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { auctionParams.AllegroStatus })); // nowa / uzywana
             auction.parameters.Add(new Parameters("215858", new string[] { product.Reference }, new string[] { }));
             auction.parameters.Add(new Parameters("127417", new string[] { }, new string[] { allegroManufacturer.AllegroManufacturerId }));
+<<<<<<< Updated upstream
+=======
+            auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] { "129591_1", "129591_2" }));
+            auction.parameters.Add(new Parameters("215858", new string[] { }, new string[] { product.Reference}));
+            auction.parameters.Add(new Parameters("214434", new string[] { }, new string[] { "214434_266986" }));
+            auction.parameters.Add(new Parameters("130531", new string[] { }, new string[] { "130531_1" }));
+>>>>>>> Stashed changes
 
             if (auctionParams.AllegroType.Replace(" ","") == "Dostawcze")
                 auction.parameters.Add(new Parameters("129591", new string[] { }, new string[] {"129591_2" }));
