@@ -683,7 +683,7 @@ namespace Clutchlit.Controllers
             //Paging   
             recordsTotal = customerData.Count();
             //Paging   
-            var data = customerData.Skip(skip).Take(1000).ToList();
+            var data = customerData.Skip(0).ToList();
             //Returning Json Data  
             Response.StatusCode = 200;
             return new JsonResult(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
