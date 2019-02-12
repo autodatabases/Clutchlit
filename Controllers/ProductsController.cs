@@ -782,7 +782,7 @@ namespace Clutchlit.Controllers
             string reference = "";
             //
             List<PdPrices> list = new List<PdPrices>();
-            list = _context.PdPrices.Where(d => d.ProductId == Id).ToList();
+            list = _context.PdPrices.Where(d => d.ProductId == Id).OrderBy(p => p.GrossPrice).ToList();
             if (list == null)
             {
                 result = "Brak danych :(";
@@ -812,7 +812,13 @@ namespace Clutchlit.Controllers
             var all_c = _context.PcCategories;
             var products = _contextShop.ProductDisplay;
             var products_shop = _contextShop.Products_prices_sp24;
+            var distributor_prices = _context.PdPrices;
+            var distributors = _context.Distributors;
+            List<Distributor> dis_list = distributors.ToList();
             var products_id = Enumerable.Empty<int>().AsQueryable();
+            var distributor_price = Enumerable.Empty<PdPrices>().AsQueryable();
+
+
 
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
             var start = Request.Form["start"].FirstOrDefault();
@@ -832,16 +838,32 @@ namespace Clutchlit.Controllers
             products_id = (from k in all_k
                            select k.Product_id);
             List<int> sorted_products_id = products_id.OrderBy(p => p).ToList();
+            var products_lang = _contextShop.Products_sp24.Where(p => sorted_products_id.Contains(p.Id_product));
+
+            distributor_price = (from dp in distributor_prices
+                                 where sorted_products_id.Contains(dp.ProductId)
+                                 select dp);
+
+            List<PdPrices> sorted_distributor_price = distributor_price.OrderBy(p => p.NetPrice).ToList();
+
             result = (from p in products
                       join ps in products_shop on p.ProductId equals ps.Id_product
                       where sorted_products_id.Contains(p.ProductId)
                       select new Product()
                       {
-                          //Gross_price = (double)p.NetPrice * 1.23,
-                          Reference = p.Reference
+                          Gross_price = Math.Round(decimal.ToDouble(p.NetPrice) * 1.23, 0),
+                          Reference = p.Reference,
+                          Id = p.ProductId,
+                          Name = products_lang.Where(dp => dp.Id_product == p.ProductId).FirstOrDefault() != null ? products_lang.Where(dp => dp.Id_product == p.ProductId).FirstOrDefault().Name : "",
+                          Manufacturer_id = p.ManufacturerId,
+                          Net_price = decimal.ToDouble(p.NetPrice),
+                          LowestPrice = sorted_distributor_price.Where(o => (o.ProductId == p.ProductId) && (o.Quantity != 0) && (o.GrossPrice != 0)).FirstOrDefault() != null ? Math.Round(sorted_distributor_price.Where(o => (o.ProductId == p.ProductId) && (o.Quantity != 0) && (o.GrossPrice != 0)).FirstOrDefault().NetPrice * 1.23, 2) : 9999,
+                          DistributorId = sorted_distributor_price.Where(o => (o.ProductId == p.ProductId) && (o.Quantity != 0) && (o.GrossPrice != 0)).FirstOrDefault() != null ? sorted_distributor_price.Where(o => (o.ProductId == p.ProductId) && (o.Quantity != 0) && (o.GrossPrice != 0)).FirstOrDefault().DistributorId : 0,
+                          DistributorName = dis_list.Where(d => d.Id == (sorted_distributor_price.Where(o => (o.ProductId == p.ProductId) && (o.Quantity != 0) && (o.GrossPrice != 0)).FirstOrDefault() != null ? sorted_distributor_price.Where(o => (o.ProductId == p.ProductId) && (o.Quantity != 0) && (o.GrossPrice != 0)).FirstOrDefault().DistributorId : 0)).SingleOrDefault().Name
                       });
 
             var customerData = result;
+
             //Search  
             if (!string.IsNullOrEmpty(searchValue))
             {

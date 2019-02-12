@@ -135,7 +135,7 @@ $(document).ready(function () {
             { "data": "reference", "name": "reference", "width": "15%" },
             { "data": "gross_price", "name": "gross_price", "width": "9%" },
             { "data": "lowestPrice", "name": "lowest_price", "width": "9%" },
-            { "data": "distributorId", "name": "distributor_id", "width": "15%", "className": "distributors" },
+            { "data": "distributorName", "name": "distributorName", "width": "15%", "className": "distributors" },
             { "data": "markup", "name": "markup", "width": "10%" },
         ],
         "order": [[1, 'asc']],

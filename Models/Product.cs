@@ -31,5 +31,7 @@ namespace Clutchlit.Models
         public Int32 DistributorId { get; set; }
         [NotMapped]
         public double Markup { get  { return Math.Round((Gross_price - LowestPrice),0);  } }
+        [NotMapped]
+        public string DistributorName { get; set; }
     }
 }
