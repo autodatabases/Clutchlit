@@ -9,7 +9,6 @@ $(document).ready(function () {
     // massive action page
     var table = $('#massiveAction').DataTable({
         "destroy": true,
-        "paging": false,
         "processing": true, // for show progress bar
         "serverSide": true, // for process server side
         "filter": true, // this is for disable filter (search box)
