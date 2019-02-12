@@ -18,23 +18,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Clutchlit.Controllers
 {
-   
+
     [Authorize]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly MysqlContext _contextShop;
 
         public static List<string> busketList = new List<string>();
 
-        public ProductsController(ApplicationDbContext context)
+        public ProductsController(ApplicationDbContext context, MysqlContext contextShop)
         {
             _context = context;
+            _contextShop = contextShop;
         }
         public IActionResult Index()
         {
             return View();
         }
-        
+
         public IActionResult List()
         {
             List<Manufacturer> list = new List<Manufacturer>();
@@ -49,7 +51,7 @@ namespace Clutchlit.Controllers
 
             CookieOptions option = new CookieOptions();
             option.Expires = DateTime.Now.AddMinutes(20);
-            
+
             Response.Cookies.Append(key, data, option);
 
             // aktualizujemy koszyk
@@ -65,15 +67,15 @@ namespace Clutchlit.Controllers
         public IActionResult ListProducts([FromQuery]string q)
         {
             var search_string = System.Web.HttpUtility.HtmlEncode(q);
-        
+
 
             // lista produktów
             var all_p = _context.Products;
             IQueryable<Product> result = null;
             result = from p in all_p
-                     where p.Reference.ToUpper().Contains(search_string.Replace(" ","").ToUpper())
-            select p;
-            
+                     where p.Reference.ToUpper().Contains(search_string.Replace(" ", "").ToUpper())
+                     select p;
+
             var customerData = result.ToList();
             //
             ViewData["products"] = customerData;
@@ -82,7 +84,7 @@ namespace Clutchlit.Controllers
         }
         public IActionResult ModelsList(int id)
         {
-            
+
             List<Model> list = new List<Model>();
             list = _context.Models.Where(m => m.Manufacturer_id == id).ToList();
             Response.StatusCode = 200;
@@ -91,21 +93,21 @@ namespace Clutchlit.Controllers
         }
         public IActionResult PcList(int id)
         {
-           
+
             var list = _context.PassengerCars.Where(p => p.Modelid == id);
             var list_a = _context.PcAttributes;
             List<PassengerCar> result = null;
 
             result = (from p in list
-                     join a in list_a on p.Ktype equals a.Pc_id
-                     select new PassengerCar { Ktype = p.Ktype, Description = p.Description, Constructioninterval = p.Constructioninterval, Id = p.Id, Modelid = p.Modelid, Fulldescription = a.Description }).OrderBy(c => c.Description).ToList();
-            
+                      join a in list_a on p.Ktype equals a.Pc_id
+                      select new PassengerCar { Ktype = p.Ktype, Description = p.Description, Constructioninterval = p.Constructioninterval, Id = p.Id, Modelid = p.Modelid, Fulldescription = a.Description }).OrderBy(c => c.Description).ToList();
+
             Response.StatusCode = 200;
             return new JsonResult(new SelectList(result, "Ktype", "SelectDesc"));
         }
         public string GetDistributorName(int id)
         {
-            string name =  _context.Distributors.Single(d=>d.Id == id).Name;
+            string name = _context.Distributors.Single(d => d.Id == id).Name;
             return name;
         }
         public string GetDistributorWarehouseName(int id, int disid)
@@ -150,12 +152,12 @@ namespace Clutchlit.Controllers
                 return "red";
             else
                 return "green";
-            
+
         }
         public string EncodeBase64(string reference)
         {
-            
-            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(reference+"|0|0");
+
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(reference + "|0|0");
             return Convert.ToBase64String(plainTextBytes);
         }
         public string ParseReference(string reference, int type)
@@ -176,6 +178,31 @@ namespace Clutchlit.Controllers
             return result;
         }
 
+        // test
+        [HttpGet("controller/action3/{id}")]
+        public IActionResult TestProducts(string id)
+        {
+            var p = _contextShop.ProductDisplay;
+            var k = _context.PcKtypes;
+            var ps = _contextShop.Products_prices_sp24;
+            var res = Enumerable.Empty<int>().AsQueryable();
+            var products = Enumerable.Empty<Product>().AsQueryable();
+
+            res = (from ka in k
+                   where ka.Ktype == 2838
+                   select ka.Product_id);
+
+            List<int> sorted = res.OrderBy(o => o).ToList(); // lista wszystkich produktów do danego KTYPE
+
+            products = (from product in p
+                        where sorted.Contains(product.ProductId)
+                        select new Product() { Name = "Test" });
+
+
+            return Json(String.Join(",", products));
+        }
+        // teset
+
         public IActionResult GetOpponentsPrices(int Id)
         {
             string iparts_string = "";
@@ -189,9 +216,9 @@ namespace Clutchlit.Controllers
             //
             Product product = _context.Products.Where(m => m.Id == Id).SingleOrDefault();
             string manufacturer_name = "DUPA";
-            if(product != null)
+            if (product != null)
             {
-                if(_context.Suppliers.Where(p => p.Tecdoc_id == product.Manufacturer_id) != null)
+                if (_context.Suppliers.Where(p => p.Tecdoc_id == product.Manufacturer_id) != null)
                 {
                     manufacturer_name = _context.Suppliers.Where(m => m.Tecdoc_id == product.Manufacturer_id).FirstOrDefault().Description.ToUpper().Replace(" ", "");
                 }
@@ -200,37 +227,37 @@ namespace Clutchlit.Controllers
             {
 
             }
-            
+
             // EBAY
             Task<string> ebay = Task<string>.Factory.StartNew(() =>
             {
-            string result = "";
-            HttpClient client = new HttpClient();
-            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
-            string resultA = "";
-            Double lowestPrice = 100000;
-            string partialResult = "";
+                string result = "";
+                HttpClient client = new HttpClient();
+                client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent", "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:44.0) Gecko/20100101 Firefox/44.0");
+                string resultA = "";
+                Double lowestPrice = 100000;
+                string partialResult = "";
 
-            try
-            {
-                using (var response = client.GetAsync("https://www.ebay.com/sch/i.html?_from=R40&_trksid=m570.l1313&_nkw=+" + product.Reference.ToUpper().Replace(" ", "") + "&_sacat=0").Result)
+                try
                 {
-                    using (var content = response.Content)
+                    using (var response = client.GetAsync("https://www.ebay.com/sch/i.html?_from=R40&_trksid=m570.l1313&_nkw=+" + product.Reference.ToUpper().Replace(" ", "") + "&_sacat=0").Result)
                     {
-                        // read answer in non-blocking way
-                        var resultB = content.ReadAsStringAsync().Result;
-                        var document = new HtmlDocument();
-                        document.LoadHtml(resultB);
-
-                        var nodes = document.DocumentNode.SelectNodes("//li[@class=\"s-item  \"]");
-                        if (nodes != null)
+                        using (var content = response.Content)
                         {
-                            foreach (HtmlNode node in nodes)
+                            // read answer in non-blocking way
+                            var resultB = content.ReadAsStringAsync().Result;
+                            var document = new HtmlDocument();
+                            document.LoadHtml(resultB);
+
+                            var nodes = document.DocumentNode.SelectNodes("//li[@class=\"s-item  \"]");
+                            if (nodes != null)
                             {
-                                if (node != null)
+                                foreach (HtmlNode node in nodes)
                                 {
-                                    var titleA = node.SelectSingleNode(".//h3[@class=\"s-item__title\"]");
-                                        if(titleA != null)
+                                    if (node != null)
+                                    {
+                                        var titleA = node.SelectSingleNode(".//h3[@class=\"s-item__title\"]");
+                                        if (titleA != null)
                                         {
                                             var title = titleA.InnerText.ToUpper().Replace(" ", "");
                                             if (title.Contains(product.Reference.ToUpper().Replace(" ", "")))
@@ -242,9 +269,9 @@ namespace Clutchlit.Controllers
 
                                                     string shippingPrice = "";
                                                     var shipprice = node.SelectSingleNode(".//span[@class=\"s-item__shipping s-item__logisticsCost\"]").InnerText;
-                                                    if ( shipprice != null)
+                                                    if (shipprice != null)
                                                     {
-                                                        shippingPrice +=  shipprice.Replace(".", ",");
+                                                        shippingPrice += shipprice.Replace(".", ",");
                                                     }
 
                                                     double TotalPrice = Double.Parse(price.Replace("$", "").Replace(".", ",").Trim());
@@ -252,8 +279,8 @@ namespace Clutchlit.Controllers
                                                     if (TotalPrice < lowestPrice)
                                                     {
                                                         lowestPrice = TotalPrice;
-                                                        string pr = Math.Round((lowestPrice * 3.76),2).ToString();
-                                                        partialResult = "<tr class='green'><td><b>EBAY</b></td><td>" + pr + " PLN "+ shipprice+"</td><td>" + stock.Trim() + "</td></tr>";
+                                                        string pr = Math.Round((lowestPrice * 3.76), 2).ToString();
+                                                        partialResult = "<tr class='green'><td><b>EBAY</b></td><td>" + pr + " PLN " + shipprice + "</td><td>" + stock.Trim() + "</td></tr>";
                                                     }
 
                                                 }
@@ -263,7 +290,7 @@ namespace Clutchlit.Controllers
                                         {
                                         }
                                     }
-                                    
+
                                 }
                                 resultA = resultA + partialResult;
                                 result = resultA;
@@ -336,7 +363,7 @@ namespace Clutchlit.Controllers
                 {
                     Console.WriteLine(e.Message);
                 }
-                
+
                 return result;
             });
             // IPARTS
@@ -395,7 +422,7 @@ namespace Clutchlit.Controllers
                             }
                         }
                     }
-                    
+
                 }
                 catch (AggregateException e)
                 {
@@ -458,7 +485,7 @@ namespace Clutchlit.Controllers
                 {
                     Console.WriteLine(e.Message);
                 }
-                
+
                 return result;
             });
             // INTER-CARS
@@ -517,7 +544,7 @@ namespace Clutchlit.Controllers
                 {
                     Console.WriteLine(e.Message);
                 }
-                
+
                 return result;
             });
             // AUTO DOC
@@ -580,7 +607,7 @@ namespace Clutchlit.Controllers
                         }
                     }
                 }
-                catch(AggregateException e)
+                catch (AggregateException e)
                 {
                     Console.WriteLine(e.Message);
                 }
@@ -642,7 +669,7 @@ namespace Clutchlit.Controllers
                 {
                     Console.WriteLine(e.Message);
                 }
-                
+
                 return result;
             });
             // CZESCI AUTO
@@ -650,7 +677,7 @@ namespace Clutchlit.Controllers
             ////////////////////////////////////
             if (iparts.Result != null)
                 iparts_string = iparts.Result;
-            if(ucando.Result != null)
+            if (ucando.Result != null)
                 ucando_string = ucando.Result;
             if (interCars.Result != null)
                 interCars_string = interCars.Result;
@@ -660,12 +687,12 @@ namespace Clutchlit.Controllers
                 ceneo_string = ceneo.Result;
             if (czesciauto.Result != null)
                 czesci_string = czesciauto.Result;
-            if(ebay != null)
+            if (ebay != null)
                 ebay_string = ebay.Result;
 
-            var res = iparts_string + ucando_string + interCars_string + autodoc_string + ceneo_string + czesci_string + ebay_string +"</table>";
+            var res = iparts_string + ucando_string + interCars_string + autodoc_string + ceneo_string + czesci_string + ebay_string + "</table>";
             return Json(res);
-     
+
         }
         public static HttpWebRequest CreateWebRequest()
         {
@@ -675,7 +702,7 @@ namespace Clutchlit.Controllers
             webRequest.Method = "POST";
             return webRequest;
         }
-        public string Api_elit_call(string Reference , int Manufacturer)
+        public string Api_elit_call(string Reference, int Manufacturer)
         {
             Reference = "826705";
             Manufacturer = 21;
@@ -706,7 +733,7 @@ namespace Clutchlit.Controllers
                         break;
                     }
             }
-            Ref = Prefix + " " +Ref;
+            Ref = Prefix + " " + Ref;
 
             string query = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" +
                 "<SOAP-ENV:Envelope xmlns:SOAP-ENV=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ns1=\"http://katalog.adpolska.pl/ws/api/1.0/\">" +
@@ -756,7 +783,7 @@ namespace Clutchlit.Controllers
             //
             List<PdPrices> list = new List<PdPrices>();
             list = _context.PdPrices.Where(d => d.ProductId == Id).ToList();
-            if(list == null)
+            if (list == null)
             {
                 result = "Brak danych :(";
             }
@@ -764,7 +791,7 @@ namespace Clutchlit.Controllers
             {
                 foreach (PdPrices s in list)
                 {
-                    result = result + "<tr class="+CheckBackground(s.Quantity)+"><td><b>" + GetDistributorName(s.DistributorId) + "</b></td><td>"+GetDistributorWarehouseName(s.DistributorWarehouseId, s.DistributorId)+"</td><td>" + s.GrossPrice + "</td><td>"+s.Quantity+"</td></tr>";
+                    result = result + "<tr class=" + CheckBackground(s.Quantity) + "><td><b>" + GetDistributorName(s.DistributorId) + "</b></td><td>" + GetDistributorWarehouseName(s.DistributorWarehouseId, s.DistributorId) + "</td><td>" + s.GrossPrice + "</td><td>" + s.Quantity + "</td></tr>";
                 }
                 result = result + "</table>";
             }
@@ -776,14 +803,16 @@ namespace Clutchlit.Controllers
             thread_elit.Start();
             // API ELIT
             Response.StatusCode = 200;
-            return new JsonResult(result); 
+            return new JsonResult(result);
         }
         public IActionResult ProductsList(string engine, int category_id)
         { // dodać obsługę Ktype samochodu     
             //Int32[] categories = Int32.Parse(category_id.Split(","));
             var all_k = _context.PcKtypes.Where(p => p.Ktype == int.Parse(engine));
-            var all_p = _context.Products;
             var all_c = _context.PcCategories;
+            var products = _contextShop.ProductDisplay;
+            var products_shop = _contextShop.Products_prices_sp24;
+            var products_id = Enumerable.Empty<int>().AsQueryable();
 
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
             var start = Request.Form["start"].FirstOrDefault();
@@ -799,20 +828,19 @@ namespace Clutchlit.Controllers
 
             int recordsTotal = 0;
             IQueryable<Product> result = null;
-            if (category_id == 0)
-            {
-                result = from k in all_k
-                         join p in all_p on k.Product_id equals p.Id
-                         select p;
-            }
-            else
-            {
-               result = from k in all_k
-                        join p in all_p on k.Product_id equals p.Id
-                        join c in all_c on p.Id equals c.ProductId
-                        where c.CategoryId == category_id
-                        select p;
-            }
+
+            products_id = (from k in all_k
+                           select k.Product_id);
+            List<int> sorted_products_id = products_id.OrderBy(p => p).ToList();
+            result = (from p in products
+                      join ps in products_shop on p.ProductId equals ps.Id_product
+                      where sorted_products_id.Contains(p.ProductId)
+                      select new Product()
+                      {
+                          //Gross_price = (double)p.NetPrice * 1.23,
+                          Reference = p.Reference
+                      });
+
             var customerData = result;
             //Search  
             if (!string.IsNullOrEmpty(searchValue))

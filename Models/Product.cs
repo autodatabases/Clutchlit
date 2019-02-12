@@ -12,14 +12,14 @@ namespace Clutchlit.Models
     {
         //[Key]
         [Column("product_id")]
-        public Int32 Id { get; set; }
+        public int Id { get; set; }
         [Column("product_name")]
         public string Name { get; set; }
         [Column("product_reference")]
         public string Reference { get; set; }
-        [Column("product_gross_price")]
+        [NotMapped]
         public double Gross_price { get; set; }
-        [Column("product_net_price")]
+        [NotMapped]
         public double Net_price { get; set; }
         [Column("product_status")]
         public Boolean Status { get; set; }
@@ -29,6 +29,7 @@ namespace Clutchlit.Models
         public double LowestPrice { get; set; }
         [Column("product_lowest_price_distributor_id")]
         public Int32 DistributorId { get; set; }
+        [NotMapped]
         public double Markup { get  { return Math.Round((Gross_price - LowestPrice),0);  } }
     }
 }

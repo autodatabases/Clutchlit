@@ -17,5 +17,9 @@ namespace Clutchlit.Models
         public string Reference { get; set; }
         [Column("quantity")]
         public int Quantity { get; set; }
+        [Column("id_manufacturer")]
+        public int ManufacturerId { get; set; }
+        [Column("price")]
+        public decimal NetPrice { get; set; }
     }
 }
