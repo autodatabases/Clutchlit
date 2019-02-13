@@ -165,4 +165,35 @@ $(document).ready(function () {
 
 
     // koszyk - ciasteczka
+
+    // lista produktów w dziale prestashop
+    var tableC = $('#prestahopList').DataTable({
+        "destroy": true,
+        "processing": false, // for show progress bar
+        "serverSide": true, // for process server side
+        "filter": true, // this is for disable filter (search box)
+        "orderMulti": false, // for disable multiple column at once
+        "ajax": {
+            "url": "/PrestashopProducts/GetAllProducts",
+            "type": "POST",
+            "datatype": "json",
+            "contentType": "application/x-www-form-urlencoded; charset=UTF-8",
+            "data": ""
+        },
+        "columnDefs":
+            [{
+                "targets": [0],
+                "visible": true,
+                "searchable": false
+            }],
+        "columns": [
+            { "data": "photo", "name": "Photo", "render": function (data, type, row) { return "<img height='100px' src='" + data + "' />"; } },
+            { "data": "id", "name": "Id" },
+            { "data": "name", "name": "Name" },
+            { "data": "reference", "name": "Reference" },
+            { "data": "grossPrice", "name": "GrossPrice" },
+            { "data": "status", "name": "Status" }
+        ],
+        "order": [[1, 'asc']]
+    });
 });

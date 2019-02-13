@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Clutchlit.Models
 {
-    [Table("ps_product_shop")]
-    public class A_product_price
+    [Table("ps_stock_available")]
+    public class A_stock
     {
         [Key]
+        [Column("id_stock_available")]
+        public int Id { get; set; }
         [Column("id_product")]
-        public int Id_product { get; set; }
-        [Column("price")]
-        public decimal Price { get; set; }
-        [Column("active")]
-        public int Active { get; set; }
+        public int ProductId { get; set; }
+        [Column("quantity")]
+        public int Quantity { get; set; }
     }
 }

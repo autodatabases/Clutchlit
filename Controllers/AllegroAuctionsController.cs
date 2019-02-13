@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Clutchlit.Data;
 using Clutchlit.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -717,8 +718,8 @@ namespace Clutchlit.Controllers
             return Json(path);
         }
        
-        [HttpGet("get/auction/{id}")]
-        public IActionResult GetAuction(string id)
+        
+        public string GetAuction(string id)
         {
             string result = "";
             var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offers/" + id + "");
@@ -734,7 +735,7 @@ namespace Clutchlit.Controllers
                 var resource = streamReader.ReadToEnd();
                 result = resource;
             }
-            return Json(result);
+            return result;
         }
         public IActionResult TestPhotoUp()
         {
@@ -777,6 +778,7 @@ namespace Clutchlit.Controllers
         }
 
         // TEST ===========
+        [Authorize]
         [HttpGet("controller/action/{id}")]
         public IActionResult PostAuctionA(string id)
         {
@@ -960,6 +962,7 @@ namespace Clutchlit.Controllers
             return Json(FinalResponse);
         }
         // TEST ===========
+        [Authorize]
         public IActionResult PostAuction(string AllegroId, string Title, string Category, string CreatedAt, string UpdatedAt, string ValidatedAt, Int64 InternalId)
         {
             string FinalResponse = "";
@@ -1163,6 +1166,7 @@ namespace Clutchlit.Controllers
 
         }
         // Poniższa metoda do wrzucania aukcji 
+        [Authorize]
         public async Task<JsonResult> PostAuctionTest(string id)
         {
             string FinalResponse = "";
@@ -1276,9 +1280,7 @@ namespace Clutchlit.Controllers
                     F_set += "</ul>";
                 }
             }
-            
 
-           
             // obsługujemy specyfikacje produktu
 
             var TermsList = Enumerable.Empty<AllegroTermsOfUse>().AsQueryable();
@@ -1325,8 +1327,6 @@ namespace Clutchlit.Controllers
 
             // dodatkowe informacje do proudktu
             //
-
-
 
             string TitlePost = "";
 
@@ -1603,8 +1603,6 @@ namespace Clutchlit.Controllers
             }
 
             
-
-
             var footerSection = new Section();
             footerSection.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p><h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Zadzwoń lub napisz, chętnie pomożemy!</h1><h1>Nr tel. / e-mail znajdziesz poniżej w zakładce [-- O sprzedającym --]</h1>", null));
             auction.description.sections.Add(footerSection);
@@ -1634,7 +1632,56 @@ namespace Clutchlit.Controllers
 
             return new JsonResult(FinalResponse);
         }
+       // [To poniżej] Jeszcze niegotowe!!
+        [HttpGet("[controller]/[action]/{id}")]
+        public async Task<JsonResult> UpdateAuctionPrice(string id)
+        {
+            int product_id = int.Parse(id);
+            string Response = "";
 
+            try
+            {
+                var product = _contextShop.ProductDisplay.Where(p => p.ProductId == product_id).SingleOrDefault();
+                var new_price = Math.Round((double)product.NetPrice * 1.23);
+
+                var auction = _context.AllegroAuction.Where(a => a.ProductId == product.ProductId).ToList();
+
+                foreach (var singleAuction in auction)
+                {
+                    var auction_internal_id = singleAuction.AuctionId;
+                    var auction_allegro_id = singleAuction.AllegroId;
+                    var title = singleAuction.AuctionTitle;
+
+                    var auctionAllegro = GetAuction(auction_allegro_id);
+
+                    AuctionToPost ac = new AuctionToPost();
+                    ac = JsonConvert.DeserializeObject<AuctionToPost>(auctionAllegro);
+
+                    ac.sellingMode.price.amount = new_price.ToString();
+
+                    string outprint = JsonConvert.SerializeObject(ac, Formatting.Indented);
+
+                    // ------
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri("https://api.allegro.pl");
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+                        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
+                        var result = await client.PutAsync("/sale/offers/"+auction_allegro_id+"", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
+                        string resultContent = await result.Content.ReadAsStringAsync();
+                        //Response = resultContent;
+                        //dynamic x = JsonConvert.DeserializeObject(resultContent);
+                    }
+                    Response += title + ", ";
+                }
+            }
+            catch(Exception e)
+            {
+                Response = e.Message;
+            }
+            
+            return Json(Response);
+        }
         public IActionResult PostDraftAuction(string id)
         {
             var auction_id = Convert.ToInt32(id);

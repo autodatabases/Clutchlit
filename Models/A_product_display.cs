@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Clutchlit.Models
 {
-    [Table("ps_product")]
+    [Table("ps_product")] 
     public class A_product_display
     {
         [Key]
@@ -21,5 +21,7 @@ namespace Clutchlit.Models
         public int ManufacturerId { get; set; }
         [Column("price")]
         public decimal NetPrice { get; set; }
+        [Column("active")]
+        public int Active { get; set; }
     }
 }

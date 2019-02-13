@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Clutchlit.Data;
+using Clutchlit.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Clutchlit.Controllers
@@ -22,6 +23,54 @@ namespace Clutchlit.Controllers
         {
             return View();
         }
+        public IActionResult GetAllProducts()
+        {
+            var products = _contextSp24.ProductDisplay; // products
+            var manufacturers = _contextSp24.ShopManufacturer; // producenci
+
+            
+            var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
+            var start = Request.Form["start"].FirstOrDefault();
+            var length = Request.Form["length"].FirstOrDefault();
+            var sortColumn = Request.Form["columns[" + Request.Form["order[0][column]"].FirstOrDefault() + "][name]"].FirstOrDefault();
+
+            var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].FirstOrDefault();
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+
+            int recordsTotal = 0;
+            IQueryable<PrestashopProduct> result = null;
+
+            result = (from p in products
+                      join m in manufacturers on p.ManufacturerId equals m.ManuId
+                      select new PrestashopProduct {
+                          Photo = p.ProductId.ToString(),
+                          Id = p.ProductId,
+                          Name = p.Reference,
+                          Reference = p.Reference,
+                          GrossPrice = p.NetPrice,
+                          Status = p.Active
+                      });
+            
+            var customerData = result;
+
+            //Search  
+            if (!string.IsNullOrEmpty(searchValue))
+            {
+                //customerData = customerData.Where(m => m.Name.ToUpper().Contains(searchValue.ToUpper()));
+            }
+            //Paging   
+            recordsTotal = customerData.Count();
+            //Paging   
+            var data = customerData.Skip(skip).Take(pageSize).ToList();
+            //Returning Json Data  
+            Response.StatusCode = 200;
+           
+            return new JsonResult(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = customerData });
+        }
         [HttpGet("[controller]/[action]/{id}")]
         public IActionResult Edit(string id)
         {
@@ -32,10 +81,52 @@ namespace Clutchlit.Controllers
 
             var product_quantity = product_data.Quantity;
 
+            ViewData["product_id"] = product_data.ProductId;
             ViewData["product_title"] = product_title;
             ViewData["product_gross_price"] = product_gross_price;
             ViewData["product_quantity"] = product_quantity;
             
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Update(string inputId, string inputTitle, string inputGrossPrice, string inputQuantity, string inputStatus)
+        {
+            int product_id = int.Parse(inputId);
+            double netPrice = Math.Round(Double.Parse(inputGrossPrice) / 1.23, 6);
+
+            var product_Sp24 = _contextSp24.ProductDisplay.Where(p => p.ProductId == product_id).SingleOrDefault();
+            var product_shop_Sp24 = _contextSp24.Products_prices_sp24.Where(p => p.Id_product == product_id).SingleOrDefault();
+            var product_stockSp24 = _contextSp24.ProductsStock.Where(p => p.ProductId == product_id).SingleOrDefault();
+
+            product_Sp24.Quantity = int.Parse(inputQuantity);
+            product_Sp24.NetPrice = (decimal)netPrice;
+            product_shop_Sp24.Price = (decimal)netPrice;
+            product_Sp24.Active = int.Parse(inputStatus);
+            product_shop_Sp24.Active = int.Parse(inputStatus);
+            product_stockSp24.Quantity = int.Parse(inputQuantity);
+
+            var product_SpC = _contextSpC.ProductDisplay.Where(p => p.ProductId == product_id).SingleOrDefault();
+            var product_shop_SpC = _contextSpC.Products_prices_spcom.Where(p => p.Id_product == product_id).SingleOrDefault();
+            var product_stockSpC = _contextSpC.ProductsStock.Where(p => p.ProductId == product_id).SingleOrDefault();
+
+            product_SpC.Quantity = int.Parse(inputQuantity);
+            product_SpC.NetPrice = (decimal)netPrice;
+            product_shop_SpC.Price = (decimal)netPrice;
+            product_SpC.Active = int.Parse(inputStatus);
+            product_shop_SpC.Active = int.Parse(inputStatus);
+            product_stockSpC.Quantity = int.Parse(inputQuantity);
+
+            //_contextSpC.SaveChanges();
+            //_contextSp24.SaveChanges();
+
+            if (inputStatus == "1")
+                ViewData["status"] = "Włączony";
+            else
+                ViewData["status"] = "Wyłączony";
+
+            ViewData["quantity"] = inputQuantity;
+            ViewData["product_id"] = product_id;
+            ViewData["price"] = Math.Round(netPrice*1.23).ToString() + "(" + netPrice + ")";
             return View();
         }
     }
