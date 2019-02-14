@@ -1641,10 +1641,10 @@ namespace Clutchlit.Controllers
 
             try
             {
-                var product = _contextShop.ProductDisplay.Where(p => p.ProductId == product_id).SingleOrDefault();
-                var new_price = Math.Round((double)product.NetPrice * 1.23);
+                var product = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product_id).SingleOrDefault();
+                var new_price = Math.Round((double)product.Price * 1.23);
 
-                var auction = _context.AllegroAuction.Where(a => a.ProductId == product.ProductId).ToList();
+                var auction = _context.AllegroAuction.Where(a => a.ProductId == product.Id_product).ToList();
 
                 foreach (var singleAuction in auction)
                 {
