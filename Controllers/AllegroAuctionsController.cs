@@ -1638,6 +1638,7 @@ namespace Clutchlit.Controllers
         {
             int product_id = int.Parse(id);
             string Response = "";
+            int Error = 0;
 
             try
             {
@@ -1646,7 +1647,7 @@ namespace Clutchlit.Controllers
 
                 var auction = _context.AllegroAuction.Where(a => a.ProductId == product.Id_product).ToList();
 
-                foreach (var singleAuction in auction)
+                foreach (var singleAuction in auction)  
                 {
                     var auction_internal_id = singleAuction.AuctionId;
                     var auction_allegro_id = singleAuction.AllegroId;
@@ -1664,6 +1665,7 @@ namespace Clutchlit.Controllers
                         var result = await client.PutAsync("/offers/"+auction_allegro_id+"/change-price-commands/"+uuid+"/", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
                         string resultContent = await result.Content.ReadAsStringAsync();
                         Response = resultContent;
+                        Error = 1;
                         //dynamic x = JsonConvert.DeserializeObject(resultContent);
                     }
                     
@@ -1672,9 +1674,10 @@ namespace Clutchlit.Controllers
             catch(Exception e)
             {
                 Response = e.Message;
+                Error = 0;
             }
             
-            return Json(Response);
+            return Json(Error);
         }
         public IActionResult PostDraftAuction(string id)
         {
