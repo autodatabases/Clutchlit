@@ -1651,23 +1651,17 @@ namespace Clutchlit.Controllers
                     var auction_internal_id = singleAuction.AuctionId;
                     var auction_allegro_id = singleAuction.AllegroId;
                     var title = singleAuction.AuctionTitle;
+                    var uuid = System.Guid.NewGuid().ToString();
+                    //var auctionAllegro = GetAuction(auction_allegro_id);
 
-                    var auctionAllegro = GetAuction(auction_allegro_id);
-
-                    AuctionToPost ac = new AuctionToPost();
-                    ac = JsonConvert.DeserializeObject<AuctionToPost>(auctionAllegro);
-
-                    ac.sellingMode.price.amount = new_price.ToString();
-
-                    string outprint = JsonConvert.SerializeObject(ac, Formatting.Indented);
-
+                    string outprint = "{\"id\": \""+uuid+"\",\"input\": { \"buyNowPrice\": { \"amount\": \""+new_price+"\", \"currency\": \"PLN\" } } }";
                     // ------
                     using (var client = new HttpClient())
                     {
                         client.BaseAddress = new Uri("https://api.allegro.pl");
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
                         client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
-                        var result = await client.PutAsync("/sale/offers/"+auction_allegro_id+"", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
+                        var result = await client.PutAsync("/offers/"+auction_allegro_id+"/change-price-commands/"+uuid+"/", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
                         string resultContent = await result.Content.ReadAsStringAsync();
                         //Response = resultContent;
                         //dynamic x = JsonConvert.DeserializeObject(resultContent);

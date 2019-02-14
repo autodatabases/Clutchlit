@@ -87,11 +87,7 @@ using Clutchlit.Models;
             WriteLiteral("\r\n        </dd>\r\n    </dl>\r\n</div>\r\n<div>\r\n    ");
             EndContext();
             BeginContext(397, 69, false);
-<<<<<<< HEAD
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a0fb7559123e4c2fb40c6e51ebe22106", async() => {
-=======
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "926aca4312ed4f96be3d4cd776f990b3", async() => {
->>>>>>> master
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "68a35fcf6466428eaaa19e024dbb01e4", async() => {
                 BeginContext(456, 6, true);
                 WriteLiteral("Edytuj");
                 EndContext();
@@ -120,11 +116,7 @@ using Clutchlit.Models;
             WriteLiteral(" |\r\n    ");
             EndContext();
             BeginContext(474, 74, false);
-<<<<<<< HEAD
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f884680134124b4db9099a192f8c4a3e", async() => {
-=======
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d3a64bd48f494d2180e9abf6c45c7359", async() => {
->>>>>>> master
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b1e3c5dcfca84bf8b188e0f6678a1ccb", async() => {
                 BeginContext(531, 13, true);
                 WriteLiteral("Wróć do listy");
                 EndContext();
