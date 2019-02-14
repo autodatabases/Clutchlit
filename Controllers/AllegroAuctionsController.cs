@@ -1663,10 +1663,10 @@ namespace Clutchlit.Controllers
                         client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
                         var result = await client.PutAsync("/offers/"+auction_allegro_id+"/change-price-commands/"+uuid+"/", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
                         string resultContent = await result.Content.ReadAsStringAsync();
-                        //Response = resultContent;
+                        Response = resultContent;
                         //dynamic x = JsonConvert.DeserializeObject(resultContent);
                     }
-                    Response += title + ", ";
+                    
                 }
             }
             catch(Exception e)
