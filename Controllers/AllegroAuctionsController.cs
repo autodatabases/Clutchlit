@@ -1643,7 +1643,9 @@ namespace Clutchlit.Controllers
                 var auction = GetAuction(auction_data.AllegroId);
                 var auctionD = JsonConvert.DeserializeObject<AuctionToPost>(auction);
 
+                auctionD.compatibilityList = new CompatibleList();
                 auctionD.FillListCompatible("Alfa Romeo");
+
                 try
                 {
                     string outprint = JsonConvert.SerializeObject(auctionD, Formatting.Indented);
