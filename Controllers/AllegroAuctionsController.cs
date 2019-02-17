@@ -1383,15 +1383,15 @@ namespace Clutchlit.Controllers
             // Generowanie tytułu
             if (additionalInfo.SecondTitle != "")
             {
-                if ((additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle).Length <= 50)
-                    TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle;
+                if ((additionalInfo.FirstTitle + " " + manufacturer.Description.ToUpper() + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle).Length <= 50)
+                    TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description.ToUpper() + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle;
                 else
                     TitlePost = additionalInfo.FirstTitle + " " + auctionData.AuctionTitle + " " + additionalInfo.SecondTitle;
             }
             else
             {
-                if ((additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle).Length <= 50)
-                    TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description + " " + auctionData.AuctionTitle;
+                if ((additionalInfo.FirstTitle + " " + manufacturer.Description.ToUpper() + " " + auctionData.AuctionTitle).Length <= 50)
+                    TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description.ToUpper() + " " + auctionData.AuctionTitle;
                 else
                     TitlePost = additionalInfo.FirstTitle + " " + auctionData.AuctionTitle;
             }
@@ -1402,7 +1402,7 @@ namespace Clutchlit.Controllers
             // tu będziemy pobierać dane dot. danego produktu do aukcji
             var auction = new AuctionToPost();
             //auction.id = AllegroId;
-            auction.name = TitlePost.ToUpper();
+            auction.name = TitlePost;
             auction.category.id = auctionParams.AllegroCategory;
 
             auction.parameters.Add(new Parameters("11323", new string[] { }, new string[] { auctionParams.AllegroStatus })); // nowa / uzywana
@@ -1634,15 +1634,21 @@ namespace Clutchlit.Controllers
         }
        // [HttpGet("[controller]/[action]/{id}")]
         public async Task<JsonResult> UpdateAuctionData(string id)
-        {
+        { 
+            // aktualizujemy PASUJE DO
+            // aktualizujemy TYTUŁY AUKCJI JEŻELI > 50
             Boolean error = true;
             string Response = "";
             var auction_data =_context.AllegroAuction.Where(a => a.AuctionId == int.Parse(id)).SingleOrDefault();
+            var product = _contextShop.ProductDisplay.Where(d => d.ProductId == auction_data.ProductId).SingleOrDefault();
+
+            var additionalInfo = _context.AllegroAdditional.Where(a => a.ProductId == auction_data.ProductId.ToString()).SingleOrDefault();
+            var manufacturer = _context.Suppliers.Where(m => m.Tecdoc_id == product.ManufacturerId).SingleOrDefault();
+
             if (auction_data.AllegroId != "")
             {   
                 var auction = GetAuction(auction_data.AllegroId);
                 var auctionD = JsonConvert.DeserializeObject<AuctionToPost>(auction);
-
                 try
                 {
                     var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auction_data.AuctionId);
@@ -1666,6 +1672,34 @@ namespace Clutchlit.Controllers
                             auctionD.FillListCompatible(car.Description_list);
                         }
                     }
+                    // sprawdzamy czy będziemy korzystać z rescue title
+                    if (auctionD.name.Length > 50)
+                    {
+                        var new_title = _context.AllegroTitle.Where(t => t.AuctionId == auction_data.AuctionId.ToString()).SingleOrDefault();
+                        if (new_title != null)
+                            auctionD.name = new_title.AuctionTitle;
+                        else
+                            auctionD.name = "TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST TEST";
+                    }
+                    else
+                    { // aktualizujemy tytuł na małe litery
+                        var TitlePost = "";
+                        if (additionalInfo.SecondTitle != "")
+                        {
+                            if ((additionalInfo.FirstTitle + " " + manufacturer.Description.ToUpper() + " " + auction_data.AuctionTitle + " " + additionalInfo.SecondTitle).Length <= 50)
+                                TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description.ToUpper() + " " + auction_data.AuctionTitle + " " + additionalInfo.SecondTitle;
+                            else
+                                TitlePost = additionalInfo.FirstTitle + " " + auction_data.AuctionTitle + " " + additionalInfo.SecondTitle;
+                        }
+                        else
+                        {
+                            if ((additionalInfo.FirstTitle + " " + manufacturer.Description.ToUpper() + " " + auction_data.AuctionTitle).Length <= 50)
+                                TitlePost = additionalInfo.FirstTitle + " " + manufacturer.Description.ToUpper() + " " + auction_data.AuctionTitle;
+                            else
+                                TitlePost = additionalInfo.FirstTitle + " " + auction_data.AuctionTitle;
+                        }
+                        auctionD.name = TitlePost; 
+                    }
                 }
                 catch(Exception e)
                 {
@@ -1686,6 +1720,14 @@ namespace Clutchlit.Controllers
                         string resultContent = await result.Content.ReadAsStringAsync();
                         Response = resultContent;
                         error = false;
+
+                        // próbujemy aktywować ofertę jeżeli jej status w sklepie > 0 
+                        // może się zdarzyć, że zostało coś poprawione 
+                        if(product.Quantity > 0)
+                        {
+                            this.ActivateOffer(auction_data.AllegroId);
+                        }
+                        
                     }
                 }
                 catch(Exception e)
@@ -1700,7 +1742,7 @@ namespace Clutchlit.Controllers
 
             return new JsonResult(Response);
         }
-       // [To poniżej] Jeszcze niegotowe!!
+       // [To poniżej] JUŻ DZIAŁA!!
         [HttpGet("[controller]/[action]/{id}")]
         public async Task<JsonResult> UpdateAuctionPrice(string id)
         {
