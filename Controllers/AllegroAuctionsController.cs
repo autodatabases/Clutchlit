@@ -1633,7 +1633,7 @@ namespace Clutchlit.Controllers
             return new JsonResult(FinalResponse);
         }
         [HttpGet("[controller]/[action]/{id}")]
-        public IActionResult UpdateAuctionData(string id)
+        public async Task<JsonResult> UpdateAuctionData(string id)
         {
             Boolean error = true;
             string Response = "";
@@ -1643,15 +1643,35 @@ namespace Clutchlit.Controllers
                 var auction = GetAuction(auction_data.AllegroId);
                 var auctionD = JsonConvert.DeserializeObject<AuctionToPost>(auction);
 
-                Response += auctionD.name;
-                Response += auctionD.payments.invoice;
-
+                auctionD.FillListCompatible("Alfa Romeo");
+                try
+                {
+                    string outprint = JsonConvert.SerializeObject(auctionD, Formatting.Indented);
+                    // ------
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri("https://api.allegro.pl");
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+                        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
+                        var result = await client.PutAsync("/sale/offers/"+ auction_data.AllegroId + "", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
+                        string resultContent = await result.Content.ReadAsStringAsync();
+                        Response = resultContent;
+                        dynamic x = JsonConvert.DeserializeObject(resultContent);
+                        
+                        error = false;
+                    }
+                }
+                catch(Exception e)
+                {
+                    Response = e.Message;
+                    error = true;
+                }
                 error = false;
             }
             else
                 error = true;
 
-            return Json(Response);
+            return new JsonResult(Response);
         }
        // [To poniżej] Jeszcze niegotowe!!
         [HttpGet("[controller]/[action]/{id}")]
