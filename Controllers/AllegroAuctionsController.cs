@@ -1632,6 +1632,14 @@ namespace Clutchlit.Controllers
 
             return new JsonResult(FinalResponse);
         }
+        [HttpGet("[controller]/[action]/{id}")]
+        public IActionResult UpdateAuctionData(string id)
+        {
+            var auction_data =_context.AllegroAuction.Where(a => a.AuctionId == int.Parse(id)).SingleOrDefault();
+            var auction = GetAuction(auction_data.AllegroId);
+
+            return Json(auction);
+        }
        // [To poniżej] Jeszcze niegotowe!!
         [HttpGet("[controller]/[action]/{id}")]
         public async Task<JsonResult> UpdateAuctionPrice(string id)
