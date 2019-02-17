@@ -1632,7 +1632,7 @@ namespace Clutchlit.Controllers
 
             return new JsonResult(FinalResponse);
         }
-        [HttpGet("[controller]/[action]/{id}")]
+       // [HttpGet("[controller]/[action]/{id}")]
         public async Task<JsonResult> UpdateAuctionData(string id)
         {
             Boolean error = true;
@@ -1643,8 +1643,35 @@ namespace Clutchlit.Controllers
                 var auction = GetAuction(auction_data.AllegroId);
                 var auctionD = JsonConvert.DeserializeObject<AuctionToPost>(auction);
 
-                auctionD.compatibilityList = new CompatibleList();
-                auctionD.FillListCompatible("Alfa Romeo");
+                try
+                {
+                    var usage = _context.AllegroAuctionUsage.Where(u => u.AuctionId == auction_data.AuctionId);
+                    var usageDesc = _context.AllegroUsage;
+                    var UsageList = Enumerable.Empty<AllegroAuctionUsageDescription>().AsQueryable();
+                    UsageList = (from u in usage
+                                 join ud in usageDesc on u.PcId equals ud.PcId
+                                 where u.ProductId == auction_data.ProductId.ToString()
+                                 select new AllegroAuctionUsageDescription()
+                                 {
+                                     Description_desc = ud.Description_desc,
+                                     Description_list = ud.Description_list,
+                                     Id = ud.Id,
+                                     PcId = ud.PcId
+                                 });
+                    if (UsageList != null)
+                    {
+                        auctionD.compatibilityList = new CompatibleList();
+                        foreach (var car in UsageList)
+                        {
+                            auctionD.FillListCompatible(car.Description_list);
+                        }
+                    }
+                }
+                catch(Exception e)
+                {
+                    Response += e.Message;
+                }
+
 
                 try
                 {
@@ -1658,14 +1685,12 @@ namespace Clutchlit.Controllers
                         var result = await client.PutAsync("/sale/offers/"+ auction_data.AllegroId + "", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
                         string resultContent = await result.Content.ReadAsStringAsync();
                         Response = resultContent;
-                        dynamic x = JsonConvert.DeserializeObject(resultContent);
-                        
                         error = false;
                     }
                 }
                 catch(Exception e)
                 {
-                    Response = e.Message;
+                    Response += e.Message;
                     error = true;
                 }
                 error = false;

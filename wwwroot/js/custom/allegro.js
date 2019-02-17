@@ -79,6 +79,29 @@ $(document).ready(function () {
             });
         }
     });
+
+    $('#update_selected').click(function (event) {
+
+        if (confirm("Czy jesteś pewien, że chcesz zaktualizować listę \"Pasuje Do\"?")) {
+            var idR;
+            var rows_selected = table.column(0).checkboxes.selected();
+            $.each(rows_selected, function (index, rowId) {
+                idR = rowId;
+                $.ajax({
+                    type: "POST",
+                    url: "/AllegroAuctions/UpdateAuctionData/" + idR + "/",
+                    data: { "id": idR },
+                    dataType: "json",
+                    success: function (msg) {
+                        alert(msg);
+                    },
+                    error: function (msg) {
+                        alert("Coś poszło nie tak. Aukcja ID: " + idR + " nie została zaktualizowana :(");
+                    }
+                });
+            });
+        }
+    });
     // massive action page
 
     $("#confirmCategory").hide();
