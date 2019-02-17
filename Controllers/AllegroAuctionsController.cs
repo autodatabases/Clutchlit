@@ -1635,10 +1635,23 @@ namespace Clutchlit.Controllers
         [HttpGet("[controller]/[action]/{id}")]
         public IActionResult UpdateAuctionData(string id)
         {
+            Boolean error = true;
+            string Response = "";
             var auction_data =_context.AllegroAuction.Where(a => a.AuctionId == int.Parse(id)).SingleOrDefault();
-            var auction = GetAuction(auction_data.AllegroId);
+            if (auction_data.AllegroId != "")
+            {   
+                var auction = GetAuction(auction_data.AllegroId);
+                var auctionD = JsonConvert.DeserializeObject<AuctionToPost>(auction);
 
-            return Json(auction);
+                Response += auctionD.name;
+                Response += auctionD.payments.invoice;
+
+                error = false;
+            }
+            else
+                error = true;
+
+            return Json(Response);
         }
        // [To poniżej] Jeszcze niegotowe!!
         [HttpGet("[controller]/[action]/{id}")]
