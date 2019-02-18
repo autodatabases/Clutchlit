@@ -1632,6 +1632,80 @@ namespace Clutchlit.Controllers
 
             return new JsonResult(FinalResponse);
         }
+        public async Task<JsonResult> UpdateReplacemenetList(string id)
+        {
+            string Response = "";
+            List<string> crosy = new List<string>();
+
+            var auction_data = _context.AllegroAuction.Where(a => a.AuctionId == int.Parse(id)).SingleOrDefault();
+
+            var allegro_auction = this.GetAuction(auction_data.AllegroId);
+            var auctionD = JsonConvert.DeserializeObject<AuctionToPost>(allegro_auction);
+            var product = _contextShop.ProductDisplay.Where(d => d.ProductId == auction_data.ProductId).SingleOrDefault();
+
+
+            var tagProduct = _contextShop.TagProduct.Where(t => t.ProductId == auction_data.ProductId);
+            var tag = _contextShop.Tag;
+            var TagList = Enumerable.Empty<AllegroTag>().AsQueryable();
+
+            if (tagProduct != null)
+            {
+                TagList = (from tp in tagProduct
+                           join t in tag on tp.TagId equals t.TagId
+                           join m in _contextShop.ShopManufacturer on t.ManufacturerId equals m.ManuId
+                           select new AllegroTag()
+                           {
+                               LangId = t.LangId,
+                               TagId = t.TagId,
+                               Manufacturer = m.Name,
+                               ManufacturerId = t.ManufacturerId,
+                               Name = t.Name
+                           });
+                if (TagList != null)
+                {
+                    foreach (var singletag in TagList)
+                    {
+                        crosy.Add(singletag.Manufacturer + " " + singletag.Name);
+                    }
+                }
+            }
+
+            // uction.parameters.Add(new Parameters("215941", crosy.Take(9).ToArray() , new string[] { }));
+
+            var cros_parameter = auctionD.parameters.Where(p => p.id == "215941").SingleOrDefault();
+            cros_parameter.values = crosy.Take(10).ToArray();
+
+            try
+            {
+                string outprint = JsonConvert.SerializeObject(auctionD, Formatting.Indented);
+                // ------
+                using (var client = new HttpClient())
+                {
+                    client.BaseAddress = new Uri("https://api.allegro.pl");
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+                    client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
+                    var result = await client.PutAsync("/sale/offers/" + auction_data.AllegroId + "", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
+                    string resultContent = await result.Content.ReadAsStringAsync();
+                    Response = resultContent;
+                   
+
+                    // próbujemy aktywować ofertę jeżeli jej status w sklepie > 0 
+                    // może się zdarzyć, że zostało coś poprawione 
+                    if (product.Quantity > 0)
+                    {
+                        this.ActivateOffer(auction_data.AllegroId);
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                Response += e.Message;
+            }
+
+
+            return new JsonResult(cros_parameter);
+        }
        // [HttpGet("[controller]/[action]/{id}")]
         public async Task<JsonResult> UpdateAuctionData(string id)
         { 

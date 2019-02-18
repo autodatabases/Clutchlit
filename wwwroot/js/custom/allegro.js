@@ -102,6 +102,29 @@ $(document).ready(function () {
             });
         }
     });
+
+    $('#update_cross_list').click(function (event) {
+
+        if (confirm("Czy jesteś pewien, że chcesz zaktualizować listę \"Cross\"?")) {
+            var idR;
+            var rows_selected = table.column(0).checkboxes.selected();
+            $.each(rows_selected, function (index, rowId) {
+                idR = rowId;
+                $.ajax({
+                    type: "POST",
+                    url: "/AllegroAuctions/UpdateReplacemenetList/" + idR + "/",
+                    data: { "id": idR },
+                    dataType: "json",
+                    success: function (msg) {
+                        alert(msg);
+                    },
+                    error: function (msg) {
+                        alert("Coś poszło nie tak. Aukcja ID: " + idR + " nie została zaktualizowana :(");
+                    }
+                });
+            });
+        }
+    });
     // massive action page
 
     $("#confirmCategory").hide();
