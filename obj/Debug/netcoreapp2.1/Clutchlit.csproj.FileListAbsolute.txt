@@ -214,4 +214,10 @@ D:\WORK\Customers\[SPRZĘGŁA]\Clutchlit\Clutchlit\obj\Debug\netcoreapp2.1\Razor
 D:\WORK\Customers\[SPRZĘGŁA]\Clutchlit\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Distributors\DistributorDetails.g.cshtml.cs
 D:\WORK\Customers\[SPRZĘGŁA]\Clutchlit\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Distributors\DistributorEdit.g.cshtml.cs
 D:\WORK\Customers\[SPRZĘGŁA]\Clutchlit\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\Distributors\DistributorsList.g.cshtml.cs
+<<<<<<< Updated upstream
 D:\WORK\Customers\[SPRZĘGŁA]\Clutchlit\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\AllegroAuctions\MassiveAction.g.cshtml.cs
+=======
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\PrestashopProducts\Edit.g.cshtml.cs
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\PrestashopProducts\Update.g.cshtml.cs
+E:\[DOTNET] Projekty\Clutchlit\obj\Debug\netcoreapp2.1\Razor\Views\PrestashopProducts\Index.g.cshtml.cs
+>>>>>>> Stashed changes

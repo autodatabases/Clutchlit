@@ -90,7 +90,11 @@ using Clutchlit.Models;
             ");
             EndContext();
             BeginContext(1111, 1744, false);
+<<<<<<< Updated upstream
             __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "adfb7076c5a846cb82c619ab62e5c415", async() => {
+=======
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c81bfe4dc5f644cc984ebb42e79a0497", async() => {
+>>>>>>> Stashed changes
                 BeginContext(1131, 288, true);
                 WriteLiteral(@"
                 <div class=""col-lg-3"">
@@ -101,7 +105,11 @@ using Clutchlit.Models;
                         ");
                 EndContext();
                 BeginContext(1419, 36, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1fa85d9319c44e04bfe36cdea17b29f3", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c3ebfb32b5b64255bc330d5b9e190eba", async() => {
+>>>>>>> Stashed changes
                     BeginContext(1437, 9, true);
                     WriteLiteral("Wszystkie");
                     EndContext();
@@ -123,7 +131,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1481, 32, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ab528960e1bc4167bf62fb175c12ec3c", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d40195001bfc47ddba36e0e336258fe0", async() => {
+>>>>>>> Stashed changes
                     BeginContext(1489, 15, true);
                     WriteLiteral("Zestaw sprzęgła");
                     EndContext();
@@ -143,7 +155,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1539, 32, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "aa371a1c4bad4330a3263861c2d0766b", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "494d10c0f5594f1897169592fa5adaab", async() => {
+>>>>>>> Stashed changes
                     BeginContext(1547, 15, true);
                     WriteLiteral("Docisk sprzęgła");
                     EndContext();
@@ -163,7 +179,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1597, 32, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "b11297977bba42d193a6407d504ba45c", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f174d61d3f77447287a8e7720426e21a", async() => {
+>>>>>>> Stashed changes
                     BeginContext(1605, 15, true);
                     WriteLiteral("Tarcza sprzęgła");
                     EndContext();
@@ -183,7 +203,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1655, 43, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f109ae872d134c169ffebd9b3719f132", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "181d90ede06b44b58e41279232cc6f5f", async() => {
+>>>>>>> Stashed changes
                     BeginContext(1663, 26, true);
                     WriteLiteral("Koło zamachowe / dwumasowe");
                     EndContext();
@@ -203,7 +227,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1724, 39, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f3b3e372b82145b7afac1aa56a8c3e88", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "932b5fe62f5546c198dc2200b2ee621b", async() => {
+>>>>>>> Stashed changes
                     BeginContext(1733, 21, true);
                     WriteLiteral("Wysprzęglik centralny");
                     EndContext();
@@ -223,7 +251,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1789, 32, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9b2a198d035747fea8a27e2ac8283b4b", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1133d046cc3b4782a67d7ea652df2abc", async() => {
+>>>>>>> Stashed changes
                     BeginContext(1797, 15, true);
                     WriteLiteral("Łożysko oporowe");
                     EndContext();
@@ -243,7 +275,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1847, 31, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ad40e6e6db3c4825b5b5ee6002fd0885", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "731deaf507ea4ce0b9dd290787932331", async() => {
+>>>>>>> Stashed changes
                     BeginContext(1855, 14, true);
                     WriteLiteral("Pompa sprzęgła");
                     EndContext();
@@ -263,7 +299,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1904, 40, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4f76f6202d7e437ba5b4f8fc8c6a67c3", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5cf33ad1cce649a091b1dcb52dbe1824", async() => {
+>>>>>>> Stashed changes
                     BeginContext(1912, 23, true);
                     WriteLiteral("Zestaw sprzęgła z kołem");
                     EndContext();
@@ -283,7 +323,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(1970, 22, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "72eb8e76bed34a60ac6340ac474d071a", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3e0222e53068480e9cb2addde9ad801b", async() => {
+>>>>>>> Stashed changes
                     BeginContext(1978, 5, true);
                     WriteLiteral("Śruby");
                     EndContext();
@@ -303,7 +347,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2018, 34, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ecf3792dc57d446d99df1f985b86e938", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f2c25ad4a9924bb1bc470babffd9804c", async() => {
+>>>>>>> Stashed changes
                     BeginContext(2026, 17, true);
                     WriteLiteral("Siłownik sprzęgła");
                     EndContext();
@@ -329,7 +377,11 @@ using Clutchlit.Models;
                         ");
                 EndContext();
                 BeginContext(2359, 38, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "16a4bf7f18a240329ba52a1447fb9b13", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "4aa45f9d756740c5b282bc66c95213d5", async() => {
+>>>>>>> Stashed changes
                     BeginContext(2379, 9, true);
                     WriteLiteral("Wszystkie");
                     EndContext();
@@ -351,7 +403,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2423, 30, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "578e63b390d144caa7d58cec5d4b3aa1", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "8e630a2298d04fa09033362ef14afbc1", async() => {
+>>>>>>> Stashed changes
                     BeginContext(2441, 3, true);
                     WriteLiteral("LUK");
                     EndContext();
@@ -373,7 +429,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2479, 33, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "9ffbc3a70051449e89b42872c6b23dc6", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "c9f85fda94054a179f465717472df45f", async() => {
+>>>>>>> Stashed changes
                     BeginContext(2498, 5, true);
                     WriteLiteral("SACHS");
                     EndContext();
@@ -395,7 +455,11 @@ using Clutchlit.Models;
                 WriteLiteral("\r\n                        ");
                 EndContext();
                 BeginContext(2538, 33, false);
+<<<<<<< Updated upstream
                 __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "def1f3525f0a4748a101a8155f6bdcde", async() => {
+=======
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1da879951b0744e299d5d82ba877f81f", async() => {
+>>>>>>> Stashed changes
                     BeginContext(2557, 5, true);
                     WriteLiteral("VALEO");
                     EndContext();
