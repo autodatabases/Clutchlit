@@ -23,12 +23,14 @@ namespace Clutchlit.Controllers
         {
             return View();
         }
+
+       
         public IActionResult GetAllProducts()
         {
             var products = _contextSp24.ProductDisplay; // products
             var manufacturers = _contextSp24.ShopManufacturer; // producenci
+            var productsName = _contextSp24.Products_sp24;
 
-            
             var draw = HttpContext.Request.Form["draw"].FirstOrDefault();
             var start = Request.Form["start"].FirstOrDefault();
             var length = Request.Form["length"].FirstOrDefault();
@@ -37,7 +39,7 @@ namespace Clutchlit.Controllers
             var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
-            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int pageSize = length != null ? Convert.ToInt32(length) : 10;
 
             int skip = start != null ? Convert.ToInt32(start) : 0;
 
@@ -46,21 +48,21 @@ namespace Clutchlit.Controllers
 
             result = (from p in products
                       join m in manufacturers on p.ManufacturerId equals m.ManuId
+                      join pn in productsName on p.ProductId equals pn.Id_product
                       select new PrestashopProduct {
-                          Photo = p.ProductId.ToString(),
                           Id = p.ProductId,
-                          Name = p.Reference,
+                          Name = pn.Name,
                           Reference = p.Reference,
-                          GrossPrice = p.NetPrice,
+                          GrossPrice = Math.Round((decimal)((double)p.NetPrice*1.23)),
                           Status = p.Active
                       });
-            
-            var customerData = result;
+
+            var customerData = result.OrderBy(o=>o.Id);
 
             //Search  
             if (!string.IsNullOrEmpty(searchValue))
             {
-                //customerData = customerData.Where(m => m.Name.ToUpper().Contains(searchValue.ToUpper()));
+                customerData = customerData.Where(m => m.Name.ToUpper().Contains(searchValue.ToUpper())).OrderBy(o=>o.Id);
             }
             //Paging   
             recordsTotal = customerData.Count();
@@ -68,8 +70,7 @@ namespace Clutchlit.Controllers
             var data = customerData.Skip(skip).Take(pageSize).ToList();
             //Returning Json Data  
             Response.StatusCode = 200;
-           
-            return new JsonResult(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = customerData });
+            return new JsonResult(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = data });
         }
         [HttpGet("[controller]/[action]/{id}")]
         public IActionResult Edit(string id)
@@ -116,8 +117,10 @@ namespace Clutchlit.Controllers
             product_shop_SpC.Active = int.Parse(inputStatus);
             product_stockSpC.Quantity = int.Parse(inputQuantity);
 
-            //_contextSpC.SaveChanges();
-            //_contextSp24.SaveChanges();
+            _contextSpC.SaveChanges();
+            _contextSp24.SaveChanges();
+
+            
 
             if (inputStatus == "1")
                 ViewData["status"] = "Włączony";

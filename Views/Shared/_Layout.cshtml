@@ -556,6 +556,44 @@
 
         $(document).ready(function () {
 
+            var tablePresta = $('#prestahopList').DataTable({
+                "paging":true,
+                "processing": true, // for show progress bar
+                "serverSide": true, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "ajax":
+                {
+                    "url": 'PrestashopProducts/GetAllProducts',
+                    "type": "POST",
+                    "datatype": "json",
+                    "data": '',
+                    "contentType": "application/x-www-form-urlencoded",
+                },
+               
+                "columns": [
+                    { "data": "id" },
+                    { "data": "name", "width": '300px' },
+                    { "data": "reference" },
+                    { "data": "grossPrice", "width": '100px' },
+                    { "data": "status", "width": '100px' },
+                    {
+                        "mRender": function (data, type, row) {
+                            return '<a href="/PrestashopProducts/edit/' + row["id"] +'" class="btn btn-default">Edit</a>';
+                        }
+                    }
+                ],
+                "rowCallback": function (row, data, index) {
+                    if (data["status"] == "1") {
+                        $('td', row).css('background-color', '#6bf725');
+                    }
+                    else if (data["status"] == "0") {
+                        $('td', row).css('background-color', '#fc1919');
+                    }
+                },
+                "order": [[0, 'asc']]
+            });
+       
             $('#getoffers').submit(function (event) {
 
                 event.preventDefault();
