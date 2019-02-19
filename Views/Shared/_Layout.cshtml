@@ -728,7 +728,14 @@
                         "render": function (data, type, full, meta) { return '<a class="add_to_busket btn btn-default" name="' + full.id + '">Kup</a>'; }
                     },
                 ],
-
+                "rowCallback": function (row, data, index) {
+                    if (data["distributorName"] != "BRAK") {
+                        $('td', row).css('color', '#73c105');
+                    }
+                    else {
+                        $('td', row).css('color', '#dd0606');
+                    }
+                },
                 "order": [[1, 'asc']],
 
             });
