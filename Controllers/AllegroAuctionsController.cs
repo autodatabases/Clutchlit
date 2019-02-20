@@ -1608,7 +1608,7 @@ namespace Clutchlit.Controllers
             {
                 var product = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product_id).SingleOrDefault();
                 var auction = _context.AllegroAuction.Where(a => a.ProductId == product.Id_product).ToList();
-                string data = "{\"publication\": {\"action\": \"END\"},\"offerCritera\": [ { \"offers\" : [";
+                string data = "{\"publication\": {\"action\": \"END\"},\"offerCriteria\": [ { \"offers\" : [";
 
                 var i = auction.Count();
                 var counter = 1;
@@ -1643,26 +1643,44 @@ namespace Clutchlit.Controllers
         public async Task<JsonResult> TurnOnAuction(string id)
         {
             int product_id = int.Parse(id);
-            string Response = "";
+            string response = "";
+            var uuid = Guid.NewGuid().ToString();
 
             try
             {
                 var product = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product_id).SingleOrDefault();
                 var auction = _context.AllegroAuction.Where(a => a.ProductId == product.Id_product).ToList();
+                string data = "{\"publication\": {\"action\": \"ACTIVATE\"},\"offerCriteria\": [ { \"offers\" : [";
+
+                var i = auction.Count();
+                var counter = 1;
 
                 foreach (var singleAuction in auction)
                 {
                     var auction_internal_id = singleAuction.AuctionId;
                     var auction_allegro_id = singleAuction.AllegroId;
 
-                    await this.ActivateOffer(auction_allegro_id);
+                    if (counter == i)
+                        data += "{ \"id\" : \"" + auction_allegro_id + "\" }";
+                    else
+                        data += "{ \"id\" : \"" + auction_allegro_id + "\" },";
+
+                    counter++;
                 }
+                data += "], \"type\": \"CONTAINS_OFFERS\" }]}";
+
+                client.BaseAddress = new Uri("https://api.allegro.pl");
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+                client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
+                var result = await client.PutAsync("/sale/offer-publication-commands/" + uuid, new StringContent(data, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
+                string resultContent = await result.Content.ReadAsStringAsync();
+                response = resultContent;
             }
             catch (Exception e)
             {
-                Response = e.Message;
+                response = e.Message;
             }
-            return new JsonResult(Response);
+            return new JsonResult(response);
         }
         // [To poniżej] JUŻ DZIAŁA!!
         [HttpGet("[controller]/[action]/{id}")]
