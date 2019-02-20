@@ -127,9 +127,10 @@ namespace Clutchlit.Controllers
             }
 
         }
-        public IActionResult EndOffer(string Id)
+        public async Task<IActionResult> EndOffer(string Id)
         {
             var uuid = Guid.NewGuid().ToString();
+            string response = "";
             string data = "{" +
   "\"offerCriteria\": [" +
     "{" +
@@ -145,39 +146,12 @@ namespace Clutchlit.Controllers
     "\"action\": \"END\"" +
     "}" +
     "}";
-
-            string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/" + uuid + "");
-            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Method = "PUT";
-            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
-
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                streamWriter.Write(data);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                response = streamReader.ReadToEnd();
-            }
-            var resource = "";
-            var httpWebRequest2 = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/" + uuid + "");
-            httpWebRequest2.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequest2.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequest2.Method = "GET";
-            httpWebRequest2.Headers.Add("Authorization", "Bearer " + Token + "");
-
-            var httpResponse2 = (HttpWebResponse)httpWebRequest2.GetResponse();
-
-            using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))
-            {
-                resource = streamReader.ReadToEnd();
-            }
+            client.BaseAddress = new Uri("https://api.allegro.pl");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
+            var result = await client.PutAsync("/sale/offer-publication-commands/" + uuid , new StringContent(data, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
+            string resultContent = await result.Content.ReadAsStringAsync();
+            response = resultContent;
 
             Response.StatusCode = 200;
             return new JsonResult("Aukcja została zakończona");
@@ -1648,7 +1622,31 @@ namespace Clutchlit.Controllers
 
             return new JsonResult(Response);
         }
-       // [To poniżej] JUŻ DZIAŁA!!
+        public async Task<JsonResult> TurnOffAuction(string id)
+        {
+            int product_id = int.Parse(id);
+            string Response = "";
+           
+            try
+            {
+                var product = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product_id).SingleOrDefault();
+                var auction = _context.AllegroAuction.Where(a => a.ProductId == product.Id_product).ToList();
+
+                foreach (var singleAuction in auction)
+                {
+                    var auction_internal_id = singleAuction.AuctionId;
+                    var auction_allegro_id = singleAuction.AllegroId;
+
+                    await EndOffer(auction_allegro_id);
+                }
+            }
+            catch(Exception e)
+            {
+                Response = e.Message;
+            }
+            return new JsonResult(Response);
+        }
+        // [To poniżej] JUŻ DZIAŁA!!
         [HttpGet("[controller]/[action]/{id}")]
         public async Task<JsonResult> UpdateAuctionPrice(string id)
         {
