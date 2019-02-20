@@ -12,11 +12,13 @@ namespace Clutchlit.Controllers
     {
         private readonly MysqlContext _contextSp24;
         private readonly AMysqlContext _contextSpC;
+        private readonly AllegroAuctionsController _allegroAuctionsController;
 
-        public PrestashopProductsController(MysqlContext contextSp24, AMysqlContext contextSpC)
+        public PrestashopProductsController(MysqlContext contextSp24, AMysqlContext contextSpC, AllegroAuctionsController allegroAuctionsController)
         {
             _contextSp24 = contextSp24;
             _contextSpC = contextSpC;
+            _allegroAuctionsController = allegroAuctionsController;
         }
 
         public IActionResult Index()
@@ -130,6 +132,11 @@ namespace Clutchlit.Controllers
             ViewData["quantity"] = inputQuantity;
             ViewData["product_id"] = product_id;
             ViewData["price"] = Math.Round(netPrice*1.23).ToString() + "(" + netPrice + ")";
+
+            // coś takiego będzie trzeba tutaj dodać celem aktualizacji cen w aukcjach allegro
+            // RedirectToAction("UpdateAuctionPrice","AllegroAuctionsController");
+            _allegroAuctionsController.UpdateAuctionPrice(product_id.ToString());
+
             return View();
         }
     }

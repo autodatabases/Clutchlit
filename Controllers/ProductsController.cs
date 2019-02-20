@@ -828,7 +828,7 @@ namespace Clutchlit.Controllers
             var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
-            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int pageSize = length != null ? Convert.ToInt32(length) : 10;
 
             int skip = start != null ? Convert.ToInt32(start) : 0;
 
@@ -867,7 +867,7 @@ namespace Clutchlit.Controllers
             //Search  
             if (!string.IsNullOrEmpty(searchValue))
             {
-                customerData = customerData.Where(m => m.Name.ToUpper().Contains(searchValue.ToUpper()));
+                customerData = customerData.Where(m => m.Name.ToUpper().Replace(" ","").Contains(searchValue.Replace(" ","").ToUpper()));
             }
             //Paging   
             recordsTotal = customerData.Count();

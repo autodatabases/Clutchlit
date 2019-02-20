@@ -697,10 +697,10 @@
             // Tabela z produktami
             var tableA = $('#example2').DataTable({
                 "destroy": true,
-                "processing": true, // for show progress bar
+                "processing": false, // for show progress bar
                 "serverSide": true, // for process server side
                 "filter": true, // this is for disable filter (search box)
-                "orderMulti": false, // for disable multiple column at once
+                "orderMulti": true, // for disable multiple column at once
                 "ajax": {
                     "url": "/Products/ProductsList",
                     "type": "POST",
