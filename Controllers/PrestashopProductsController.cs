@@ -138,7 +138,10 @@ namespace Clutchlit.Controllers
             if (inputQuantity == "0" || inputStatus == "0")
                 await _allegroAuctionsController.TurnOffAuction(product_id.ToString());
             else if(product_SpC.Quantity > 0 && product_shop_SpC.Active == 1)
+            {
                 await _allegroAuctionsController.TurnOnAuction(product_id.ToString());
+                System.Threading.Thread.Sleep(2000); // staramy sie zmniejszyć szanse na brak aktualizacji ceny. 
+            }
 
             await _allegroAuctionsController.UpdateAuctionPrice(product_id.ToString());
 
