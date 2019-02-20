@@ -1626,13 +1626,15 @@ namespace Clutchlit.Controllers
                     counter++;
                 }
                 data += "], \"type\": \"CONTAINS_OFFERS\" }]}";
-
+                response = data;
+/*
                 client.BaseAddress = new Uri("https://api.allegro.pl");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
                 var result = await client.PutAsync("/sale/offer-publication-commands/" + uuid, new StringContent(data, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
                 string resultContent = await result.Content.ReadAsStringAsync();
                 response = resultContent;
+                */
             }
             catch(Exception e)
             {
