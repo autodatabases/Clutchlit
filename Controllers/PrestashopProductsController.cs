@@ -136,7 +136,6 @@ namespace Clutchlit.Controllers
             // coś takiego będzie trzeba tutaj dodać celem aktualizacji cen w aukcjach allegro
             // RedirectToAction("UpdateAuctionPrice","AllegroAuctionsController");
             _allegroAuctionsController.UpdateAuctionPrice(product_id.ToString());
-
             return View();
         }
     }

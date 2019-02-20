@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Logging;
 using Clutchlit.Models;
+using Clutchlit.Controllers;
 
 namespace Clutchlit
 {
@@ -59,6 +60,7 @@ namespace Clutchlit
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).AddJsonOptions(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
+            services.AddTransient<AllegroAuctionsController>();
             services.AddResponseCompression(options =>
             {
                 options.MimeTypes = new[]
