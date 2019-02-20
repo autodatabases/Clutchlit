@@ -1523,7 +1523,7 @@ namespace Clutchlit.Controllers
 
                         // próbujemy aktywować ofertę jeżeli jej status w sklepie > 0 
                         // może się zdarzyć, że zostało coś poprawione 
-                        if (product.Quantity > 0)
+                        if (product.Quantity > 0 && product.Active == 1)
                         {
                             this.ActivateOffer(auction_data.AllegroId);
                         }
