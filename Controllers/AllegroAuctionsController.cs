@@ -1489,6 +1489,55 @@ namespace Clutchlit.Controllers
 
             return new JsonResult(cros_parameter);
         }
+        public async Task<JsonResult> UpdateAuctionDescription(string id)
+        {
+            string Response = "";
+
+            var auction_data = _context.AllegroAuction.Where(a => a.AuctionId == int.Parse(id)).SingleOrDefault();
+            var product = _contextShop.ProductDisplay.Where(d => d.ProductId == auction_data.ProductId).SingleOrDefault();
+
+            if (auction_data.AllegroId != "")
+            {
+                var auction = GetAuction(auction_data.AllegroId);
+                var auctionD = JsonConvert.DeserializeObject<AuctionToPost>(auction);
+
+                auctionD.description.sections.RemoveAt(auctionD.description.sections.Count() - 1);
+                var footerSection = new Section();
+                footerSection.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p><h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Użyj formularza 'Pytanie do sprzedającego'</h1>", null));
+
+                auctionD.description.sections.Add(footerSection);
+
+                try
+                {
+                    string outprint = JsonConvert.SerializeObject(auctionD, Formatting.Indented);
+                    // ------
+                    using (var client = new HttpClient())
+                    {
+                        client.BaseAddress = new Uri("https://api.allegro.pl");
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+                        client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
+                        var result = await client.PutAsync("/sale/offers/" + auction_data.AllegroId + "", new StringContent(outprint, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
+                        string resultContent = await result.Content.ReadAsStringAsync();
+                        Response = resultContent;
+                        
+
+                        // próbujemy aktywować ofertę jeżeli jej status w sklepie > 0 
+                        // może się zdarzyć, że zostało coś poprawione 
+                        if (product.Quantity > 0)
+                        {
+                            this.ActivateOffer(auction_data.AllegroId);
+                        }
+
+                    }
+                }
+                catch (Exception e)
+                {
+                    Response += e.Message;
+                }
+            }
+
+            return new JsonResult(Response);
+        }
         public async Task<JsonResult> UpdateAuctionData(string id)
         { 
             // aktualizujemy PASUJE DO
