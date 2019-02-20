@@ -137,6 +137,8 @@ namespace Clutchlit.Controllers
             // RedirectToAction("UpdateAuctionPrice","AllegroAuctionsController");
             if (product_SpC.Quantity == 0 || product_shop_SpC.Active == 0)
                 await _allegroAuctionsController.TurnOffAuction(product_id.ToString());
+            else if(product_SpC.Quantity > 0 && product_shop_SpC.Active == 1)
+                await _allegroAuctionsController.TurnOffAuction(product_id.ToString());
 
             await _allegroAuctionsController.UpdateAuctionPrice(product_id.ToString());
 

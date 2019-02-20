@@ -185,7 +185,7 @@ namespace Clutchlit.Controllers
 
 
             Response.StatusCode = 200;
-            return new JsonResult("Aukcja została zakończona");
+            return new JsonResult(response);
         }
         [HttpGet("[controller]/[action]s/{id}/")]
         public IActionResult EditOffer(string id)
@@ -1617,6 +1617,30 @@ namespace Clutchlit.Controllers
                 }
             }
             catch(Exception e)
+            {
+                Response = e.Message;
+            }
+            return new JsonResult(Response);
+        }
+        public async Task<JsonResult> TurnOnAuction(string id)
+        {
+            int product_id = int.Parse(id);
+            string Response = "";
+
+            try
+            {
+                var product = _contextShop.Products_prices_sp24.Where(p => p.Id_product == product_id).SingleOrDefault();
+                var auction = _context.AllegroAuction.Where(a => a.ProductId == product.Id_product).ToList();
+
+                foreach (var singleAuction in auction)
+                {
+                    var auction_internal_id = singleAuction.AuctionId;
+                    var auction_allegro_id = singleAuction.AllegroId;
+
+                    await ActivateOffer(auction_allegro_id);
+                }
+            }
+            catch (Exception e)
             {
                 Response = e.Message;
             }
