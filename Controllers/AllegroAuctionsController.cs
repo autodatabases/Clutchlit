@@ -616,7 +616,7 @@ namespace Clutchlit.Controllers
             var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
-            int pageSize = length != null ? Convert.ToInt32(length) : 10;
+            int pageSize = length != null ? Convert.ToInt32(length) : 1000;
 
             int skip = start != null ? Convert.ToInt32(start) : 0;
 
@@ -1502,10 +1502,6 @@ namespace Clutchlit.Controllers
                 var auctionD = JsonConvert.DeserializeObject<AuctionToPost>(auction);
 
                 auctionD.description.sections.RemoveAt(auctionD.description.sections.Count() - 1);
-                var footerSection = new Section();
-                footerSection.items.Add(new Item("TEXT", "<p>Zdjęcia zamieszczone w aukcji mają charakter poglądowy. W rzeczywistości, w zależności od modelu samochodu sprzęgła mogą się trochę różnić.</p><h1>Nie jesteś pewien czy sprzęgło będzie pasowało do Twojego samochodu?</h1><h1>Użyj formularza 'Pytanie do sprzedającego'</h1>", null));
-
-                auctionD.description.sections.Add(footerSection);
 
                 try
                 {
