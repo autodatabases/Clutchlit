@@ -92,7 +92,7 @@ namespace Clutchlit.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Update(string inputId, string inputTitle, string inputGrossPrice, string inputQuantity, string inputStatus)
+        public async Task<IActionResult> Update(string inputId, string inputTitle, string inputGrossPrice, string inputQuantity, string inputStatus)
         {
             int product_id = int.Parse(inputId);
             double netPrice = Math.Round(Double.Parse(inputGrossPrice) / 1.23, 6);
@@ -135,7 +135,7 @@ namespace Clutchlit.Controllers
 
             // coś takiego będzie trzeba tutaj dodać celem aktualizacji cen w aukcjach allegro
             // RedirectToAction("UpdateAuctionPrice","AllegroAuctionsController");
-            _allegroAuctionsController.UpdateAuctionPrice(product_id.ToString());
+            await _allegroAuctionsController.UpdateAuctionPrice(product_id.ToString());
             return View();
         }
     }
