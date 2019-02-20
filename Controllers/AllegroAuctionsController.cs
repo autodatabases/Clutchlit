@@ -1613,7 +1613,7 @@ namespace Clutchlit.Controllers
                     var auction_internal_id = singleAuction.AuctionId;
                     var auction_allegro_id = singleAuction.AllegroId;
 
-                    await EndOffer(auction_allegro_id);
+                    await this.EndOffer(auction_allegro_id);
                 }
             }
             catch(Exception e)
@@ -1637,7 +1637,7 @@ namespace Clutchlit.Controllers
                     var auction_internal_id = singleAuction.AuctionId;
                     var auction_allegro_id = singleAuction.AllegroId;
 
-                    await ActivateOffer(auction_allegro_id);
+                    await this.ActivateOffer(auction_allegro_id);
                 }
             }
             catch (Exception e)
