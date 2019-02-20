@@ -1619,22 +1619,22 @@ namespace Clutchlit.Controllers
                     var auction_allegro_id = singleAuction.AllegroId;
 
                     if(counter == i)
-                        data += "{ \"id\" : \""+auction_allegro_id+"\" }";
+                        data += " { \"id\" : \""+auction_allegro_id+"\" }";
                     else
-                        data += "{ \"id\" : \"" + auction_allegro_id + "\" },";
+                        data += " { \"id\" : \"" + auction_allegro_id + "\" },";
 
                     counter++;
                 }
-                data += "], \"type\": \"CONTAINS_OFFERS\" }]}";
+                data += "], \"type\": \"CONTAINS_OFFERS\"  } ] }";
                 response = data;
-/*
+
                 client.BaseAddress = new Uri("https://api.allegro.pl");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
                 var result = await client.PutAsync("/sale/offer-publication-commands/" + uuid, new StringContent(data, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
                 string resultContent = await result.Content.ReadAsStringAsync();
                 response = resultContent;
-                */
+                
             }
             catch(Exception e)
             {
@@ -1663,13 +1663,13 @@ namespace Clutchlit.Controllers
                     var auction_allegro_id = singleAuction.AllegroId;
 
                     if (counter == i)
-                        data += "{ \"id\" : \"" + auction_allegro_id + "\" }";
+                        data += " { \"id\" : \"" + auction_allegro_id + "\" }";
                     else
-                        data += "{ \"id\" : \"" + auction_allegro_id + "\" },";
+                        data += " { \"id\" : \"" + auction_allegro_id + "\" },";
 
                     counter++;
                 }
-                data += "], \"type\": \"CONTAINS_OFFERS\" }]}";
+                data += " ], \"type\": \"CONTAINS_OFFERS\"  } ] }";
 
                 client.BaseAddress = new Uri("https://api.allegro.pl");
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
