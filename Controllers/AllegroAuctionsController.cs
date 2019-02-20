@@ -616,8 +616,8 @@ namespace Clutchlit.Controllers
             var sortColumnDirection = Request.Form["order[0][dir]"].FirstOrDefault();
             var searchValue = Request.Form["search[value]"].FirstOrDefault();
 
-            int pageSize = length != null ? Convert.ToInt32(length) : 1000;
-
+            int pageSize = length != null ? Convert.ToInt32(length) : 10;
+           
             int skip = start != null ? Convert.ToInt32(start) : 0;
 
             int recordsTotal = 0;
