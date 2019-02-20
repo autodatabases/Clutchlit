@@ -154,11 +154,12 @@ namespace Clutchlit.Controllers
             response = resultContent;
 
             Response.StatusCode = 200;
-            return new JsonResult("Aukcja została zakończona");
+            return new JsonResult(response);
         }
-        public IActionResult ActivateOffer(string Id)
+        public async Task<IActionResult> ActivateOffer(string Id)
         {
             var uuid = Guid.NewGuid().ToString();
+            string response = "";
             string data = "{" +
   "\"offerCriteria\": [" +
     "{" +
@@ -175,38 +176,13 @@ namespace Clutchlit.Controllers
     "}" +
     "}";
 
-            string response = "Coś poszło nie tak. Skontaktuj się z pokojem obok.";
-            var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/" + uuid + "");
-            httpWebRequest.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequest.Method = "PUT";
-            httpWebRequest.Headers.Add("Authorization", "Bearer " + Token + "");
+            client.BaseAddress = new Uri("https://api.allegro.pl");
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.allegro.public.v1+json"));
+            client.DefaultRequestHeaders.Add("Authorization", "Bearer " + Token + "");
+            var result = await client.PutAsync("/sale/offer-publication-commands/" + uuid, new StringContent(data, Encoding.UTF8, "application/vnd.allegro.public.v1+json"));
+            string resultContent = await result.Content.ReadAsStringAsync();
+            response = resultContent;
 
-            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-            {
-                streamWriter.Write(data);
-                streamWriter.Flush();
-                streamWriter.Close();
-            }
-            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-
-            using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-            {
-                response = streamReader.ReadToEnd();
-            }
-            var resource = "";
-            var httpWebRequest2 = (HttpWebRequest)WebRequest.Create("https://api.allegro.pl/sale/offer-publication-commands/" + uuid + "");
-            httpWebRequest2.ContentType = "application/vnd.allegro.public.v1+json";
-            httpWebRequest2.Accept = "application/vnd.allegro.public.v1+json";
-            httpWebRequest2.Method = "GET";
-            httpWebRequest2.Headers.Add("Authorization", "Bearer " + Token + "");
-
-            var httpResponse2 = (HttpWebResponse)httpWebRequest2.GetResponse();
-
-            using (var streamReader = new StreamReader(httpResponse2.GetResponseStream()))
-            {
-                resource = streamReader.ReadToEnd();
-            }
 
             Response.StatusCode = 200;
             return new JsonResult("Aukcja została zakończona");
