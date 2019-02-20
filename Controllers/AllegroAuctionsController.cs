@@ -1501,8 +1501,12 @@ namespace Clutchlit.Controllers
                 var auction = GetAuction(auction_data.AllegroId);
                 var auctionD = JsonConvert.DeserializeObject<AuctionToPost>(auction);
 
-                auctionD.description.sections.RemoveAt(auctionD.description.sections.Count() - 1);
+                var footerSection = new Section();
+                footerSection.items.Add(new Item("TEXT", "<p><b>Jeśli nie jesteś pewny</b> czy oferowane części będą pasowały do Twojego samochodu? <b>W wiadomości do Sprzedającego</b>&nbsp;prześlij nam&nbsp;<b>pełne dane swojego pojazdu</b>:</p><ul><li>Marka</li><li>Model</li><li>Pojemność i moc silnika</li><li>Rok produkcji</li><li>Numer nadwozia (VIN)</li></ul><p>Nasi doradcy <b>upewnią się</b>, że wyślemy części, które <b>na</b> <b>pewno będą pasować do Twojego samochodu</b>.</p>", null));
+                
 
+                auctionD.description.sections.RemoveAt(auctionD.description.sections.Count() - 1);
+                auctionD.description.sections.Add(footerSection);
                 try
                 {
                     string outprint = JsonConvert.SerializeObject(auctionD, Formatting.Indented);
