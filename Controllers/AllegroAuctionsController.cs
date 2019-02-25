@@ -1778,7 +1778,7 @@ namespace Clutchlit.Controllers
                 Error = 0;
             }
             
-            return Json(Error);
+            return Json(Response);
         }
         
     }
